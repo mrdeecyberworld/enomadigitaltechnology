@@ -1,0 +1,191 @@
+<?php
+/**
+ * Services catalogue.
+ *
+ * To add a service later:
+ *   1. Add an entry below (the array key is the URL slug).
+ *   2. Create /your-slug.php containing:
+ *        <?php $serviceSlug = 'your-slug'; require __DIR__ . '/includes/templates/service-page.php';
+ *   3. Add the path to 'sitemap' in includes/content/site.php.
+ * Cards, menus, the service finder, forms and the AI assistant pick it up automatically.
+ */
+
+return [
+    'web-development' => [
+        'name'      => 'Web Development',
+        'nav_label' => 'Web Development',
+        'icon'      => 'code-xml',
+        'summary'   => 'Professional, responsive websites designed to help businesses establish credibility, attract customers and grow online.',
+        'includes'  => ['Business websites', 'Landing pages', 'Portfolio websites', 'Website redesign', 'Website maintenance', 'Domain and hosting setup', 'Basic SEO'],
+        'cta'       => 'Explore Web Development',
+        'image'     => 'webdev',
+        'meta_title'       => 'Web Development Services for Small Businesses | Enoma Digital Technologies',
+        'meta_description' => 'Website development and website design for small businesses, startups and professionals. Responsive business websites, landing pages, redesigns, maintenance and basic SEO.',
+        'eyebrow'   => 'Web Development',
+        'headline'  => 'Websites that earn trust from the first click.',
+        'intro'     => 'Your website is often the first conversation a customer has with your business. We design and build fast, responsive websites that explain what you do clearly, look professional on every device and make it easy for people to contact you.',
+        'details'   => [
+            ['title' => 'Business websites',        'text' => 'Multi-page websites that present your services, your story and a clear way to get in touch.'],
+            ['title' => 'Landing pages',            'text' => 'Focused pages for a single offer, event or campaign, built to turn visitors into inquiries.'],
+            ['title' => 'Portfolio websites',       'text' => 'Clean showcases for professionals, creatives and consultants who need to present their work.'],
+            ['title' => 'Website redesign',         'text' => 'Modernize an outdated site with better structure, clearer messaging and mobile-friendly layouts.'],
+            ['title' => 'Website maintenance',      'text' => 'Updates, content changes, backups and routine checks so your site stays current and secure.'],
+            ['title' => 'Domain and hosting setup', 'text' => 'Help choosing, connecting and configuring your domain, hosting and business email.'],
+            ['title' => 'Basic SEO',                'text' => 'Page titles, descriptions, headings, performance and structure that help search engines understand your site.'],
+        ],
+        'audience'  => ['Small businesses', 'Startups and entrepreneurs', 'Professionals and consultants', 'Nonprofits', 'Schools and community organizations'],
+        'faqs' => [
+            ['q' => 'How long does it take to build a small business website?', 'a' => 'Timelines depend on the number of pages, how ready your content is and how many revisions are needed. After a consultation we provide a timeline specific to your project.'],
+            ['q' => 'Will my website work on phones and tablets?', 'a' => 'Yes. Every website we build is responsive, which means the layout adapts to phones, tablets and desktop screens.'],
+            ['q' => 'Can you update or redesign my existing website?', 'a' => 'Yes. We can review your current site, recommend improvements and either refresh it or rebuild it, depending on what makes the most sense for your goals and budget.'],
+            ['q' => 'Do you include security in website projects?', 'a' => 'Yes. Security is considered from the start, including HTTPS, sensible access controls, software updates and backups.'],
+        ],
+    ],
+
+    'cybersecurity' => [
+        'name'      => 'Cybersecurity',
+        'nav_label' => 'Cybersecurity',
+        'icon'      => 'shield-check',
+        'summary'   => 'Practical cybersecurity services and education designed to help individuals and organizations reduce digital risk.',
+        'includes'  => ['Security awareness', 'Account security', 'MFA setup', 'Phishing awareness', 'Basic security assessments', 'Security guidance', 'Cybersecurity education'],
+        'cta'       => 'Explore Cybersecurity',
+        'image'     => 'cyber',
+        'meta_title'       => 'Cybersecurity Services for Small Businesses & Individuals | Enoma Digital Technologies',
+        'meta_description' => 'Practical cybersecurity services: account security, MFA setup, phishing awareness, basic security assessments and cybersecurity awareness training for small businesses, families and individuals.',
+        'eyebrow'   => 'Cybersecurity Services',
+        'headline'  => 'Practical protection for the way you actually work.',
+        'intro'     => 'Most security problems start with everyday things: a reused password, a convincing phishing email, an unprotected account. We help you close those gaps with clear, practical steps and the education to keep them closed.',
+        'details'   => [
+            ['title' => 'Security awareness',         'text' => 'Clear explanations of the most common threats and the habits that prevent them.'],
+            ['title' => 'Account security',           'text' => 'Review and strengthen the email, banking, social and business accounts that matter most.'],
+            ['title' => 'MFA setup',                  'text' => 'Set up multi-factor authentication on key accounts, with backup options so you never get locked out.'],
+            ['title' => 'Phishing awareness',         'text' => 'Learn to recognize suspicious emails, texts and calls before they cause harm.'],
+            ['title' => 'Basic security assessments', 'text' => 'A structured, non-intrusive review of your accounts, devices and practices with prioritized recommendations.'],
+            ['title' => 'Security guidance',          'text' => 'Straightforward advice on passwords, backups, updates, Wi-Fi and safe use of cloud services.'],
+            ['title' => 'Cybersecurity education',    'text' => 'Sessions for individuals, teams and families that build lasting confidence, not fear.'],
+        ],
+        'audience'  => ['Small businesses and startups', 'Professionals working remotely', 'Families and older adults', 'Nonprofits and schools'],
+        'note'      => 'Our cybersecurity services are defensive and educational. Assessments are performed only with the owner\'s permission.',
+        'faqs' => [
+            ['q' => 'Is cybersecurity only for large companies?', 'a' => 'No. Small businesses, professionals and families are frequent targets because they often have fewer protections. Simple steps such as multi-factor authentication and phishing awareness make a real difference.'],
+            ['q' => 'What is a basic security assessment?', 'a' => 'It is a structured review of your accounts, devices, backups and everyday practices, done with your permission. You receive a clear list of recommendations in priority order.'],
+            ['q' => 'Can you help secure my business website?', 'a' => 'Yes. We review common website security basics such as HTTPS, software updates, user access, backups and hosting configuration, and recommend or implement improvements.'],
+            ['q' => 'Do you respond to active security incidents?', 'a' => 'If you believe you are dealing with an active incident, contact us and we will help you understand next steps. For serious incidents we may recommend a specialized incident response provider and, where appropriate, law enforcement.'],
+        ],
+    ],
+
+    'it-support' => [
+        'name'      => 'IT Support',
+        'nav_label' => 'IT Support',
+        'icon'      => 'headset',
+        'summary'   => 'Reliable technical support for everyday technology problems.',
+        'includes'  => ['Computer troubleshooting', 'Software installation', 'Email setup', 'Network troubleshooting', 'Device configuration', 'Remote support'],
+        'cta'       => 'Get IT Support',
+        'image'     => 'itsupport',
+        'meta_title'       => 'Remote IT Support & Technical Support | Enoma Digital Technologies',
+        'meta_description' => 'Friendly, reliable remote IT support and technical support for small businesses and individuals: computer troubleshooting, software, email setup, networks and device configuration.',
+        'eyebrow'   => 'IT & Technical Support',
+        'headline'  => 'Technology problems, solved with patience.',
+        'intro'     => 'When technology stops working, you need someone who listens, explains clearly and fixes the problem properly. We provide remote technical support for businesses and individuals, from a slow laptop to a new office setup.',
+        'details'   => [
+            ['title' => 'Computer troubleshooting', 'text' => 'Diagnose slow performance, errors, crashes and other everyday computer problems.'],
+            ['title' => 'Software installation',    'text' => 'Install, update and configure the applications you rely on.'],
+            ['title' => 'Email setup',              'text' => 'Set up business or personal email on your computer, phone and tablet.'],
+            ['title' => 'Network troubleshooting',  'text' => 'Resolve Wi-Fi, connectivity and router configuration issues.'],
+            ['title' => 'Device configuration',     'text' => 'Set up new computers, phones, printers and accessories so they work together.'],
+            ['title' => 'Remote support',           'text' => 'Secure screen-sharing sessions, only with your permission, so we can help without an on-site visit.'],
+        ],
+        'audience'  => ['Small offices and home offices', 'Professionals and freelancers', 'Older adults and families', 'Nonprofits'],
+        'faqs' => [
+            ['q' => 'Do you provide remote IT support?', 'a' => 'Yes. Most support is provided remotely using secure screen-sharing tools, and only with your permission. You can see everything that happens during the session.'],
+            ['q' => 'What if my problem cannot be fixed remotely?', 'a' => 'We will explain what we found and recommend next steps, such as a hardware repair provider or replacement options.'],
+            ['q' => 'Can you help older family members with technology?', 'a' => 'Yes. We offer patient, step-by-step help for people of all experience levels.'],
+        ],
+    ],
+
+    'training' => [
+        'name'      => 'Technology Training',
+        'short_label' => 'Training',
+        'nav_label' => 'Training',
+        'icon'      => 'graduation-cap',
+        'summary'   => 'Practical technology and cybersecurity training for people at every level.',
+        'includes'  => ['Beginner technology training', 'Cybersecurity awareness', 'Digital literacy', 'Cybersecurity fundamentals', 'Training for businesses', 'Training for young people and adults'],
+        'cta'       => 'Explore Training',
+        'image'     => 'training',
+        'meta_title'       => 'Cybersecurity Awareness Training & Technology Training | Enoma Digital Technologies',
+        'meta_description' => 'Cybersecurity training and technology education for businesses, schools, young people, adults and seniors. Phishing awareness, password security, online safety and digital literacy.',
+        'eyebrow'   => 'Technology & Cybersecurity Training',
+        'headline'  => 'Technology education for everyone.',
+        'intro'     => 'Confidence with technology is a skill that can be learned. Our training programs explain technology and cybersecurity in plain language, with practical exercises that fit the learner, whether that is a business team, a classroom or a group of older adults.',
+        'details'   => [
+            ['title' => 'Beginner technology training', 'text' => 'Comfortable, jargon-free introductions to computers, smartphones and the internet.'],
+            ['title' => 'Cybersecurity awareness',      'text' => 'Recognize phishing, scams and risky behavior, and know what to do about them.'],
+            ['title' => 'Digital literacy',             'text' => 'Search, evaluate information, communicate and work productively online.'],
+            ['title' => 'Cybersecurity fundamentals',   'text' => 'An introduction to how security works for students and career-curious adults.'],
+            ['title' => 'Training for businesses',      'text' => 'Cybersecurity awareness training that helps teams protect company data and accounts.'],
+            ['title' => 'Training for young people and adults', 'text' => 'Age-appropriate sessions on online safety, privacy and responsible technology use.'],
+        ],
+        'audience'  => ['Young people', 'Adults', 'Seniors', 'Business teams', 'Schools', 'Community organizations'],
+        'faqs' => [
+            ['q' => 'Do you offer cybersecurity training?', 'a' => 'Yes. We offer cybersecurity awareness training for business teams, schools, community groups and individuals, as well as introductory cybersecurity fundamentals for learners interested in the field.'],
+            ['q' => 'Is training available online?', 'a' => 'Yes. Training is delivered remotely through live online sessions. Tell us about your group and we will recommend a format.'],
+            ['q' => 'Can training be tailored to our organization?', 'a' => 'Yes. Topics, examples and pace are adapted to your audience, whether that is a small office, a classroom or a senior community group.'],
+        ],
+    ],
+
+    'cloud-services' => [
+        'name'      => 'Cloud & Digital Technology',
+        'nav_label' => 'Cloud & Digital Technology',
+        'icon'      => 'cloud',
+        'summary'   => 'Modern cloud and digital technology solutions for individuals and growing businesses.',
+        'includes'  => ['Cloud setup', 'Backup solutions', 'Microsoft 365', 'Google Workspace', 'Cloud storage', 'Digital workflow setup'],
+        'cta'       => 'Explore Cloud Services',
+        'image'     => 'cloud',
+        'meta_title'       => 'Cloud Setup, Microsoft 365 & Google Workspace Help | Enoma Digital Technologies',
+        'meta_description' => 'Cloud and digital technology services for small businesses and individuals: cloud setup, backups, Microsoft 365, Google Workspace, cloud storage and digital workflow setup.',
+        'eyebrow'   => 'Cloud & Digital Technology',
+        'headline'  => 'Work from anywhere, with everything in its place.',
+        'intro'     => 'The right cloud tools make it easier to collaborate, stay organized and recover when something goes wrong. We help you choose, set up and secure cloud services that fit how you work.',
+        'details'   => [
+            ['title' => 'Cloud setup',            'text' => 'Plan and configure cloud services for email, files and collaboration.'],
+            ['title' => 'Backup solutions',       'text' => 'Automatic, tested backups so important files can be recovered after loss or ransomware.'],
+            ['title' => 'Microsoft 365',          'text' => 'Set up accounts, email, Teams, OneDrive and security settings.'],
+            ['title' => 'Google Workspace',       'text' => 'Configure Gmail with your domain, Drive, shared calendars and admin security.'],
+            ['title' => 'Cloud storage',          'text' => 'Organize shared folders and permissions so the right people have the right access.'],
+            ['title' => 'Digital workflow setup', 'text' => 'Connect forms, calendars, documents and e-signatures to reduce manual work.'],
+        ],
+        'audience'  => ['Small businesses moving to the cloud', 'Remote and hybrid teams', 'Professionals and freelancers', 'Nonprofits'],
+        'faqs' => [
+            ['q' => 'Should I use Microsoft 365 or Google Workspace?', 'a' => 'Both are strong options. The right choice depends on the tools your team already uses, the files you work with and your budget. We can walk through the trade-offs with you.'],
+            ['q' => 'Can you help move my email to a professional domain?', 'a' => 'Yes. We can set up email that uses your own domain name and help migrate existing messages where possible.'],
+        ],
+    ],
+
+    'technology-consulting' => [
+        'name'      => 'Technology Consulting',
+        'short_label' => 'Consulting',
+        'nav_label' => 'Technology Consulting',
+        'icon'      => 'compass',
+        'summary'   => 'Technology guidance that helps you make informed decisions.',
+        'includes'  => ['Technology planning', 'Website strategy', 'Cybersecurity guidance', 'Digital transformation guidance', 'Small-business technology consulting'],
+        'cta'       => 'Talk to a Specialist',
+        'image'     => 'consulting',
+        'meta_title'       => 'Small Business Technology Consulting | Enoma Digital Technologies',
+        'meta_description' => 'Independent technology consulting for small businesses, startups and organizations: technology planning, website strategy, cybersecurity guidance and digital transformation.',
+        'eyebrow'   => 'Technology Consulting',
+        'headline'  => 'Clear advice before you invest.',
+        'intro'     => 'Technology decisions are easier with someone in your corner who explains the options plainly. We help you understand where you are today, what you actually need and a practical path to get there.',
+        'details'   => [
+            ['title' => 'Technology planning',               'text' => 'Map your current tools, identify gaps and plan improvements that fit your budget.'],
+            ['title' => 'Website strategy',                  'text' => 'Decide what your website needs to do, who it serves and how to measure success.'],
+            ['title' => 'Cybersecurity guidance',            'text' => 'Prioritize the security improvements that matter most for your situation.'],
+            ['title' => 'Digital transformation guidance',   'text' => 'Replace manual processes with simple digital workflows, one step at a time.'],
+            ['title' => 'Small-business technology consulting', 'text' => 'An experienced sounding board for software, hardware and vendor decisions.'],
+        ],
+        'audience'  => ['Startups and founders', 'Small businesses', 'Nonprofits and schools', 'Professionals'],
+        'faqs' => [
+            ['q' => 'What happens in a consultation?', 'a' => 'We talk through your goals and challenges, ask questions to understand your situation and outline sensible next steps. You leave with clarity, whether or not you decide to work with us.'],
+            ['q' => 'Do you recommend specific vendors?', 'a' => 'We recommend tools based on your needs and budget. We will always explain why we are recommending something.'],
+        ],
+    ],
+];

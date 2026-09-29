@@ -1,0 +1,13 @@
+# Private configuration (never commit secrets)
+enoma-config.php
+.env
+
+# Runtime data
+storage/ratelimit/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/
