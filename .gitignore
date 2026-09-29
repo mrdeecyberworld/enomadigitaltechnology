@@ -19,3 +19,6 @@ storage/admin/
 assets/uploads/*
 !assets/uploads/.htaccess
 !assets/uploads/.gitkeep
+
+# Generated side-panel preview
+enoma-website-preview.html
