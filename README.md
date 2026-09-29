@@ -18,7 +18,8 @@ Built for **standard shared hosting** (cPanel, Hostinger, Namecheap, Bluehost, e
 3. Copy `config.sample.php` to **one level above** the web root as `enoma-config.php`
    (e.g. `/home/youraccount/enoma-config.php`) and fill in real values. Keeping it outside
    `public_html` means it can never be downloaded.
-4. Make `storage/` and `assets/uploads/` writable by PHP (usually already true; `755` or `775`).
+4. Make `storage/` and `assets/uploads/` writable (the included `.user.ini` raises the upload limit to 25 MB on hosts that support it; otherwise raise `upload_max_filesize` in cPanel → MultiPHP INI Editor).
+   Also make `storage/` and `assets/uploads/` writable by PHP (usually already true; `755` or `775`).
 5. Visit `/admin` and create your admin account (see **Admin panel** below).
 6. Once SSL is active, uncomment the HTTPS redirect (and optionally HSTS) in `.htaccess`.
 7. Submit `https://enomadigitaltech.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
@@ -50,7 +51,7 @@ From the admin you can edit, with no code:
 | **Services** | Add, edit, reorder or remove services. New services get a page at `/slug` automatically and appear in menus, cards, footer, forms and the AI assistant |
 | **Pages** | SEO titles/descriptions and header text for every other page |
 | **FAQs, Training, Resources, Testimonials** | All lists, add/remove/reorder |
-| **Photos** & **Media library** | Upload images and assign them anywhere; alt text |
+| **Photos** & **Media library** | Drag and drop photos (several at once). Each upload is automatically turned upright, resized, compressed, stripped of hidden location data and saved in several sizes; every image spot crops it to fit. Click a photo in the library to choose its focus point |
 | **Legal pages** | Privacy Policy and Terms text, effective dates, governing state |
 | **Settings** | Contact email/phone, social links, founder profile, scheduling link, form email delivery, AI API key, setup notes |
 | **Blog posts** | Write, edit, schedule, draft and publish articles with cover images, categories, tags and SEO fields. Drafts can be previewed while logged in |

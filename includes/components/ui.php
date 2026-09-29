@@ -124,7 +124,7 @@ function founder_card(): string
     <figure class="founder-card">
       <div class="founder-card__photo<?= $photo ? '' : ' founder-card__photo--empty' ?>">
         <?php if ($photo): ?>
-          <img src="/<?= e(ltrim($photo, '/')) ?>" alt="Portrait of <?= e($name ?: 'the founder of ' . site('name')) ?>" width="800" height="1000" loading="lazy" decoding="async">
+          <?= photo(ltrim($photo, '/'), '(min-width: 1024px) 440px, 90vw', ['alt' => 'Portrait of ' . ($name ?: 'the founder of ' . site('name'))]) ?>
         <?php else: ?>
           <?= icon('user-round', 'icon founder-card__placeholder-icon') ?>
           <span class="founder-card__placeholder-label">Founder photo will appear here</span>

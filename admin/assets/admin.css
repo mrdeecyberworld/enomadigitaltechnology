@@ -244,3 +244,27 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 .quick-links li { display: grid; gap: 2px; }
 .quick-links a { font-weight: 600; text-decoration: none; display: inline-flex; gap: 4px; align-items: center; }
 @media (min-width: 1100px) { .quick-links { position: sticky; top: 20px; } }
+
+/* Drag & drop upload */
+.dropzone { position: relative; margin-bottom: 20px; }
+.dropzone__inner { display: grid; justify-items: center; gap: 6px; padding: 32px 16px; text-align: center; border: 2px dashed var(--line-2); border-radius: 14px; background: #fff; cursor: pointer; transition: border-color .2s, background-color .2s; }
+.dropzone__inner:hover, .dropzone.is-over .dropzone__inner { border-color: var(--blue); background: var(--blue-50); }
+.dropzone input:focus-visible + .dropzone__inner { outline: 3px solid var(--blue); outline-offset: 2px; }
+.dropzone__icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; background: var(--blue-50); color: var(--blue-d); }
+.dropzone.is-busy .dropzone__inner { opacity: .6; pointer-events: none; }
+.dropzone__progress { margin-top: 10px; font-weight: 600; font-size: .9rem; }
+.dropzone__progress .notice { margin: 6px 0; }
+.saved { color: var(--ok); font-weight: 600; }
+
+/* Focus point picker */
+.focus-picker { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #eef1f6; }
+.focus-picker img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto !important; }
+.focus-picker__grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+.focus-picker__grid button { display: grid; place-items: center; border: 0; background: transparent; cursor: crosshair; padding: 0; }
+.focus-picker__grid button span { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); background: rgba(13,22,40,.25); opacity: 0; transition: opacity .15s, transform .15s; box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+.focus-picker:hover .focus-picker__grid button span, .focus-picker__grid button:focus-visible span { opacity: .8; }
+.focus-picker__grid button[aria-checked="true"] span { opacity: 1; background: var(--blue); transform: scale(1.25); }
+.focus-picker__grid button:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+img.focus-top-left { object-position: 15% 15%; } img.focus-top { object-position: 50% 15%; } img.focus-top-right { object-position: 85% 15%; }
+img.focus-left { object-position: 15% 50%; } img.focus-right { object-position: 85% 50%; }
+img.focus-bottom-left { object-position: 15% 85%; } img.focus-bottom { object-position: 50% 85%; } img.focus-bottom-right { object-position: 85% 85%; }

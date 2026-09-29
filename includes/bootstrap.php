@@ -23,6 +23,7 @@ date_default_timezone_set('America/New_York');
 
 require INC . '/functions.php';
 require INC . '/forms.php';
+require INC . '/media.php';
 require INC . '/blog.php';
 foreach (glob(INC . '/components/*.php') as $component) {
     require $component;

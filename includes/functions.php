@@ -158,8 +158,15 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
     foreach ($candidates as $local) {
         if (is_file(SITE_ROOT . '/assets/' . $local)) {
             $src = asset($local);
-            $srcset = '';
-            if ($size = @getimagesize(SITE_ROOT . '/assets/' . $local)) {
+            $srcset = media_srcset($local);
+            $focus = media_focus_class($local);
+            if ($focus !== '') {
+                $class = trim($class . ' ' . $focus);
+            }
+            $meta = media_meta(basename($local));
+            if (!empty($meta['w'])) {
+                [$w, $h] = [(int) $meta['w'], (int) $meta['h']];
+            } elseif ($size = @getimagesize(SITE_ROOT . '/assets/' . $local)) {
                 [$w, $h] = $size;
             }
             break;

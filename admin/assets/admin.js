@@ -122,6 +122,71 @@
     });
   }
 
+  // Media library: drag & drop / multi-file upload
+  var drop = document.querySelector('[data-dropzone]');
+  if (drop) {
+    var dropInput = drop.querySelector('[data-drop-input]');
+    var status = drop.querySelector('[data-drop-status]');
+    var csrf = drop.querySelector('input[name="csrf"]').value;
+    function uploadAll(files) {
+      files = Array.prototype.filter.call(files, function (f) { return /^image\//.test(f.type) || /\.(heic|heif)$/i.test(f.name); });
+      if (!files.length) { status.textContent = 'Please choose image files.'; return; }
+      var done = 0, failed = [];
+      drop.classList.add('is-busy');
+      function next(i) {
+        if (i >= files.length) {
+          drop.classList.remove('is-busy');
+          if (failed.length) {
+            status.innerHTML = '';
+            failed.forEach(function (msg) { var p = document.createElement('p'); p.className = 'notice notice--error'; p.textContent = msg; status.appendChild(p); });
+            if (done) { var ok = document.createElement('p'); ok.textContent = done + ' uploaded. '; var a = document.createElement('a'); a.href = '/admin/media'; a.textContent = 'Refresh to see them'; ok.appendChild(a); status.appendChild(ok); }
+          } else {
+            status.textContent = done + (done === 1 ? ' image' : ' images') + ' uploaded and optimized. Refreshing…';
+            window.location.reload();
+          }
+          return;
+        }
+        status.textContent = 'Uploading and optimizing ' + (i + 1) + ' of ' + files.length + ': ' + files[i].name + '…';
+        var fd = new FormData();
+        fd.append('csrf', csrf); fd.append('file', files[i]);
+        fetch('/admin/media', { method: 'POST', body: fd, credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json().catch(function () { return { error: 'The server could not process this file (it may be too large for your hosting).' }; }); })
+          .then(function (res) { if (res.error) failed.push(files[i].name + ': ' + res.error); else done++; })
+          .catch(function () { failed.push(files[i].name + ': upload failed. Check your connection.'); })
+          .then(function () { next(i + 1); });
+      }
+      next(0);
+    }
+    dropInput.addEventListener('change', function () { uploadAll(dropInput.files); dropInput.value = ''; });
+    ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
+    ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('is-over'); }); });
+    drop.addEventListener('drop', function (e) { if (e.dataTransfer && e.dataTransfer.files.length) uploadAll(e.dataTransfer.files); });
+  }
+
+  // Media library: focus point
+  var labelsEl = document.querySelector('[data-focus-labels]');
+  var focusLabels = labelsEl ? JSON.parse(labelsEl.textContent) : {};
+  document.querySelectorAll('[data-focus-picker]').forEach(function (picker) {
+    picker.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-focus]');
+      if (!btn) return;
+      var focus = btn.getAttribute('data-focus');
+      var fd = new FormData();
+      fd.append('csrf', document.querySelector('input[name="csrf"]').value);
+      fd.append('action', 'focus'); fd.append('name', picker.getAttribute('data-name')); fd.append('focus', focus);
+      fetch('/admin/media', { method: 'POST', body: fd, credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res.ok) return;
+          picker.querySelectorAll('[data-focus]').forEach(function (b) { b.setAttribute('aria-checked', b === btn ? 'true' : 'false'); });
+          var img = picker.querySelector('[data-focus-img]');
+          img.className = focus === 'center' ? '' : 'focus-' + focus;
+          var lbl = picker.parentNode.querySelector('[data-focus-label]');
+          if (lbl) lbl.textContent = focusLabels[focus] || focus;
+        });
+    });
+  });
+
   // Media picker
   var modal = document.querySelector('[data-media-modal]');
   var targetField = null;

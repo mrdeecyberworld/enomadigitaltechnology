@@ -1131,3 +1131,13 @@ body.nav-open .site-header::before { background: var(--white); }
 .post-cta h2 { margin: 0 0 6px !important; color: var(--white); font-size: 1.35rem !important; }
 .post-cta p { margin: 0; font-size: 1rem; }
 @media (min-width: 700px) { .post-cta { grid-template-columns: 1fr auto; align-items: center; } }
+
+/* Focus point for uploaded photos (set in Admin → Media library): keeps that part in view when cropped to fit */
+img.focus-top-left { object-position: 15% 15%; }
+img.focus-top { object-position: 50% 15%; }
+img.focus-top-right { object-position: 85% 15%; }
+img.focus-left { object-position: 15% 50%; }
+img.focus-right { object-position: 85% 50%; }
+img.focus-bottom-left { object-position: 15% 85%; }
+img.focus-bottom { object-position: 50% 85%; }
+img.focus-bottom-right { object-position: 85% 85%; }
