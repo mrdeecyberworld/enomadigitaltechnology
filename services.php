@@ -9,16 +9,16 @@ foreach (services() as $slug => $svc) {
 }
 
 $page = [
-    'title'       => 'Technology Services: Web, Cybersecurity, IT Support & Training | Enoma Digital Technologies',
-    'description' => 'Explore Enoma Digital Technologies services: website development, cybersecurity services, IT support, cybersecurity training, cloud services and small business technology consulting.',
+    'title'       => page_text('services', 'meta_title', 'Services | ' . site('name')),
+    'description' => page_text('services', 'meta_description', site('description')),
     'path'        => '/services',
     'schema'      => [schema_breadcrumbs($crumbs), ['@type' => 'ItemList', 'name' => 'Services', 'itemListElement' => $list]],
 ];
 require INC . '/layout/header.php';
 
-echo page_hero('Technology Services Built Around You', [
-    'eyebrow' => 'Services',
-    'text'    => 'From building your digital presence to protecting it, Enoma Digital Technologies provides practical technology services for small businesses, startups, organizations and individuals.',
+echo page_hero(page_text('services', 'heading', 'Services'), [
+    'eyebrow' => page_text('services', 'eyebrow'),
+    'text'    => page_text('services', 'intro'),
     'crumbs'  => $crumbs,
     'image'   => 'services',
     'actions' => true,
@@ -27,7 +27,7 @@ echo page_hero('Technology Services Built Around You', [
 
 <section class="section" aria-labelledby="all-services-heading">
   <div class="container">
-    <?= section_header('What we do', 'Six ways we help', 'Choose a service to learn more, or use the service finder below if you are not sure where to start.', ['id' => 'all-services-heading']) ?>
+    <?= section_header('What we do', 'How we help', 'Choose a service to learn more, or use the service finder below if you are not sure where to start.', ['id' => 'all-services-heading']) ?>
     <?= service_grid() ?>
   </div>
 </section>

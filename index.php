@@ -7,8 +7,8 @@ $training = content('training');
 $faqs = content('faqs');
 
 $page = [
-    'title'       => 'Enoma Digital Technologies | Web Development & Cybersecurity',
-    'description' => 'Enoma Digital Technologies provides web development, cybersecurity, IT support and technology training for businesses and individuals.',
+    'title'       => page_text('home', 'meta_title', site('name')),
+    'description' => page_text('home', 'meta_description', site('description')),
     'path'        => '/',
     'schema'      => [schema_faq($faqs)],
     'body_class'  => 'page-home',

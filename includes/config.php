@@ -107,4 +107,17 @@ if (is_file($overrideFile) && is_readable($overrideFile)) {
     }
 }
 
+// Settings saved from the admin panel (Settings page) take priority.
+$adminSettings = json_read(storage_dir('content') . '/settings.json');
+if (is_array($adminSettings)) {
+    // Blank secrets in the admin panel never wipe values set elsewhere.
+    if (($adminSettings['ai']['api_key'] ?? '') === '') {
+        unset($adminSettings['ai']['api_key']);
+    }
+    $config = array_replace_recursive($config, $adminSettings);
+}
+if ($config['ai']['api_key'] === '' && $env('ANTHROPIC_API_KEY') !== '') {
+    $config['ai']['api_key'] = $env('ANTHROPIC_API_KEY');
+}
+
 return $config;

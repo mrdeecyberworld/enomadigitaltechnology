@@ -6,8 +6,8 @@ $guides = content('resources');
 $crumbs = [['Home', '/'], ['Resources', '/resources']];
 
 $page = [
-    'title'       => 'Cybersecurity & Technology Resources | Enoma Digital Technologies',
-    'description' => 'Free, practical guides from Enoma Digital Technologies: securing your accounts, recognizing phishing, reliable backups and a small business website checklist.',
+    'title'       => page_text('resources', 'meta_title', 'Resources | ' . site('name')),
+    'description' => page_text('resources', 'meta_description', site('description')),
     'path'        => '/resources',
     'schema'      => [
         schema_breadcrumbs($crumbs),
@@ -21,9 +21,9 @@ $page = [
 ];
 require INC . '/layout/header.php';
 
-echo page_hero('Practical Technology & Security Resources', [
-    'eyebrow' => 'Resources',
-    'text'    => 'Short, practical guides to help you stay secure and make better technology decisions. General educational information; for advice about your specific situation, talk with us.',
+echo page_hero(page_text('resources', 'heading', 'Resources'), [
+    'eyebrow' => page_text('resources', 'eyebrow'),
+    'text'    => page_text('resources', 'intro'),
     'crumbs'  => $crumbs,
 ]);
 ?>

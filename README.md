@@ -18,9 +18,10 @@ Built for **standard shared hosting** (cPanel, Hostinger, Namecheap, Bluehost, e
 3. Copy `config.sample.php` to **one level above** the web root as `enoma-config.php`
    (e.g. `/home/youraccount/enoma-config.php`) and fill in real values. Keeping it outside
    `public_html` means it can never be downloaded.
-4. Make `storage/` writable by PHP (usually already true; `755` or `775`).
-5. Once SSL is active, uncomment the HTTPS redirect (and optionally HSTS) in `.htaccess`.
-6. Submit `https://enomadigitaltech.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+4. Make `storage/` and `assets/uploads/` writable by PHP (usually already true; `755` or `775`).
+5. Visit `/admin` and create your admin account (see **Admin panel** below).
+6. Once SSL is active, uncomment the HTTPS redirect (and optionally HSTS) in `.htaccess`.
+7. Submit `https://enomadigitaltech.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
 
 ### Local development
 
@@ -30,18 +31,50 @@ php -S localhost:8000 router.php
 
 `router.php` mimics the `.htaccess` rules for PHP's built-in server. Set `ENOMA_DEBUG=1` to show PHP errors.
 
+## Admin panel (manage everything)
+
+Go to **`/admin`** on your website (e.g. `https://enomadigitaltech.com/admin`).
+
+**First-time setup:** the first visit asks for a one-time **setup code**. The code is saved on your
+server in `storage/admin/setup-code.txt`. Open that file with your hosting File Manager or FTP,
+enter the code, and choose your username and password. This stops anyone else from claiming the
+admin before you do, so set it up right after uploading the site. The code file is deleted afterwards.
+
+From the admin you can edit, with no code:
+
+| Section | What you manage |
+| --- | --- |
+| **Messages** | Every contact, quote, consultation and service inquiry form submission (always saved here, even if email isn't set up). Read, mark, delete, reply by email, export CSV. |
+| **Brand & navigation** | Business name, taglines, main menu, header buttons, footer links |
+| **Homepage** | Hero, trust bar, Why Enoma, cybersecurity feature, How It Works, about |
+| **Services** | Add, edit, reorder or remove services. New services get a page at `/slug` automatically and appear in menus, cards, footer, forms and the AI assistant |
+| **Pages** | SEO titles/descriptions and header text for every other page |
+| **FAQs, Training, Resources, Testimonials** | All lists, add/remove/reorder |
+| **Photos** & **Media library** | Upload images and assign them anywhere; alt text |
+| **Legal pages** | Privacy Policy and Terms text, effective dates, governing state |
+| **Settings** | Contact email/phone, social links, founder profile, scheduling link, form email delivery, AI API key, setup notes |
+| **Account / Backup** | Change username/password; download or restore a content backup |
+
+How it's stored: edits are saved as JSON in `storage/` (no database). The original content in
+`includes/content/` stays as the fallback, and each admin section has a "Reset to original" option.
+Forgot your password? Delete `storage/admin/users.json` via File Manager and run setup again.
+
+Security: login throttling (5 failures per 15 minutes), hashed passwords, CSRF protection on every
+form, 2-hour idle logout, `storage/` and `admin/includes/` blocked from the web, and uploads limited
+to real images in a folder where scripts can't run.
+
 ## Integration points (before launch)
 
 | What | Where | Default |
 | --- | --- | --- |
-| **Form delivery** | `forms.delivery` / `forms.to` in `enoma-config.php`; sending code in `send_form_email()` in `includes/forms.php` | `none` — forms validate, and visitors are told honestly that messages are **not** sent yet |
+| **Form delivery** | Admin → Settings (or `forms.*` in `enoma-config.php`); sending code in `send_form_email()` in `includes/forms.php` | Saved to Admin → Messages; email off until you turn it on |
 | **AI assistant** | `ANTHROPIC_API_KEY` env var or `ai.api_key` in `enoma-config.php`; endpoint `api/ai-assistant.php` (`POST /api/ai-assistant`) | *Guided mode*: a local rules-based helper that only uses approved site content |
 | **Scheduling link** | `booking_url` | Consultation request form only |
 | **Contact email / phone** | `contact_email`, `contact_phone` | Hidden (nothing invented) |
 | **Social profiles** | `social` | "Coming soon" placeholders |
 | **Founder name, bio, photo** | `founder` | Clearly marked placeholders |
 | **Testimonials** | `includes/content/testimonials.php` | Placeholder cards labeled "Client testimonial will appear here." |
-| **Legal pages** | `privacy-policy.php`, `terms-of-service.php` | Starting templates — have them reviewed; fill in effective date and governing state |
+| **Legal pages** | Admin → Legal pages | Starting templates — have them reviewed; fill in effective date and governing state |
 
 Set `setup_notices` to `false` once everything is connected to hide the owner-facing yellow "Setup note" boxes.
 
@@ -72,14 +105,11 @@ All copy lives in `includes/content/`:
 
 ### Adding a service
 
+Easiest: Admin → Services → Add service. To do it in code instead:
+
+
 1. Add an entry to `includes/content/services.php` (the key becomes the URL slug).
-2. Create `your-slug.php` in the root:
-   ```php
-   <?php
-   $serviceSlug = 'your-slug';
-   require __DIR__ . '/includes/templates/service-page.php';
-   ```
-3. Add `/your-slug` to `sitemap` in `includes/content/site.php`.
+2. That's it: `/your-slug` is served by `service.php` and added to the sitemap automatically.
 
 Menus, cards, the footer, forms, the service finder and the AI assistant's knowledge update automatically.
 To have the service finder recommend it, add answers in `service_finder_data()` (`includes/components/assistant.php`).

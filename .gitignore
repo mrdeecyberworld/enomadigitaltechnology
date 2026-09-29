@@ -11,3 +11,11 @@ Thumbs.db
 .idea/
 .vscode/
 node_modules/
+
+# Admin panel data (content edits, messages, admin account) and uploads
+storage/content/
+storage/submissions/
+storage/admin/
+assets/uploads/*
+!assets/uploads/.htaccess
+!assets/uploads/.gitkeep

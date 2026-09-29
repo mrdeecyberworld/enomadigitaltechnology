@@ -7,7 +7,7 @@
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/';
 $root = __DIR__;
 
-if (preg_match('#^/(includes|storage)(/|$)|^/(config\.sample\.php|router\.php)$#', $path)) {
+if (preg_match('#^/(includes|storage|admin/includes)(/|$)|^/(config\.sample\.php|router\.php)$#', $path)) {
     http_response_code(403);
     exit('Forbidden');
 }
@@ -20,12 +20,20 @@ if ($path !== '/' && is_file($root . $path) && !str_ends_with($path, '.php')) {
 }
 $clean = rtrim($path, '/');
 $file = $clean === '' ? $root . '/index.php' : $root . $clean . '.php';
+if ($clean !== '' && is_dir($root . $clean) && is_file($root . $clean . '/index.php')) {
+    $file = $root . $clean . '/index.php';
+}
 if (str_ends_with($path, '.php') && is_file($root . $path)) {
     $file = $root . $path;
 }
 if (is_file($file)) {
     chdir(dirname($file));
     require $file;
+    return true;
+}
+if (preg_match('#^/([a-z0-9-]+)/?$#', $path, $m)) {
+    $_GET['slug'] = $m[1];
+    require $root . '/service.php';
     return true;
 }
 require $root . '/404.php';

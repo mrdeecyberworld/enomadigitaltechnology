@@ -156,29 +156,46 @@ function handle_form(string $formId, string $type, ?string $defaultService = nul
 }
 
 /**
- * INTEGRATION POINT: deliver a validated submission.
+ * Deliver a validated submission: it is always saved to the admin inbox
+ * (Admin → Messages) and, when email is configured, also emailed.
  * Returns ['status' => 'success'|'error', 'message' => string].
  */
 function deliver_form(string $type, array $v): array
 {
-    $delivery = cfg('forms.delivery', 'none');
     $serviceName = service_options()[$v['service']] ?? $v['service'];
+    $saved = save_submission($type, $v, $serviceName);
 
-    if ($delivery === 'mail' && cfg('forms.to')) {
-        $sent = send_form_email($type, $v, $serviceName);
-        if ($sent) {
-            return ['status' => 'success', 'message' => 'Thank you, ' . $v['name'] . '. Your ' . strtolower(FORM_TYPES[$type] ?? 'message') . ' has been sent. We will reply by email.'];
-        }
-        return ['status' => 'error', 'message' => 'Sorry, your message could not be sent right now. Please try again later.'];
+    $emailed = false;
+    if (cfg('forms.delivery') === 'mail' && cfg('forms.to')) {
+        $emailed = send_form_email($type, $v, $serviceName);
     }
 
-    // Not connected yet: be honest with the visitor.
+    if ($saved || $emailed) {
+        return ['status' => 'success', 'message' => 'Thank you, ' . $v['name'] . '. Your ' . strtolower(FORM_TYPES[$type] ?? 'message') . ' has been received. We will reply by email.'];
+    }
     $email = cfg('contact_email');
-    $fallback = $email ? ' Please email us directly at ' . $email . '.' : ' Please check back soon.';
-    return [
-        'status'  => 'notice',
-        'message' => 'Thanks, ' . $v['name'] . '. Your details look good, but online form delivery is not connected yet, so this message was not sent.' . $fallback,
-    ];
+    return ['status' => 'error', 'message' => 'Sorry, your message could not be saved right now. Please try again later' . ($email ? ' or email us at ' . $email : '') . '.'];
+}
+
+/** Store a submission as a JSON file in storage/submissions (not web accessible). */
+function save_submission(string $type, array $v, string $serviceName): bool
+{
+    $id = date('Ymd-His') . '-' . bin2hex(random_bytes(3));
+    return json_write(storage_dir('submissions') . '/' . $id . '.json', [
+        'id'           => $id,
+        'type'         => $type,
+        'type_label'   => FORM_TYPES[$type] ?? $type,
+        'name'         => $v['name'],
+        'email'        => $v['email'],
+        'phone'        => $v['phone'],
+        'company'      => $v['company'],
+        'service'      => $serviceName,
+        'budget'       => $v['budget'],
+        'message'      => $v['message'],
+        'page'         => current_path(),
+        'created_at'   => date('c'),
+        'read'         => false,
+    ]);
 }
 
 /** Send via PHP mail(). Replace with SMTP / an email API for production-grade deliverability. */

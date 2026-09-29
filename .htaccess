@@ -16,6 +16,7 @@ ErrorDocument 404 /404.php
 
   # Block private folders and files.
   RewriteRule ^(includes|storage)(/|$) - [F,L]
+  RewriteRule ^admin/(includes)(/|$) - [F,L]
   RewriteRule ^(config\.sample\.php|router\.php|README\.md|\.git.*)$ - [F,L]
 
   # Sitemap.
@@ -37,6 +38,11 @@ ErrorDocument 404 /404.php
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{DOCUMENT_ROOT}/$1.php -f
   RewriteRule ^([A-Za-z0-9/_-]+)$ $1.php [L]
+
+  # Everything else that looks like a page slug is a service page (managed in the admin).
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-z0-9-]+)$ service.php?slug=$1 [L,QSA]
 </IfModule>
 
 # ── Security headers (also sent by PHP) ──

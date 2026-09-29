@@ -1,15 +1,28 @@
 <?php
 /**
  * Shared template for Contact, Get a Quote and Book a Consultation.
- * Set $formPage before requiring this file:
- *   ['slug','type','title','meta_title','meta_description','eyebrow','intro','side_heading','side_points'=>[[icon,text]]]
+ * Set $formPage before requiring this file: ['slug', 'type', 'key', 'icons'].
+ * Text comes from content('pages')[key] and is editable in the admin panel.
  */
 
 declare(strict_types=1);
 require_once dirname(__DIR__) . '/bootstrap.php';
 
 /** @var array $formPage */
-$fp = $formPage;
+$pageContent = content('pages')[$formPage['key']] ?? [];
+$fp = $formPage + [
+    'title'            => $pageContent['heading'] ?? ucfirst($formPage['slug']),
+    'meta_title'       => $pageContent['meta_title'] ?? site('name'),
+    'meta_description' => $pageContent['meta_description'] ?? site('description'),
+    'eyebrow'          => $pageContent['eyebrow'] ?? '',
+    'intro'            => $pageContent['intro'] ?? '',
+    'side_heading'     => $pageContent['side_heading'] ?? '',
+    'form_heading'     => $pageContent['form_heading'] ?? '',
+];
+$fp['side_points'] = [];
+foreach (array_values($pageContent['side_points'] ?? []) as $i => $text) {
+    $fp['side_points'][] = [$formPage['icons'][$i] ?? 'check', $text];
+}
 $path = '/' . $fp['slug'];
 $formId = $fp['type'] . '-form';
 $preselect = isset($_GET['service']) && array_key_exists((string) $_GET['service'], service_options()) ? (string) $_GET['service'] : null;

@@ -96,7 +96,7 @@ $graph = array_merge(schema_base(), $page['schema']);
                     <li>
                       <a class="mega-menu__item" href="<?= e(service_path($navSlug)) ?>">
                         <span class="mega-menu__icon"><?= icon($navSvc['icon'], 'icon icon-sm') ?></span>
-                        <span><strong><?= e($navSvc['nav_label']) ?></strong><span class="mega-menu__desc"><?= e($navSvc['summary']) ?></span></span>
+                        <span><strong><?= e(($navSvc['nav_label'] ?? '') ?: $navSvc['name']) ?></strong><span class="mega-menu__desc"><?= e($navSvc['summary']) ?></span></span>
                       </a>
                     </li>
                   <?php endforeach; ?>
@@ -132,7 +132,7 @@ $graph = array_merge(schema_base(), $page['schema']);
                 <ul>
                   <li><a href="/services">All services</a></li>
                   <?php foreach (services() as $navSlug => $navSvc): ?>
-                    <li><a href="<?= e(service_path($navSlug)) ?>"><?= icon($navSvc['icon'], 'icon icon-sm') ?><?= e($navSvc['nav_label']) ?></a></li>
+                    <li><a href="<?= e(service_path($navSlug)) ?>"><?= icon($navSvc['icon'], 'icon icon-sm') ?><?= e(($navSvc['nav_label'] ?? '') ?: $navSvc['name']) ?></a></li>
                   <?php endforeach; ?>
                 </ul>
               </details>

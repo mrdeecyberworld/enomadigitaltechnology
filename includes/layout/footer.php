@@ -29,7 +29,7 @@ declare(strict_types=1);
         <h2 class="site-footer__heading" id="footer-services">Services</h2>
         <ul>
           <?php foreach (services() as $navSlug => $navSvc): ?>
-            <li><a href="<?= e(service_path($navSlug)) ?>"><?= e($navSvc['short_label'] ?? $navSvc['name']) ?></a></li>
+            <li><a href="<?= e(service_path($navSlug)) ?>"><?= e(($navSvc['short_label'] ?? '') ?: $navSvc['name']) ?></a></li>
           <?php endforeach; ?>
         </ul>
       </nav>

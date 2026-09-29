@@ -18,12 +18,17 @@ function cfg(string $key, mixed $default = null): mixed
     return $value;
 }
 
-/** Load an editable content file from includes/content (cached per request). */
+/**
+ * Load a content section. Content edited in the admin panel
+ * (storage/content/{name}.json) wins over the built-in defaults in
+ * includes/content/{name}.php. Cached per request.
+ */
 function content(string $name): array
 {
     static $cache = [];
     if (!isset($cache[$name])) {
-        $cache[$name] = require INC . '/content/' . $name . '.php';
+        $override = json_read(content_override_file($name));
+        $cache[$name] = is_array($override) ? $override : content_default($name);
     }
     return $cache[$name];
 }
@@ -33,9 +38,38 @@ function site(string $key): mixed
     return content('site')[$key] ?? null;
 }
 
+/** All services, with sensible defaults for any optional field left blank in the admin. */
 function services(): array
 {
-    return content('services');
+    static $cache = null;
+    if ($cache !== null) {
+        return $cache;
+    }
+    $cache = [];
+    foreach (content('services') as $slug => $svc) {
+        $name = (string) ($svc['name'] ?? '') ?: ucwords(str_replace('-', ' ', (string) $slug));
+        $summary = (string) ($svc['summary'] ?? '');
+        $fill = static fn (string $k, string $default): string => ((string) ($svc[$k] ?? '')) !== '' ? (string) $svc[$k] : $default;
+        $cache[$slug] = array_merge($svc, [
+            'name'             => $name,
+            'nav_label'        => $fill('nav_label', $name),
+            'short_label'      => $fill('short_label', $name),
+            'icon'             => $fill('icon', 'circle-help'),
+            'summary'          => $summary,
+            'cta'              => $fill('cta', 'Learn about ' . $name),
+            'eyebrow'          => $fill('eyebrow', $name),
+            'headline'         => $fill('headline', $name),
+            'intro'            => $fill('intro', $summary),
+            'image'            => (string) ($svc['image'] ?? ''),
+            'meta_title'       => $fill('meta_title', $name . ' | ' . site('name')),
+            'meta_description' => $fill('meta_description', $summary ?: (string) site('description')),
+            'includes'         => array_values((array) ($svc['includes'] ?? [])),
+            'details'          => array_values((array) ($svc['details'] ?? [])),
+            'audience'         => array_values((array) ($svc['audience'] ?? [])),
+            'faqs'             => array_values((array) ($svc['faqs'] ?? [])),
+        ]);
+    }
+    return $cache;
 }
 
 function service(string $slug): ?array
@@ -101,22 +135,38 @@ function icon(string $name, string $class = 'icon', ?string $label = null): stri
 function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', array $opts = []): string
 {
     $img = content('images')[$key] ?? null;
+    // A direct path to an uploaded image (e.g. chosen for a service in the admin).
+    if ($img === null && preg_match('#^/?assets/[A-Za-z0-9_./-]+$#', $key) && !str_contains($key, '..')) {
+        $img = ['file' => ltrim($key, '/'), 'alt' => '', 'id' => ''];
+    }
     if ($img === null) {
         return '';
     }
-    $alt = $opts['alt'] ?? $img['alt'];
+    $alt = $opts['alt'] ?? ($img['alt'] ?? '');
     $eager = !empty($opts['eager']);
     $class = $opts['class'] ?? '';
-    $w = $img['w'];
-    $h = $img['h'];
+    $w = (int) ($img['w'] ?? 1600);
+    $h = (int) ($img['h'] ?? 1067);
 
+    $candidates = [];
+    if (!empty($img['file'])) {
+        $candidates[] = preg_replace('#^/?assets/#', '', $img['file']);
+    }
     foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
-        $local = 'img/photos/' . $key . '.' . $ext;
+        $candidates[] = 'img/photos/' . $key . '.' . $ext;
+    }
+    foreach ($candidates as $local) {
         if (is_file(SITE_ROOT . '/assets/' . $local)) {
             $src = asset($local);
             $srcset = '';
+            if ($size = @getimagesize(SITE_ROOT . '/assets/' . $local)) {
+                [$w, $h] = $size;
+            }
             break;
         }
+    }
+    if (!isset($src) && empty($img['id'])) {
+        return '';
     }
 
     if (!isset($src)) {
@@ -257,4 +307,43 @@ function setup_notice(string $message): string
 function placeholder(string $label): string
 {
     return '<span class="placeholder-text">[' . e($label) . ']</span>';
+}
+
+/** Page SEO/header text from the "pages" content section. */
+function page_text(string $page, string $key, string $fallback = ''): string
+{
+    $value = content('pages')[$page][$key] ?? '';
+    return is_string($value) && $value !== '' ? $value : $fallback;
+}
+
+/**
+ * Minimal, safe text formatting for admin-edited long text:
+ * "## Heading", "- list item", **bold**, [link](/path or https://...), blank-line paragraphs.
+ * Everything is HTML-escaped first; only these patterns become markup.
+ */
+function simple_format(string $text, int $headingLevel = 2): string
+{
+    $inline = static function (string $s): string {
+        $s = e($s);
+        $s = preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $s);
+        return preg_replace_callback('/\[([^\]]+)\]\(((?:https?:\/\/|\/|mailto:)[^)\s]*)\)/', static function ($m) {
+            $external = str_starts_with($m[2], 'http');
+            return '<a href="' . $m[2] . '"' . ($external ? ' rel="noopener" target="_blank"' : '') . '>' . $m[1] . '</a>';
+        }, $s);
+    };
+    $html = '';
+    foreach (preg_split('/\n\s*\n/', str_replace("\r", '', trim($text))) as $block) {
+        $lines = array_values(array_filter(array_map('rtrim', explode("\n", $block)), 'strlen'));
+        if (!$lines) {
+            continue;
+        }
+        if (preg_match('/^#{2,3}\s+(.*)$/', $lines[0], $m) && count($lines) === 1) {
+            $html .= '<h' . $headingLevel . '>' . $inline($m[1]) . '</h' . $headingLevel . '>';
+        } elseif (preg_match('/^\s*[-*]\s+/', $lines[0])) {
+            $html .= '<ul>' . implode('', array_map(static fn ($l) => '<li>' . $inline(preg_replace('/^\s*[-*]\s+/', '', $l)) . '</li>', $lines)) . '</ul>';
+        } else {
+            $html .= '<p>' . implode('<br>', array_map($inline, $lines)) . '</p>';
+        }
+    }
+    return $html;
 }

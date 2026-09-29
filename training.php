@@ -3,6 +3,10 @@ declare(strict_types=1);
 require __DIR__ . '/includes/bootstrap.php';
 
 $svc = service('training');
+if ($svc === null) {
+    require __DIR__ . '/404.php';
+    exit;
+}
 $training = content('training');
 $formId = 'training-form';
 $formState = handle_form($formId, 'inquiry', 'training');

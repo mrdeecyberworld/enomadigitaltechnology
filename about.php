@@ -7,16 +7,16 @@ $f = cfg('founder', []);
 $crumbs = [['Home', '/'], ['About', '/about']];
 
 $page = [
-    'title'       => 'About Enoma Digital Technologies | Technology With a Human Approach',
-    'description' => 'Enoma Digital Technologies was created to make technology more accessible, practical and secure for small businesses, organizations and individuals across the United States.',
+    'title'       => page_text('about', 'meta_title', 'About | ' . site('name')),
+    'description' => page_text('about', 'meta_description', site('description')),
     'path'        => '/about',
     'schema'      => [schema_breadcrumbs($crumbs), ['@type' => 'AboutPage', 'url' => abs_url('/about'), 'name' => 'About ' . site('name'), 'about' => ['@id' => abs_url('/#organization')]]],
 ];
 require INC . '/layout/header.php';
 
-echo page_hero('Technology With a Human Approach', [
-    'eyebrow' => 'About Enoma',
-    'text'    => $home['about']['paragraphs'][0],
+echo page_hero(page_text('about', 'heading', 'About'), [
+    'eyebrow' => page_text('about', 'eyebrow'),
+    'text'    => page_text('about', 'intro'),
     'crumbs'  => $crumbs,
 ]);
 ?>
@@ -28,7 +28,7 @@ echo page_hero('Technology With a Human Approach', [
       <?php foreach ($home['about']['paragraphs'] as $p): ?>
         <p class="prose-p reveal"><?= e($p) ?></p>
       <?php endforeach; ?>
-      <p class="prose-p reveal">We work with small businesses, startups, entrepreneurs, professionals, nonprofits, schools and individuals, including people who simply need a patient guide to everyday technology. Our services are delivered remotely to clients across the United States.</p>
+      <?php if (page_text('about', 'body') !== ''): ?><div class="prose-p reveal"><?= simple_format(page_text('about', 'body')) ?></div><?php endif; ?>
     </div>
     <div class="split__media reveal">
       <div class="media-frame media-frame--tall">

@@ -15,16 +15,16 @@ foreach (services() as $slug => $svc) {
 $all = array_merge(...array_column($groups, 'faqs'));
 
 $page = [
-    'title'       => 'Frequently Asked Questions | Enoma Digital Technologies',
-    'description' => 'Answers to common questions about Enoma Digital Technologies web development, cybersecurity services, remote IT support, cybersecurity training, quotes and consultations.',
+    'title'       => page_text('faq', 'meta_title', 'FAQ | ' . site('name')),
+    'description' => page_text('faq', 'meta_description', site('description')),
     'path'        => '/faq',
     'schema'      => [schema_breadcrumbs($crumbs), schema_faq($all)],
 ];
 require INC . '/layout/header.php';
 
-echo page_hero('Frequently Asked Questions', [
-    'eyebrow' => 'FAQ',
-    'text'    => 'Answers to common questions about our services, how we work and how to get started.',
+echo page_hero(page_text('faq', 'heading', 'Frequently Asked Questions'), [
+    'eyebrow' => page_text('faq', 'eyebrow'),
+    'text'    => page_text('faq', 'intro'),
     'crumbs'  => $crumbs,
 ]);
 ?>

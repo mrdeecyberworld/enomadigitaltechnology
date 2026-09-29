@@ -8,6 +8,7 @@ declare(strict_types=1);
 define('SITE_ROOT', dirname(__DIR__));
 define('INC', __DIR__);
 
+require INC . '/storage.php';
 $GLOBALS['config'] = require INC . '/config.php';
 
 if (!empty($GLOBALS['config']['debug'])) {
