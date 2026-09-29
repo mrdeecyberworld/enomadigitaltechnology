@@ -317,30 +317,45 @@ function page_text(string $page, string $key, string $fallback = ''): string
 }
 
 /**
- * Minimal, safe text formatting for admin-edited long text:
- * "## Heading", "- list item", **bold**, [link](/path or https://...), blank-line paragraphs.
- * Everything is HTML-escaped first; only these patterns become markup.
+ * Safe text formatting for admin-edited long text (legal pages, blog posts):
+ *   ## Heading   ### Subheading   - bullet   1. numbered   > quote
+ *   **bold**   *italic*   [link](/path or https://...)   ![alt text](assets/uploads/photo.jpg)
+ * Blank lines separate blocks. Everything is HTML-escaped first; only these
+ * patterns become markup, so pasted HTML or scripts are shown as plain text.
  */
 function simple_format(string $text, int $headingLevel = 2): string
 {
     $inline = static function (string $s): string {
         $s = e($s);
         $s = preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $s);
+        $s = preg_replace('/(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])/s', '<em>$1</em>', $s);
         return preg_replace_callback('/\[([^\]]+)\]\(((?:https?:\/\/|\/|mailto:)[^)\s]*)\)/', static function ($m) {
             $external = str_starts_with($m[2], 'http');
-            return '<a href="' . $m[2] . '"' . ($external ? ' rel="noopener" target="_blank"' : '') . '>' . $m[1] . '</a>';
+            return '<a href="' . $m[2] . '"' . ($external ? ' rel="noopener noreferrer" target="_blank"' : '') . '>' . $m[1] . '</a>';
         }, $s);
     };
+    $sub = min(6, $headingLevel + 1);
     $html = '';
     foreach (preg_split('/\n\s*\n/', str_replace("\r", '', trim($text))) as $block) {
         $lines = array_values(array_filter(array_map('rtrim', explode("\n", $block)), 'strlen'));
         if (!$lines) {
             continue;
         }
-        if (preg_match('/^#{2,3}\s+(.*)$/', $lines[0], $m) && count($lines) === 1) {
+        $first = $lines[0];
+        if (count($lines) === 1 && preg_match('/^###\s+(.*)$/', $first, $m)) {
+            $html .= '<h' . $sub . '>' . $inline($m[1]) . '</h' . $sub . '>';
+        } elseif (count($lines) === 1 && preg_match('/^##\s+(.*)$/', $first, $m)) {
             $html .= '<h' . $headingLevel . '>' . $inline($m[1]) . '</h' . $headingLevel . '>';
-        } elseif (preg_match('/^\s*[-*]\s+/', $lines[0])) {
+        } elseif (count($lines) === 1 && preg_match('/^!\[([^\]]*)\]\(\/?(assets\/[A-Za-z0-9_\/.-]+|https:\/\/[^)\s]+)\)$/', trim($first), $m) && !str_contains($m[2], '..')) {
+            $src = str_starts_with($m[2], 'https://') ? $m[2] : '/' . $m[2];
+            $html .= '<figure class="prose-figure"><img src="' . e($src) . '" alt="' . e($m[1]) . '" loading="lazy" decoding="async">'
+                . ($m[1] !== '' ? '<figcaption>' . e($m[1]) . '</figcaption>' : '') . '</figure>';
+        } elseif (preg_match('/^\s*[-*]\s+/', $first)) {
             $html .= '<ul>' . implode('', array_map(static fn ($l) => '<li>' . $inline(preg_replace('/^\s*[-*]\s+/', '', $l)) . '</li>', $lines)) . '</ul>';
+        } elseif (preg_match('/^\s*\d+[.)]\s+/', $first)) {
+            $html .= '<ol>' . implode('', array_map(static fn ($l) => '<li>' . $inline(preg_replace('/^\s*\d+[.)]\s+/', '', $l)) . '</li>', $lines)) . '</ol>';
+        } elseif (preg_match('/^>\s?/', $first)) {
+            $html .= '<blockquote><p>' . implode('<br>', array_map(static fn ($l) => $inline(preg_replace('/^>\s?/', '', $l)), $lines)) . '</p></blockquote>';
         } else {
             $html .= '<p>' . implode('<br>', array_map($inline, $lines)) . '</p>';
         }

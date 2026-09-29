@@ -22,3 +22,6 @@ assets/uploads/*
 
 # Generated side-panel preview
 enoma-website-preview.html
+
+storage/blog/
+storage/cache/

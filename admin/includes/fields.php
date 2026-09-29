@@ -89,6 +89,11 @@ function field_render(array $f, string $name, mixed $value): string
             return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint
                 . '<textarea id="' . $id . '" name="' . e($name) . '" rows="' . $rows . '"' . $counter . $required . '>' . e($text) . '</textarea></div>';
 
+        case 'datetime':
+            $ts = $value ? strtotime((string) $value) : false;
+            return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint
+                . '<input type="datetime-local" id="' . $id . '" name="' . e($name) . '" value="' . ($ts ? date('Y-m-d\\TH:i', $ts) : '') . '"></div>';
+
         default: // text, url, email
             $inputType = in_array($type, ['url', 'email'], true) ? $type : 'text';
             $counter = isset($f['counter']) ? ' data-counter="' . (int) $f['counter'] . '"' : '';
@@ -197,6 +202,10 @@ function field_parse(array $f, mixed $input, mixed $old): mixed
         case 'email':
             $v = $str($input, 254);
             return filter_var($v, FILTER_VALIDATE_EMAIL) ? $v : '';
+
+        case 'datetime':
+            $ts = strtotime($str($input, 40));
+            return $ts ? date('Y-m-d H:i', $ts) : '';
 
         case 'image':
             $v = $str($input, 500);

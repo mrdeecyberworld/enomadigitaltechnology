@@ -11,6 +11,15 @@ if (preg_match('#^/(includes|storage|admin/includes)(/|$)|^/(config\.sample\.php
     http_response_code(403);
     exit('Forbidden');
 }
+if ($path === '/blog/feed.xml') {
+    require $root . '/blog-feed.php';
+    return true;
+}
+if (preg_match('#^/blog/([a-z0-9-]+)/?$#', $path, $m)) {
+    $_GET['slug'] = $m[1];
+    require $root . '/blog-post.php';
+    return true;
+}
 if ($path === '/sitemap.xml') {
     require $root . '/sitemap.php';
     return true;

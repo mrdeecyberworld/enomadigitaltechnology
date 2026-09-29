@@ -53,6 +53,9 @@ From the admin you can edit, with no code:
 | **Photos** & **Media library** | Upload images and assign them anywhere; alt text |
 | **Legal pages** | Privacy Policy and Terms text, effective dates, governing state |
 | **Settings** | Contact email/phone, social links, founder profile, scheduling link, form email delivery, AI API key, setup notes |
+| **Blog posts** | Write, edit, schedule, draft and publish articles with cover images, categories, tags and SEO fields. Drafts can be previewed while logged in |
+| **Tech & security news** | Latest headlines from CISA, Krebs on Security, BleepingComputer, The Hacker News, Dark Reading, SANS, Schneier, Microsoft and Google security blogs, Ars Technica, The Verge, TechCrunch and Wired (refreshed hourly), plus go-to resource links. "Write a post about this" starts a draft with the source linked. Edit the list in **News sources** |
+| **Blog settings** | Blog page text, categories, homepage "Latest Insights" section |
 | **Account / Backup** | Change username/password; download or restore a content backup |
 
 How it's stored: edits are saved as JSON in `storage/` (no database). The original content in
@@ -62,6 +65,16 @@ Forgot your password? Delete `storage/admin/users.json` via File Manager and run
 Security: login throttling (5 failures per 15 minutes), hashed passwords, CSRF protection on every
 form, 2-hour idle logout, `storage/` and `admin/includes/` blocked from the web, and uploads limited
 to real images in a folder where scripts can't run.
+
+### Blog
+
+Public pages: `/blog` (with category filters and pagination), `/blog/your-post`, and an RSS feed at `/blog/feed.xml`.
+Four starter articles are included; edit or delete them in Admin → Blog posts. Posts without a cover image get
+designed cover art automatically. Article formatting: `## Heading`, `### Subheading`, `- bullets`, `1. numbered`,
+`> quote`, `**bold**`, `*italic*`, `[link](/contact)` and `![description](assets/uploads/photo.jpg)` for images.
+
+The news page needs your host to allow outgoing web requests (almost all do). Write posts in your own words and
+link to sources rather than copying articles.
 
 ## Integration points (before launch)
 

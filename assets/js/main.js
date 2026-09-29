@@ -138,8 +138,8 @@
 
   /* ---------- Remote image fallback ---------- */
   function initImages() {
-    document.querySelectorAll('.media-frame img').forEach(function (img) {
-      function fail() { img.closest('.media-frame').classList.add('img-failed'); }
+    document.querySelectorAll('.media-frame img, .post-card__media img').forEach(function (img) {
+      function fail() { img.parentNode.classList.add('img-failed'); }
       if (img.complete && img.naturalWidth === 0) fail();
       img.addEventListener('error', fail);
     });

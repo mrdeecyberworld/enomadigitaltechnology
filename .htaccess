@@ -19,8 +19,10 @@ ErrorDocument 404 /404.php
   RewriteRule ^admin/(includes)(/|$) - [F,L]
   RewriteRule ^(config\.sample\.php|router\.php|README\.md|\.git.*)$ - [F,L]
 
-  # Sitemap.
+  # Sitemap and blog.
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
+  RewriteRule ^blog/feed\.xml$ blog-feed.php [L]
+  RewriteRule ^blog/([a-z0-9-]+)/?$ blog-post.php?slug=$1 [L,QSA]
 
   # Redirect /index(.php) to / and /page.php to /page (external requests only).
   RewriteCond %{THE_REQUEST} \s/+index(\.php)?[\s?] [NC]

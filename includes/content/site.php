@@ -21,6 +21,7 @@ return [
         ['label' => 'Web Development', 'path' => '/web-development'],
         ['label' => 'Training',        'path' => '/training'],
         ['label' => 'About',           'path' => '/about'],
+        ['label' => 'Blog',            'path' => '/blog'],
         ['label' => 'Resources',       'path' => '/resources'],
         ['label' => 'Contact',         'path' => '/contact'],
     ],
@@ -30,6 +31,7 @@ return [
 
     'footer_company' => [
         ['label' => 'About',            'path' => '/about'],
+        ['label' => 'Blog',             'path' => '/blog'],
         ['label' => 'Resources',        'path' => '/resources'],
         ['label' => 'FAQ',              'path' => '/faq'],
         ['label' => 'Contact',          'path' => '/contact'],
@@ -49,6 +51,7 @@ return [
         ['path' => '/technology-consulting',  'priority' => '0.8'],
         ['path' => '/about',                  'priority' => '0.7'],
         ['path' => '/resources',              'priority' => '0.7'],
+        ['path' => '/blog',                   'priority' => '0.8'],
         ['path' => '/faq',                    'priority' => '0.6'],
         ['path' => '/contact',                'priority' => '0.7'],
         ['path' => '/get-a-quote',            'priority' => '0.7'],

@@ -22,7 +22,8 @@ require INC . '/layout/header.php';
   <div class="container hero__inner">
     <div class="hero__content">
       <p class="eyebrow eyebrow--light hero__eyebrow"><?= e($home['hero']['eyebrow']) ?></p>
-      <h1 class="hero__title" id="hero-title"><?= e($home['hero']['headline']) ?></h1>
+      <?php $hl = (string) $home['hero']['headline']; $cut = strpos($hl, '. '); ?>
+      <h1 class="hero__title" id="hero-title"><?php if ($cut !== false): ?><?= e(substr($hl, 0, $cut + 1)) ?> <span class="text-gradient"><?= e(substr($hl, $cut + 2)) ?></span><?php else: ?><?= e($hl) ?><?php endif; ?></h1>
       <p class="hero__text"><?= e($home['hero']['text']) ?></p>
       <div class="btn-row">
         <?= button('Book a Consultation', '/book-a-consultation', 'primary btn-lg', 'calendar-check') ?>
@@ -42,6 +43,10 @@ require INC . '/layout/header.php';
       <div class="float-card float-card--top" aria-hidden="true">
         <span class="float-card__icon float-card__icon--ok"><?= icon('shield-check', 'icon icon-sm') ?></span>
         <span><strong>MFA enabled</strong><small>Account protected</small></span>
+      </div>
+      <div class="float-card float-card--mid" aria-hidden="true">
+        <span class="float-card__icon float-card__icon--ok"><?= icon('hard-drive', 'icon icon-sm') ?></span>
+        <span><strong>Backup complete</strong><small>Files protected</small></span>
       </div>
       <div class="float-card float-card--bottom" aria-hidden="true">
         <span class="float-card__icon"><?= icon('code-xml', 'icon icon-sm') ?></span>
@@ -200,8 +205,22 @@ require INC . '/layout/header.php';
 <!-- 11. Testimonials -->
 <?= testimonials_section() ?>
 
+<!-- Latest blog posts -->
+<?php $blogSettings = content('blog'); $latest = array_slice(blog_posts(), 0, 3); ?>
+<?php if (!empty($blogSettings['show_on_home']) && $latest): ?>
+<section class="section" aria-labelledby="blog-heading">
+  <div class="container">
+    <div class="section-split-head">
+      <?= section_header('Blog', (string) ($blogSettings['home_heading'] ?? 'Latest Insights'), (string) ($blogSettings['home_intro'] ?? ''), ['align' => 'left', 'id' => 'blog-heading']) ?>
+      <?= button('View all articles', '/blog', 'ghost', 'arrow-right') ?>
+    </div>
+    <div class="post-grid"><?php foreach ($latest as $p) echo blog_card($p); ?></div>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- 12. FAQ -->
-<section class="section" aria-labelledby="faq-heading">
+<section class="section section--muted" aria-labelledby="faq-heading">
   <div class="container container--narrow">
     <?= section_header('FAQ', 'Frequently Asked Questions', 'Quick answers about our services. Still have questions? Our team is happy to help.', ['id' => 'faq-heading']) ?>
     <?= faq_list($faqs) ?>

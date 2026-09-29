@@ -22,12 +22,15 @@ $entries = array_filter($entries, static function (array $e): bool {
     $slug = ltrim($e['path'], '/');
     return $e['path'] === '/' || is_file(__DIR__ . '/' . $slug . '.php') || service($slug) !== null;
 });
+foreach (blog_posts() as $post) {
+    $entries[] = ['path' => blog_url($post), 'priority' => '0.6', 'lastmod' => substr((string) ($post['updated_at'] ?: $post['published_at']), 0, 10)];
+}
 foreach ($entries as $entry) {
     $file = __DIR__ . ($entry['path'] === '/' ? '/index.php' : $entry['path'] . '.php');
     if (!is_file($file)) {
         $file = content_override_file('services');
     }
-    $lastmod = is_file($file) ? date('Y-m-d', filemtime($file)) : date('Y-m-d');
+    $lastmod = $entry['lastmod'] ?? (is_file($file) ? date('Y-m-d', filemtime($file)) : date('Y-m-d'));
     echo "  <url>\n";
     echo '    <loc>' . e(abs_url($entry['path'])) . "</loc>\n";
     echo '    <lastmod>' . $lastmod . "</lastmod>\n";

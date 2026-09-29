@@ -136,6 +136,8 @@ function admin_header(string $title, string $active = ''): void
     $nav = [
         ['Dashboard', '/admin/', 'dashboard', 'layout-template'],
         ['Messages', '/admin/messages', 'messages', 'mail'],
+        ['Blog posts', '/admin/blog', 'blog', 'file-text'],
+        ['Tech & security news', '/admin/news', 'news', 'sparkles'],
     ];
     $content = [];
     foreach (admin_sections() as $key => $section) {

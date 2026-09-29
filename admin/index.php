@@ -40,7 +40,13 @@ admin_header('Dashboard', 'dashboard');
   <a class="stat" href="/admin/messages"><span class="stat__num"><?= unread_count() ?></span><span class="stat__label">Unread messages</span></a>
   <a class="stat" href="/admin/messages"><span class="stat__num"><?= $total ?></span><span class="stat__label">Total messages</span></a>
   <a class="stat" href="/admin/edit?section=services"><span class="stat__num"><?= count(services()) ?></span><span class="stat__label">Services</span></a>
-  <a class="stat" href="/admin/edit?section=faqs"><span class="stat__num"><?= count(content('faqs')) ?></span><span class="stat__label">FAQs</span></a>
+  <a class="stat" href="/admin/blog"><span class="stat__num"><?= count(blog_posts()) ?></span><span class="stat__label">Published posts</span></a>
+</div>
+
+<div class="quick">
+  <a class="quick__card" href="/admin/blog-edit?new=1"><span class="tile__icon"><?= icon('plus', 'icon icon-sm') ?></span><span><strong>Write a blog post</strong><span class="muted small">Share tips and news with your visitors.</span></span></a>
+  <a class="quick__card" href="/admin/news"><span class="tile__icon"><?= icon('sparkles', 'icon icon-sm') ?></span><span><strong>Latest tech &amp; security news</strong><span class="muted small">Headlines from CISA, Krebs, BleepingComputer and more.</span></span></a>
+  <a class="quick__card" href="/admin/media"><span class="tile__icon"><?= icon('hard-drive', 'icon icon-sm') ?></span><span><strong>Upload photos</strong><span class="muted small">Add your own images to the site.</span></span></a>
 </div>
 
 <div class="cols">

@@ -181,13 +181,53 @@ function admin_sections(): array
             'icon'  => 'monitor-check',
             'intro' => 'Photos used across the site. Upload your own image, or use an Unsplash photo ID. Always write alt text that describes the photo.',
             'schema' => ['type' => 'group', 'fields' => array_map(
-                static fn (string $key) => $f($key, ucfirst($key) . ' photo', 'group', ['fields' => [
+                static fn (string $key) => $f($key, (image_usage()[$key] ?? ucfirst($key) . ' photo'), 'group', ['fields' => [
                     $f('file', 'Uploaded image', 'image', ['hint' => 'Takes priority over the Unsplash ID.']),
                     $f('id', 'Unsplash photo ID', 'text', ['hint' => 'The part after "photo-" in an images.unsplash.com link.']),
                     $f('alt', 'Alt text (describe the photo)'),
                 ]]),
                 array_keys(content_default('images') + content('images'))
             )],
+        ],
+
+        'blog' => [
+            'title' => 'Blog settings',
+            'icon'  => 'book-open',
+            'intro' => 'Blog page text, categories and the homepage "Latest Insights" section. Write posts in Blog posts.',
+            'schema' => ['type' => 'group', 'fields' => [
+                ...$seo,
+                $f('eyebrow', 'Small label'),
+                $f('heading', 'Blog page heading (H1)'),
+                $f('intro', 'Blog page intro', 'textarea', ['rows' => 2]),
+                $f('show_on_home', 'Show latest posts on the homepage', 'bool'),
+                $f('home_heading', 'Homepage section heading'),
+                $f('home_intro', 'Homepage section intro'),
+                $f('posts_per_page', 'Posts per page', 'text'),
+                $f('default_author', 'Default author name'),
+                $f('categories', 'Categories', 'repeater', ['item_label' => 'name', 'add_label' => 'Add category', 'fields' => [
+                    $f('name', 'Name'),
+                    $f('slug', 'Slug', 'text', ['hint' => 'Lowercase with dashes, e.g. cybersecurity. Changing it un-assigns existing posts.']),
+                    $f('icon', 'Icon', 'icon'),
+                ]]),
+                $f('cta_heading', 'Call-to-action heading (end of each post)'),
+                $f('cta_text', 'Call-to-action text', 'textarea', ['rows' => 2]),
+            ]],
+        ],
+
+        'news' => [
+            'title' => 'News sources',
+            'icon'  => 'wifi',
+            'intro' => 'The RSS/Atom feeds and bookmark links shown on the Tech & security news page.',
+            'schema' => ['type' => 'group', 'fields' => [
+                $f('feeds', 'News feeds', 'repeater', ['item_label' => 'name', 'add_label' => 'Add feed', 'hint' => 'Most news sites publish an RSS feed. Paste its address (often ending in /feed or .xml).', 'fields' => [
+                    $f('name', 'Source name'),
+                    $f('url', 'Feed address (RSS or Atom)', 'url'),
+                    $f('topic', 'Topic', 'select', ['options' => ['cybersecurity' => 'Cybersecurity', 'advisories' => 'Security advisories', 'technology' => 'Technology']]),
+                ]]),
+                $f('links', 'Go-to resource links', 'repeater', ['item_label' => 'label', 'add_label' => 'Add link', 'fields' => [
+                    $f('label', 'Name'), $f('url', 'Address', 'url'), $f('note', 'Note (optional)'),
+                ]]),
+            ]],
         ],
 
         'legal' => [
@@ -254,4 +294,20 @@ function admin_section_data(string $section): array
 function admin_section_file(string $section): string
 {
     return $section === 'settings' ? storage_dir('content') . '/settings.json' : content_override_file($section);
+}
+
+/** Where each photo key is used, for the Photos editor. */
+function image_usage(): array
+{
+    return [
+        'hero'       => 'Homepage hero (top of the homepage)',
+        'cyber'      => 'Homepage cybersecurity section + Cybersecurity page',
+        'webdev'     => 'Web Development page',
+        'itsupport'  => 'IT Support page',
+        'training'   => 'Homepage training section + Training page',
+        'cloud'      => 'Cloud & Digital Technology page',
+        'consulting' => 'Technology Consulting page',
+        'team'       => 'About page',
+        'services'   => 'Services page',
+    ];
 }
