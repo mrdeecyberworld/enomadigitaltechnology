@@ -21,11 +21,12 @@ ErrorDocument 404 /404.php
   # Sitemap.
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
-  # Redirect /page.php and /index to clean URLs (external requests only).
+  # Redirect /index(.php) to / and /page.php to /page (external requests only).
+  RewriteCond %{THE_REQUEST} \s/+index(\.php)?[\s?] [NC]
+  RewriteRule ^ / [R=301,L]
   RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
   RewriteCond %{REQUEST_URI} !^/api/
   RewriteRule ^ /%1 [R=301,L,NE]
-  RewriteRule ^index$ / [R=301,L]
 
   # Remove trailing slashes on non-directories.
   RewriteCond %{REQUEST_FILENAME} !-d
