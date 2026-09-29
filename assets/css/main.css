@@ -231,15 +231,23 @@ main:focus { outline: none; }
 .prose-p { color: var(--slate-600); font-size: 1.05rem; }
 
 /* ---------- Header / navigation ---------- */
+/* The frosted background lives on a pseudo-element: backdrop-filter on the header
+   itself would become the containing block for the fixed mobile menu. */
 .site-header {
-  position: sticky; top: 0; z-index: 100;
+  position: sticky; top: 0; z-index: 100; isolation: isolate;
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
   background: rgba(255, 255, 255, .86);
   backdrop-filter: saturate(160%) blur(14px);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
-  border-bottom: 1px solid transparent;
-  transition: border-color .25s var(--ease), box-shadow .25s var(--ease), background-color .25s var(--ease);
+  transition: background-color .25s var(--ease);
 }
-.site-header.is-scrolled { border-bottom-color: var(--slate-200); box-shadow: 0 6px 24px rgba(13, 22, 40, .06); background: rgba(255,255,255,.94); }
+.site-header.is-scrolled { border-bottom-color: var(--slate-200); box-shadow: 0 6px 24px rgba(13, 22, 40, .06); }
+.site-header.is-scrolled::before { background: rgba(255,255,255,.94); }
+body.nav-open .site-header::before { background: var(--white); }
 .site-header__inner { display: flex; align-items: center; gap: 20px; min-height: var(--header-h); }
 
 .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; flex: none; }
