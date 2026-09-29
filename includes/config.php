@@ -66,6 +66,9 @@ $config = [
         'from'     => 'no-reply@enomadigitaltech.com',
     ],
 
+    // Website color theme: 'dark' (deep navy, default) or 'light'.
+    'site_theme' => 'dark',
+
     // Show small notices to site owners when an integration is not configured.
     // Turn off once forms and the AI assistant are connected.
     'setup_notices' => true,

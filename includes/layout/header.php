@@ -29,7 +29,7 @@ $canonical = abs_url($page['path']);
 $ogImage = abs_url($page['og_image']);
 $graph = array_merge(schema_base(), $page['schema']);
 ?><!doctype html>
-<html lang="en-US">
+<html lang="en-US" data-site-theme="<?= cfg('site_theme') === 'light' ? 'light' : 'dark' ?>">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +53,7 @@ $graph = array_merge(schema_base(), $page['schema']);
   <meta name="twitter:description" content="<?= e($page['description']) ?>">
   <meta name="twitter:image" content="<?= e($ogImage) ?>">
 
-  <meta name="theme-color" content="#0b1324">
+  <meta name="theme-color" content="<?= cfg('site_theme') === 'light' ? '#ffffff' : '#0b1322' ?>">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">

@@ -245,6 +245,7 @@ function admin_sections(): array
             'icon'  => 'wrench',
             'intro' => 'Contact details, social links, founder profile, form email delivery and the AI assistant.',
             'schema' => ['type' => 'group', 'fields' => [
+                $f('site_theme', 'Website color theme', 'select', ['options' => ['dark' => 'Dark premium (deep navy)', 'light' => 'Light (white)'], 'hint' => 'Changes the background and colors across the whole website.']),
                 $f('contact_email', 'Public contact email', 'email', ['hint' => 'Shown in the footer and used in messages. Leave blank to hide.']),
                 $f('contact_phone', 'Public phone number', 'text', ['hint' => 'Leave blank to hide.']),
                 $f('booking_url', 'Online scheduling link', 'url', ['hint' => 'Calendly, Microsoft Bookings, etc. Adds a "pick a time" button to Book a Consultation.']),
