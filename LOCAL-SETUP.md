@@ -8,52 +8,43 @@ There are two ways. **Option A is the easiest.**
 
 ---
 
-## Option A: PHP (recommended, about 5 minutes)
+## Option A: One double-click (recommended)
 
 ### 1. Get the website files
 
-On GitHub, open the repository, switch to the branch `claude/enoma-digital-website-avzxco`,
-click **Code → Download ZIP**, and unzip it somewhere easy such as your Desktop.
-(If you use Git: `git clone` the repository and check out that branch.)
+Download the ZIP (sign in to GitHub first if the repository is private):
+**https://github.com/mrdeecyberworld/enomadigitaltechnology/archive/refs/heads/claude/enoma-digital-website-avzxco.zip**
 
-### 2. Install PHP (one time only)
+Unzip it somewhere easy, such as your Desktop or Documents.
+(If you use Git: `git clone` the repository and check out the branch `claude/enoma-digital-website-avzxco`.)
 
-**Windows**
-
-1. Open **PowerShell** (press the Windows key, type *PowerShell*, press Enter).
-2. Run:
-   ```
-   winget install PHP.PHP.8.3
-   ```
-3. Close PowerShell when it finishes.
-
-No winget? Install **XAMPP** from https://www.apachefriends.org instead; the start script
-finds it automatically.
-
-**Mac**
-
-1. Install Homebrew: open **Terminal** and paste the command from https://brew.sh
-2. Then run:
-   ```
-   brew install php
-   ```
-
-**Linux (Ubuntu/Debian)**
-
-```
-sudo apt install php-cli php-mbstring php-gd php-curl php-xml
-```
-
-### 3. Start the website
+### 2. Double-click the start file
 
 | Computer | What to do |
 | --- | --- |
-| Windows | Double-click **`start-windows.bat`** in the website folder |
+| Windows | Double-click **`start-windows.bat`**. If Windows shows "Windows protected your PC", click **More info → Run anyway** |
 | Mac | Double-click **`start-mac.command`**. The first time, macOS may block it: right-click it → **Open** → **Open** |
 | Linux | In a terminal in the website folder: `./start-linux.sh` |
-| Any (terminal) | `php start.php` |
 
-A window opens showing something like:
+**The first time**, the script installs everything the website needs. Type **Y** when it
+asks:
+
+- **Windows:** installs PHP with the Windows Package Manager (or downloads it from
+  windows.php.net if that isn't available), the Microsoft Visual C++ runtime if your PC
+  lacks it (click **Yes** if Windows asks for permission), and the security certificates
+  used for email and news. About 1–3 minutes. Nothing needs administrator rights except
+  that runtime.
+- **Mac:** installs Homebrew (the standard Mac installer for developer tools) and PHP.
+  About 5–10 minutes. Type your Mac password when asked (nothing appears while you
+  type; that's normal).
+- **Linux:** installs PHP and its extensions with your package manager (asks for your
+  password).
+
+After that, every double-click starts the website in a few seconds.
+
+### 3. The website opens
+
+A window shows something like:
 
 ```
   Website:  http://localhost:8000
@@ -101,9 +92,16 @@ visit `/admin`). Stop with **Ctrl + C**.
 
 ## Troubleshooting
 
-**"PHP is not installed" / "php is not recognized"**
-Close the window, reopen it after installing PHP (Windows needs a fresh window to see it),
-then try again.
+**The automatic install didn't work**
+Install PHP yourself, then double-click the start file again:
+- Windows: open PowerShell and run `winget install PHP.PHP.8.3`, or install XAMPP from
+  https://www.apachefriends.org (the start file finds it automatically).
+- Mac: install Homebrew from https://brew.sh, then run `brew install php` in Terminal.
+- Linux: `sudo apt install php-cli php-mbstring php-gd php-curl php-xml`
+
+**Windows: "VCRUNTIME140.dll was not found"**
+Install the Microsoft Visual C++ runtime from https://aka.ms/vs/17/release/vc_redist.x64.exe,
+then start again.
 
 **Missing extensions ("mbstring" or others)**
 - Windows (winget PHP): find `php.ini-development` in the PHP folder (run `where php` in

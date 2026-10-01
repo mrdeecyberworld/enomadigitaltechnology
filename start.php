@@ -29,7 +29,7 @@ $needed = ['mbstring' => 'required', 'openssl' => 'email & HTTPS', 'curl' => 'AI
 $flags = [];
 $missing = array_keys(array_filter($needed, static fn ($why, $ext) => !extension_loaded($ext), ARRAY_FILTER_USE_BOTH));
 if ($missing) {
-    $extDir = dirname(PHP_BINARY) . DIRECTORY_SEPARATOR . 'ext';
+    $extDir = dirname(realpath(PHP_BINARY) ?: PHP_BINARY) . DIRECTORY_SEPARATOR . 'ext';
     if (is_dir($extDir)) {
         $flags[] = '-d ' . escapeshellarg('extension_dir=' . $extDir);
     }
@@ -46,6 +46,18 @@ if (in_array('mbstring', $stillMissing, true)) {
 }
 foreach ($stillMissing as $ext) {
     echo "  Note: PHP extension \"$ext\" isn't available, so " . $needed[$ext] . " won't work locally.\n";
+}
+
+// Windows PHP has no certificate list of its own; start-windows.bat downloads one so
+// secure connections (SMTP, Resend, news feeds, AI assistant) can be verified.
+$caFile = (string) getenv('ENOMA_CA_FILE');
+if ($caFile !== '' && is_file($caFile)) {
+    if ((string) ini_get('curl.cainfo') === '') {
+        $flags[] = '-d ' . escapeshellarg('curl.cainfo=' . $caFile);
+    }
+    if ((string) ini_get('openssl.cafile') === '') {
+        $flags[] = '-d ' . escapeshellarg('openssl.cafile=' . $caFile);
+    }
 }
 
 // Larger uploads, like on the real site.
