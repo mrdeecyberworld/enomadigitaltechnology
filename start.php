@@ -80,7 +80,7 @@ if (!$port) {
     echo "\n  Ports 8000–8020 are all busy. Close other local servers and try again.\n\n";
     exit(1);
 }
-$url = "http://localhost:$port";
+$url = "http://127.0.0.1:$port";
 putenv("ENOMA_BASE_URL=$url");
 
 // Make sure the writable folders exist.
@@ -104,17 +104,40 @@ if (!is_file($usersFile)) {
 
 echo "\n  Website:  $url\n$adminNote\n\n  Leave this window open while you use the site.\n  Press Ctrl+C to stop the server.\n$line\n\n";
 
-// Open the browser shortly after the server starts.
+// Start the server, wait until it really answers, then open the browser.
+$cmd = escapeshellarg(PHP_BINARY) . ' ' . implode(' ', $flags) . ' -S ' . escapeshellarg("127.0.0.1:$port") . ' router.php';
+$server = proc_open($cmd, [STDIN, STDOUT, STDERR], $pipes);
+if (!is_resource($server)) {
+    echo "\n  The web server could not be started. See LOCAL-SETUP.md (Troubleshooting).\n\n";
+    exit(1);
+}
+$ready = false;
+for ($i = 0; $i < 100 && !$ready; $i++) {
+    if (!proc_get_status($server)['running']) {
+        break;
+    }
+    $sock = @fsockopen('127.0.0.1', $port, $errno, $errstr, 0.2);
+    if ($sock) {
+        fclose($sock);
+        $ready = true;
+    } else {
+        usleep(100000);
+    }
+}
+if (!$ready) {
+    echo "\n  The web server stopped or did not answer (see the messages above).\n  See LOCAL-SETUP.md (Troubleshooting).\n\n";
+    proc_terminate($server);
+    exit(1);
+}
+echo "  The website is running. Your browser is opening $url\n\n";
+
 $open = match (PHP_OS_FAMILY) {
     'Windows' => 'start "" ' . escapeshellarg($url),
     'Darwin'  => 'open ' . escapeshellarg($url),
-    default   => 'xdg-open ' . escapeshellarg($url) . ' >/dev/null 2>&1',
+    default   => 'xdg-open ' . escapeshellarg($url) . ' >/dev/null 2>&1 &',
 };
 if (getenv('ENOMA_NO_BROWSER') !== '1') {
-    PHP_OS_FAMILY === 'Windows'
-        ? pclose(popen('cmd /c "timeout /t 1 >nul & ' . $open . '"', 'r'))
-        : exec('(sleep 1; ' . $open . ') > /dev/null 2>&1 &');
+    PHP_OS_FAMILY === 'Windows' ? pclose(popen($open, 'r')) : exec($open);
 }
 
-passthru(escapeshellarg(PHP_BINARY) . ' ' . implode(' ', $flags) . ' -S ' . escapeshellarg("localhost:$port") . ' router.php', $exit);
-exit((int) $exit);
+exit(proc_close($server));

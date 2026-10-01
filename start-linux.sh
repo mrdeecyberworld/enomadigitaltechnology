@@ -34,3 +34,8 @@ if [ -z "$PHP_BIN" ]; then
 fi
 
 "$PHP_BIN" start.php
+status=$?
+if [ "$status" -ne 0 ] && [ "$status" -ne 130 ]; then
+  echo "  The website stopped with an error (see the messages above)."
+  read -r -p "Press Enter to close..."; exit "$status"
+fi

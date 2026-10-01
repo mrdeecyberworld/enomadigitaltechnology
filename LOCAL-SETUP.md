@@ -2,7 +2,7 @@
 
 You can run the full website, including the admin panel, forms, blog and image uploads,
 on your own Windows, Mac or Linux computer. Nothing is published to the internet; the site is
-only reachable from your computer at an address like `http://localhost:8000`.
+only reachable from your computer at an address like `http://127.0.0.1:8000`.
 
 There are two ways. **Option A is the easiest.**
 
@@ -47,8 +47,8 @@ After that, every double-click starts the website in a few seconds.
 A window shows something like:
 
 ```
-  Website:  http://localhost:8000
-  Admin:    http://localhost:8000/admin
+  Website:  http://127.0.0.1:8000
+  Admin:    http://127.0.0.1:8000/admin
   Setup code for your first admin login: 3F9A21C0
 ```
 
@@ -57,7 +57,7 @@ site. To stop the server, click the window and press **Ctrl + C** (or just close
 
 ### 4. Log in to the admin
 
-Go to `http://localhost:8000/admin`, enter the **setup code** shown in the window, and choose
+Go to `http://127.0.0.1:8000/admin`, enter the **setup code** shown in the window, and choose
 a username and password. Everything you change in the admin is saved in the `storage` folder
 on your computer.
 
@@ -110,6 +110,15 @@ then start again.
   `extension=openssl`, `extension=fileinfo`, `extension=exif`. Save and start again.
 - Mac (Homebrew): `brew reinstall php`
 - Linux: `sudo apt install php-mbstring php-gd php-curl`
+
+**Browser says "This site can't be reached" / "refused to connect"**
+The website only runs while its start window is open. Look at that window:
+- Still installing? Wait until it says *The website is running*; the browser then opens by itself.
+- Window closed, or shows *[Process completed]*? Double-click the start file again.
+- An error message? Follow it, or send a screenshot of the window to your developer.
+
+Mac: if double-clicking does nothing or says it can't be opened, open **Terminal**, type
+`bash ` (with a space), drag `start-mac.command` into the Terminal window, and press Enter.
 
 **"Port is busy"**
 Another program is using ports 8000–8020. Close other local servers or restart your computer.

@@ -14,7 +14,7 @@ Website and content management system for **Enoma Digital Technologies** (EnomaD
 See **[LOCAL-SETUP.md](LOCAL-SETUP.md)**. In short: download and unzip the website, then
 double-click `start-windows.bat` (Windows) or `start-mac.command` (Mac). The first time, it
 installs PHP and everything else for you; after that it starts the site in seconds at
-`http://localhost:8000`.
+`http://127.0.0.1:8000`.
 Docker users can run `docker compose up --build` instead.
 
 ## Put it on your web hosting
