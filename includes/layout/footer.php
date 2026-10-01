@@ -55,17 +55,23 @@ declare(strict_types=1);
 
     <div class="site-footer__bottom">
       <p>&copy; <?= date('Y') ?> <?= e(site('name')) ?>. All rights reserved.</p>
+      <?php
+        // Visitors only see profiles that have a link; empty ones are a reminder for the admin.
+        $socialLinks = array_filter(cfg('social', []), static fn ($url) => $url || viewer_is_admin());
+      ?>
+      <?php if ($socialLinks): ?>
       <ul class="social" aria-label="Social media">
-        <?php foreach (cfg('social', []) as $network => $url): ?>
+        <?php foreach ($socialLinks as $network => $url): ?>
           <li>
             <?php if ($url): ?>
               <a href="<?= e($url) ?>" rel="noopener me" target="_blank"><?= e($network) ?><span class="sr-only"> (opens in a new tab)</span></a>
             <?php else: ?>
-              <span class="social__placeholder" title="Coming soon"><?= e($network) ?><span class="sr-only"> – coming soon</span></span>
+              <span class="social__placeholder" title="Only you see this: add the link in Admin → Settings"><?= e($network) ?><span class="sr-only"> – link not set</span></span>
             <?php endif; ?>
           </li>
         <?php endforeach; ?>
       </ul>
+      <?php endif; ?>
     </div>
   </div>
 </footer>

@@ -34,7 +34,7 @@ $config = [
     // direct scheduling button in addition to the request form.
     'booking_url' => '',
 
-    // Social profiles. Leave the URL empty to show a "coming soon" placeholder.
+    // Social profiles. Empty ones are hidden from visitors (only you see a reminder while logged in).
     'social' => [
         'LinkedIn'  => '',
         'Facebook'  => '',

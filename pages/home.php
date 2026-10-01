@@ -18,7 +18,7 @@ require INC . '/layout/header.php';
 
 <!-- 2. Hero -->
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__bg" aria-hidden="true"><span class="hero__grid"></span><span class="hero__glow"></span></div>
+  <div class="hero__bg" aria-hidden="true"><span class="aurora"><i></i><i></i><i></i></span><span class="hero__grid"></span><span class="hero__glow"></span></div>
   <div class="container hero__inner">
     <div class="hero__content">
       <p class="eyebrow eyebrow--light hero__eyebrow"><?= e($home['hero']['eyebrow']) ?></p>
@@ -76,6 +76,20 @@ require INC . '/layout/header.php';
     <?= service_grid() ?>
   </div>
 </section>
+
+<!-- Capabilities strip: every service feature, scrolling -->
+<?php $caps = []; foreach (services() as $navSvc) { foreach ((array) ($navSvc['includes'] ?? []) as $cap) { $caps[$cap] = $navSvc['icon'] ?? 'check'; } } ?>
+<?php if ($caps): ?>
+<section class="ticker" aria-label="What we help with">
+  <?php foreach ([false, true] as $copy): ?>
+    <ul class="ticker__track"<?= $copy ? ' aria-hidden="true"' : '' ?>>
+      <?php foreach ($caps as $cap => $capIcon): ?>
+        <li><?= icon($capIcon, 'icon icon-xs') ?><?= e($cap) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endforeach; ?>
+</section>
+<?php endif; ?>
 
 <!-- 5. Why Enoma -->
 <section class="section section--dark why" aria-labelledby="why-heading">

@@ -487,8 +487,22 @@
     });
   }
 
+  /* Cards: a soft light follows the pointer (CSS reads --mx / --my). */
+  function initSpotlight() {
+    if (!window.matchMedia || !matchMedia('(hover: hover)').matches) return;
+    var sel = '.service-card, .feature-card, .guide-card, .post-card, .detail-card';
+    document.addEventListener('pointermove', function (e) {
+      var card = e.target.closest && e.target.closest(sel);
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+
   function init() {
     initReveal();
+    initSpotlight();
     initHeader();
     initMenus();
     initMobileNav();
