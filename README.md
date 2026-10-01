@@ -1,169 +1,116 @@
 # Enoma Digital Technologies — Website
 
-Marketing website for **Enoma Digital Technologies** (EnomaDigitalTech.com).
+Website and content management system for **Enoma Digital Technologies** (EnomaDigitalTech.com).
 *Build. Secure. Empower.*
 
-Built for **standard shared hosting** (cPanel, Hostinger, Namecheap, Bluehost, etc.):
+- Plain **PHP 8.1+**, no database, no Composer, no build step: runs on any shared host (cPanel etc.)
+- A built-in **admin panel** at `/admin` to manage every page, address, image, email setting and color
+- Hand-written CSS and vanilla JavaScript; self-hosted fonts; [Lucide](https://lucide.dev) icons
+- SEO: clean, configurable URLs, sitemap, canonical tags, Open Graph / X cards, Schema.org data
+- Accessibility: tested with axe in every color palette; keyboard friendly; reduced-motion support
 
-- PHP 8.1+ with Apache `mod_rewrite` — no database, no Composer, no Node build step
-- Hand-written, mobile-first CSS and vanilla JavaScript (about 11 KB CSS + 5 KB JS gzipped, no frameworks)
-- Self-hosted variable fonts (Inter + Manrope) and [Lucide](https://lucide.dev) icons inlined as SVG
-- Clean URLs, XML sitemap, robots.txt, canonical URLs, Open Graph / X cards, Schema.org JSON-LD
-- WCAG-minded: semantic landmarks, skip link, keyboard-accessible menus, visible focus, accessible forms, reduced-motion support
+## Run it on your computer
 
-## Deploying to shared hosting
+See **[LOCAL-SETUP.md](LOCAL-SETUP.md)**. In short: install PHP, then double-click
+`start-windows.bat` (Windows) or `start-mac.command` (Mac), or run `php start.php`.
+Docker users can run `docker compose up --build` instead.
 
-1. Upload **everything in this folder** to your web root (usually `public_html/`), including the hidden `.htaccess` files.
-2. Make sure the site runs PHP 8.1 or newer (cPanel → *Select PHP Version* / *MultiPHP Manager*).
-3. Copy `config.sample.php` to **one level above** the web root as `enoma-config.php`
-   (e.g. `/home/youraccount/enoma-config.php`) and fill in real values. Keeping it outside
-   `public_html` means it can never be downloaded.
-4. Make `storage/` and `assets/uploads/` writable (the included `.user.ini` raises the upload limit to 25 MB on hosts that support it; otherwise raise `upload_max_filesize` in cPanel → MultiPHP INI Editor).
-   Also make `storage/` and `assets/uploads/` writable by PHP (usually already true; `755` or `775`).
-5. Visit `/admin` and create your admin account (see **Admin panel** below).
+## Put it on your web hosting
+
+1. Upload **everything in this folder** to your web root (usually `public_html/`), including the hidden
+   `.htaccess` and `.user.ini` files.
+2. Make sure the site uses PHP 8.1 or newer (cPanel → *Select PHP Version* / *MultiPHP Manager*).
+3. Make sure `storage/` and `assets/uploads/` are writable (usually already true; `755` or `775`).
+4. Visit `https://yourdomain.com/admin`. It asks for a one-time setup code, saved in
+   `storage/admin/setup-code.txt`; open that file with your hosting File Manager. Then choose your
+   username and password. Do this right after uploading, so nobody else can claim the admin.
+5. In the admin, go through the **Launch checklist** on the dashboard (email, contact details,
+   founder profile, legal dates and so on).
 6. Once SSL is active, uncomment the HTTPS redirect (and optionally HSTS) in `.htaccess`.
-7. Submit `https://enomadigitaltech.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+7. Submit `https://yourdomain.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
 
-### Local development
+Image uploads up to 25 MB work on hosts that read `.user.ini`. If large uploads fail, raise
+`upload_max_filesize` and `post_max_size` in cPanel → MultiPHP INI Editor.
 
-```bash
-php -S localhost:8000 router.php
-```
+## The admin panel
 
-`router.php` mimics the `.htaccess` rules for PHP's built-in server. Set `ENOMA_DEBUG=1` to show PHP errors.
-
-## Admin panel (manage everything)
-
-Go to **`/admin`** on your website (e.g. `https://enomadigitaltech.com/admin`).
-
-**First-time setup:** the first visit asks for a one-time **setup code**. The code is saved on your
-server in `storage/admin/setup-code.txt`. Open that file with your hosting File Manager or FTP,
-enter the code, and choose your username and password. This stops anyone else from claiming the
-admin before you do, so set it up right after uploading the site. The code file is deleted afterwards.
-
-From the admin you can edit, with no code:
-
-| Section | What you manage |
+| Page | What you manage |
 | --- | --- |
-| **Messages** | Every contact, quote, consultation and service inquiry form submission (always saved here, even if email isn't set up). Read, mark, delete, reply by email, export CSV. |
-| **Brand & navigation** | Business name, taglines, main menu, header buttons, footer links |
-| **Homepage** | Hero, trust bar, Why Enoma, cybersecurity feature, How It Works, about |
-| **Services** | Add, edit, reorder or remove services. New services get a page at `/slug` automatically and appear in menus, cards, footer, forms and the AI assistant |
+| **Dashboard** | Launch checklist, latest messages, quick actions |
+| **Messages** | Every contact, quote, consultation and service inquiry (always saved here). Read, reply, delete, export CSV |
+| **Blog posts** | Write, schedule, draft and publish articles with cover images, categories, tags and SEO fields |
+| **Tech & security news** | Latest headlines from CISA, Krebs, BleepingComputer, The Hacker News, SANS and more, plus go-to links. "Write a post about this" starts a draft |
+| **Brand & navigation** | Business name, taglines, menu, header buttons, footer links |
+| **Homepage** | Every homepage section |
+| **Services** | Add, edit, reorder or remove services; each gets its own page and address |
 | **Pages** | SEO titles/descriptions and header text for every other page |
-| **FAQs, Training, Resources, Testimonials** | All lists, add/remove/reorder |
-| **Photos** & **Media library** | Drag and drop photos (several at once). Each upload is automatically turned upright, resized, compressed, stripped of hidden location data and saved in several sizes; every image spot crops it to fit. Click a photo in the library to choose its focus point |
-| **Legal pages** | Privacy Policy and Terms text, effective dates, governing state |
-| **Settings** | Contact email/phone, social links, founder profile, scheduling link, form email delivery, AI API key, setup notes |
-| **Blog posts** | Write, edit, schedule, draft and publish articles with cover images, categories, tags and SEO fields. Drafts can be previewed while logged in |
-| **Tech & security news** | Latest headlines from CISA, Krebs on Security, BleepingComputer, The Hacker News, Dark Reading, SANS, Schneier, Microsoft and Google security blogs, Ars Technica, The Verge, TechCrunch and Wired (refreshed hourly), plus go-to resource links. "Write a post about this" starts a draft with the source linked. Edit the list in **News sources** |
-| **Blog settings** | Blog page text, categories, homepage "Latest Insights" section |
-| **Account / Backup** | Change username/password; download or restore a content backup |
+| **FAQs, Training, Resources, Testimonials** | Lists you can add to, reorder and remove. Each resource guide has its own page |
+| **Photos, Media library** | Drag-and-drop uploads that are automatically rotated, resized, compressed and cropped to fit, with a focus point |
+| **Page URLs** | The web address of every page (e.g. `/about` → `/about-us`). Old addresses redirect automatically and all links update |
+| **Blog settings, News sources, Legal pages** | Blog text and categories, news feeds, Privacy Policy and Terms |
+| **Email** | Send form submissions by **SMTP** (Gmail, Outlook/Microsoft 365, Zoho, your host), **Resend API** or PHP mail. Optional automatic reply to visitors. **Send test** button |
+| **Appearance** | Dark or light background, four color palettes (Midnight Blue, Obsidian, Deep Ocean, Royal Violet) and an optional custom accent color with automatic contrast checking |
+| **Settings** | Contact details, social links, founder profile, scheduling link, AI assistant key |
+| **Account, Backup** | Change your login; download or restore all content |
 
-How it's stored: edits are saved as JSON in `storage/` (no database). The original content in
-`includes/content/` stays as the fallback, and each admin section has a "Reset to original" option.
-Forgot your password? Delete `storage/admin/users.json` via File Manager and run setup again.
+Setup reminders and placeholders (like an empty founder name) are only shown to you while you are
+logged in. Visitors never see unfinished sections.
 
-Security: login throttling (5 failures per 15 minutes), hashed passwords, CSRF protection on every
-form, 2-hour idle logout, `storage/` and `admin/includes/` blocked from the web, and uploads limited
-to real images in a folder where scripts can't run.
+### Addresses (URLs)
 
-### Blog
+Every page has its own address: `/services`, `/about`, `/blog`, `/blog/post-address`, `/resources`,
+`/resources/guide-address`, one per service (e.g. `/cybersecurity`), `/contact`, `/get-a-quote`,
+`/book-a-consultation`, `/faq`, `/privacy-policy`, `/terms-of-service`. Change them in
+**Page URLs**, or on each service, guide or post. When an address changes, the old one returns a
+permanent (301) redirect to the new one, so search rankings and shared links keep working.
 
-Public pages: `/blog` (with category filters and pagination), `/blog/your-post`, and an RSS feed at `/blog/feed.xml`.
-Four starter articles are included; edit or delete them in Admin → Blog posts. Posts without a cover image get
-designed cover art automatically. Article formatting: `## Heading`, `### Subheading`, `- bullets`, `1. numbered`,
-`> quote`, `**bold**`, `*italic*`, `[link](/contact)` and `![description](assets/uploads/photo.jpg)` for images.
+### Email
 
-The news page needs your host to allow outgoing web requests (almost all do). Write posts in your own words and
-link to sources rather than copying articles.
+- **SMTP:** use the Quick setup buttons, then enter your username and password. Gmail and Outlook
+  need an *app password* when two-step verification is on.
+- **Resend:** create an API key at resend.com and verify your domain there; use a "from" address on
+  that domain.
+- Every submission is also saved in **Messages**, so nothing is lost if email has a problem; the
+  error is shown on the message.
 
-## Integration points (before launch)
+### AI assistant
 
-| What | Where | Default |
-| --- | --- | --- |
-| **Form delivery** | Admin → Settings (or `forms.*` in `enoma-config.php`); sending code in `send_form_email()` in `includes/forms.php` | Saved to Admin → Messages; email off until you turn it on |
-| **AI assistant** | `ANTHROPIC_API_KEY` env var or `ai.api_key` in `enoma-config.php`; endpoint `api/ai-assistant.php` (`POST /api/ai-assistant`) | *Guided mode*: a local rules-based helper that only uses approved site content |
-| **Scheduling link** | `booking_url` | Consultation request form only |
-| **Contact email / phone** | `contact_email`, `contact_phone` | Hidden (nothing invented) |
-| **Social profiles** | `social` | "Coming soon" placeholders |
-| **Founder name, bio, photo** | `founder` | Clearly marked placeholders |
-| **Testimonials** | `includes/content/testimonials.php` | Placeholder cards labeled "Client testimonial will appear here." |
-| **Legal pages** | Admin → Legal pages | Starting templates — have them reviewed; fill in effective date and governing state |
+Without an API key, the assistant answers from your site content ("guided mode"). Add an Anthropic
+API key in Settings to use Claude. The key stays on the server. Every message is screened first:
+the assistant always says it is an AI, declines legal, medical or financial advice and refuses
+offensive-security requests.
 
-Set `setup_notices` to `false` once everything is connected to hide the owner-facing yellow "Setup note" boxes.
-
-### AI assistant details
-
-- The API key stays on the server; the browser only talks to `/api/ai-assistant`.
-- With a key, the server calls the Claude Messages API (model configurable via `ai.model` / `ENOMA_AI_MODEL`)
-  using a system prompt built **only** from the site's content files, so it can't invent company facts.
-- Every message passes a safety screen first: the assistant always identifies as AI, declines legal/medical/financial
-  advice, and refuses offensive-security requests while offering defensive help.
-- If the API fails or declines, the assistant falls back to guided mode automatically.
-- Per-visitor rate limiting (`ai.rate_limit` messages per hour) is stored in `storage/ratelimit/`.
-
-## Editing content
-
-All copy lives in `includes/content/`:
-
-| File | Contents |
-| --- | --- |
-| `site.php` | Brand, navigation, footer links, sitemap entries |
-| `services.php` | The six services: summaries, bullet lists, page copy, SEO titles/descriptions, service FAQs |
-| `home.php` | Homepage hero, trust bar, Why Enoma, cybersecurity feature, process, about |
-| `faqs.php` | General FAQs (homepage, `/faq`, FAQPage schema, AI assistant knowledge) |
-| `training.php` | Training audiences, topics and formats |
-| `resources.php` | Short educational guides on `/resources` |
-| `testimonials.php` | Real client testimonials (empty until provided) |
-| `images.php` | Photography (see below) |
-
-### Adding a service
-
-Easiest: Admin → Services → Add service. To do it in code instead:
-
-
-1. Add an entry to `includes/content/services.php` (the key becomes the URL slug).
-2. That's it: `/your-slug` is served by `service.php` and added to the sitemap automatically.
-
-Menus, cards, the footer, forms, the service finder and the AI assistant's knowledge update automatically.
-To have the service finder recommend it, add answers in `service_finder_data()` (`includes/components/assistant.php`).
-
-### Photography
-
-Photos load from the Unsplash CDN (free for commercial use under the [Unsplash License](https://unsplash.com/license)),
-with responsive `srcset`, lazy loading and a styled fallback if a photo can't load. To use your own photography,
-put a file named after the key in `assets/img/photos/` — e.g. `assets/img/photos/hero.jpg` — and it is used
-automatically. Swap Unsplash photo IDs in `includes/content/images.php`. **Review every photo before launch** to
-make sure it fits the brand.
-
-## Structure
+## How it works
 
 ```
-index.php, services.php, training.php, about.php, resources.php, faq.php,
-contact.php, get-a-quote.php, book-a-consultation.php,
-web-development.php, cybersecurity.php, it-support.php, cloud-services.php, technology-consulting.php,
-privacy-policy.php, terms-of-service.php, 404.php, sitemap.php, robots.txt
-api/ai-assistant.php            AI assistant endpoint
-assets/css/main.css             Design system + all styles
-assets/js/main.js               Navigation, forms, assistant, service finder, reveal animations
-assets/fonts/                   Inter + Manrope variable fonts (SIL Open Font License)
-assets/img/                     Logo, icons, Open Graph image
-includes/bootstrap.php          Loaded by every page
-includes/config.php             Defaults + env/private-config overrides
-includes/functions.php          Helpers: escaping, URLs, icons, images, schema
-includes/forms.php              Validation, CSRF, spam protection, delivery
-includes/assistant-engine.php   AI assistant (guided + Claude API)
-includes/components/            Reusable UI: buttons, section headers, service cards, CTA, FAQ,
-                                testimonials, contact form, AI assistant, service finder
-includes/layout/                Header (head, nav) and footer
-includes/templates/             Service page and form page templates
-includes/content/               Editable content
-storage/                        Runtime data (not web accessible)
+index.php                Front controller: resolves every address (Admin → Page URLs) and redirects
+pages/                   Page templates (home, services, about, blog, resources, contact, legal…)
+admin/                   Admin panel
+api/ai-assistant.php     AI assistant endpoint
+includes/
+  bootstrap.php          Loaded on every request
+  config.php             Defaults; Admin → Settings/Email/Appearance override them
+  routing.php            Addresses, redirects and automatic link updating
+  content/               Original content (the admin saves edits to storage/content/*.json)
+  components/, layout/, templates/   Reusable UI
+  mailer.php             SMTP, Resend and PHP mail()
+  media.php              Image processing for uploads
+  appearance.php         Palettes and custom accent color
+  blog.php, forms.php, functions.php, assistant-engine.php, news.php, storage.php
+assets/                  CSS, JS, fonts, images; uploads in assets/uploads/
+storage/                 Admin data: content edits, messages, blog posts, settings (not web accessible)
+router.php, start.php    Local server (see LOCAL-SETUP.md)
+Dockerfile, docker-compose.yml   Optional local Apache setup
 ```
+
+Content you edit in the admin is stored in `storage/`; the originals in `includes/content/` stay as
+the fallback ("Reset to original" in each admin section). Advanced: a private `enoma-config.php`
+one level above the web root can also set values (see `config.sample.php`).
 
 ## Security
 
-- Content-Security-Policy, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
-- CSRF tokens, honeypot field and minimum fill time on all forms; server-side validation; Post/Redirect/Get
-- `includes/` and `storage/` are blocked from the web; private config lives outside the web root
-- AI replies are rendered as text (never HTML); only same-site links are shown
+- Content-Security-Policy and other security headers; private folders blocked by `.htaccess`
+- Admin: one-time setup code, hashed passwords, login throttling, CSRF protection, 2-hour idle logout
+- Forms: CSRF, honeypot, minimum fill time, server-side validation
+- Uploads: real images only, re-encoded, metadata removed, scripts can't run in the uploads folder
+- Secrets (SMTP password, API keys) are never sent back to the browser; backups leave them out

@@ -105,6 +105,7 @@ return [
 
     'training' => [
         'name'      => 'Technology Training',
+        'layout'    => 'training', // uses the dedicated Training page design
         'short_label' => 'Training',
         'nav_label' => 'Training',
         'icon'      => 'graduation-cap',

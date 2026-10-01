@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample private configuration.
+ * Sample private configuration (optional: everything here can also be set in the admin panel).
  *
  * Copy this file to ONE LEVEL ABOVE your public web root and rename it to
  * enoma-config.php, e.g. /home/youraccount/enoma-config.php, then fill in
@@ -14,10 +14,13 @@ return [
 
     'booking_url' => '', // e.g. https://calendly.com/your-link
 
-    'forms' => [
-        'delivery' => 'mail',
-        'to'       => 'hello@enomadigitaltech.com',
-        'from'     => 'no-reply@enomadigitaltech.com',
+    'mail' => [
+        'method'     => 'smtp',              // none | smtp | resend | php
+        'to'         => 'hello@enomadigitaltech.com',
+        'from_email' => 'no-reply@enomadigitaltech.com',
+        'from_name'  => 'Enoma Digital Technologies',
+        'smtp'       => ['host' => 'smtp.gmail.com', 'port' => '587', 'encryption' => 'tls', 'username' => '', 'password' => ''],
+        'resend_api_key' => '',
     ],
 
     'ai' => [

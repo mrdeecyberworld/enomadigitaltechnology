@@ -64,6 +64,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $data['published_at'] = date('Y-m-d H:i');
     }
     $data['updated_at'] = date('c');
+    clear_redirect(page_url('blog', '/' . $data['slug']));
+    if ($post && !empty($post['slug']) && $post['slug'] !== $data['slug']) {
+        record_redirect(page_url('blog', '/' . $post['slug']), page_url('blog', '/' . $data['slug']));
+    }
     if (blog_write($data)) {
         $msg = $data['status'] === 'published'
             ? (strtotime($data['published_at']) > time() ? 'Post scheduled for ' . date('M j, Y g:i a', strtotime($data['published_at'])) . '.' : 'Post published. It’s live on your blog.')

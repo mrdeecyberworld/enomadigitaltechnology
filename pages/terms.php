@@ -3,4 +3,4 @@ declare(strict_types=1);
 
 $legalKey = 'terms';
 $legalPath = '/terms-of-service';
-require __DIR__ . '/includes/templates/legal-page.php';
+require dirname(__DIR__) . '/includes/templates/legal-page.php';

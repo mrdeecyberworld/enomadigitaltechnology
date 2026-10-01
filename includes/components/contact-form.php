@@ -43,8 +43,8 @@ function contact_form(string $formId, string $type, array $state, array $opts = 
         </div>
       <?php endif; ?>
 
-      <?php if (cfg('forms.delivery') !== 'mail' || !cfg('forms.to')): ?>
-        <?= setup_notice('Submissions are saved to Admin → Messages. To also receive them by email, turn on email delivery in Admin → Settings.') ?>
+      <?php if (!mail_enabled()): ?>
+        <?= setup_notice('Submissions are saved to Admin → Messages. To also receive them by email, set up Admin → Email.') ?>
       <?php endif; ?>
 
       <input type="hidden" name="form_id" value="<?= e($formId) ?>">

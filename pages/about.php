@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 $home = content('home');
 $f = cfg('founder', []);
@@ -54,6 +54,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
   </div>
 </section>
 
+<?php if (founder_ready() || viewer_is_admin()): ?>
 <section class="section" aria-labelledby="founder-heading">
   <div class="container split split--center">
     <div class="split__media reveal">
@@ -74,6 +75,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <section class="section section--muted" aria-labelledby="how-heading">
   <div class="container">

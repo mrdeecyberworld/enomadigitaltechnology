@@ -106,11 +106,11 @@ function logo_mark(string $class = 'brand__mark'): string
     $id = 'lg' . (++$n);
     return '<svg class="' . e($class) . '" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">'
         . '<defs><linearGradient id="' . $id . '" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">'
-        . '<stop offset="0" stop-color="#2f6bff"/><stop offset="1" stop-color="#0fb5d6"/></linearGradient></defs>'
+        . '<stop offset="0" stop-color="#2f6bff" class="lg-a"/><stop offset="1" stop-color="#0fb5d6" class="lg-b"/></linearGradient></defs>'
         . '<rect x="1" y="1" width="38" height="38" rx="10" fill="#0b1324"/>'
         . '<rect x="1" y="1" width="38" height="38" rx="10" fill="none" stroke="url(#' . $id . ')" stroke-opacity=".55"/>'
         . '<path d="M12 11h16v4H16.5v3H26v4h-9.5v3H28v4H12z" fill="url(#' . $id . ')"/>'
-        . '<circle cx="30.5" cy="20" r="2" fill="#5ee0f5"/>'
+        . '<circle cx="30.5" cy="20" r="2" fill="#5ee0f5" class="lg-dot"/>'
         . '</svg>';
 }
 

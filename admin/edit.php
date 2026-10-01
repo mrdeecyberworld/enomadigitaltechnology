@@ -39,8 +39,80 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         flash('Keep at least one service.', 'error');
         redirect('/admin/edit?section=services');
     }
+
+    // Address changes: validate, then remember old → new so old links keep working.
+    $moves = [];
+    $problems = [];
+    if ($key === 'routes') {
+        $current = routes();
+        $seen = [];
+        foreach ($data as $pageKey => $slug) {
+            $slug = trim(strtolower((string) $slug), '/ ');
+            $data[$pageKey] = $slug;
+            if ($slug === ($current[$pageKey] ?? '')) {
+                $seen[$slug] = true;
+                continue;
+            }
+            $problem = slug_problem($slug, 'page:' . $pageKey) ?? (isset($seen[$slug]) ? '“' . $slug . '” is used twice.' : null);
+            if ($problem) {
+                $problems[] = $problem;
+            }
+            $seen[$slug] = true;
+            $moves[] = ['/' . $current[$pageKey], '/' . $slug, in_array($pageKey, ['blog', 'resources'], true)];
+        }
+    }
+    if ($key === 'services') {
+        foreach ($data as $slug => &$svc) {
+            $orig = (string) ($svc['_original'] ?? '');
+            unset($svc['_original']);
+            if ($orig === $slug) {
+                continue;
+            }
+            $problem = slug_problem($slug, 'service:' . $orig);
+            if ($problem && !isset(content('services')[$slug])) {
+                $problems[] = $problem;
+            }
+            if ($orig !== '') {
+                $moves[] = ['/' . $orig, '/' . $slug, false];
+            } else {
+                $moves[] = ['', '/' . $slug, false]; // brand-new address
+            }
+        }
+        unset($svc);
+    }
+    if ($key === 'resources') {
+        $base = page_url('resources') . '/';
+        foreach ($data as &$g) {
+            $g['slug'] = trim(preg_replace('/[^a-z0-9]+/', '-', strtolower((string) (($g['slug'] ?? '') ?: ($g['title'] ?? 'guide')))), '-') ?: 'guide';
+            $orig = (string) ($g['_original'] ?? '');
+            unset($g['_original']);
+            if ($orig !== '' && $orig !== $g['slug']) {
+                $moves[] = [$base . $orig, $base . $g['slug'], false];
+            }
+        }
+        unset($g);
+    }
+    if ($problems) {
+        foreach (array_unique($problems) as $msg) {
+            flash($msg, 'error');
+        }
+        flash('Nothing was saved. Fix the addresses above and try again.', 'error');
+        redirect('/admin/edit?section=' . $key);
+    }
+
     if (json_write($file, $data)) {
-        flash($section['title'] . ' saved. Changes are live on the website.');
+        foreach ($moves as [$from, $to, $isSection]) {
+            if ($from === '') {
+                clear_redirect($to);
+                continue;
+            }
+            record_redirect($from, $to);
+            if ($isSection) {
+                record_redirect($from . '/', $to . '/');
+            }
+        }
+        $note = array_filter($moves, static fn ($m) => $m[0] !== '') ? ' Old addresses now redirect to the new ones.' : '';
+        flash($section['title'] . ' saved. Changes are live on the website.' . $note);
     } else {
         flash('Could not save. Check that the storage folder is writable.', 'error');
     }

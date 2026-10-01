@@ -24,11 +24,16 @@ echo page_hero($heading, ['eyebrow' => 'Legal', 'crumbs' => $crumbs]);
 $body = (string) ($legal['body'] ?? '');
 $state = trim((string) ($legal['governing_state'] ?? ''));
 $html = simple_format($body);
-$html = str_replace(e('{state}'), $state !== '' ? e($state) : placeholder('State'), $html);
+if ($state === '' && !viewer_is_admin()) {
+    $html = str_replace(e('{state}') . ', United States', 'the United States', $html);
+}
+$html = str_replace(e('{state}'), $state !== '' ? e($state) : (viewer_is_admin() ? placeholder('State') : 'the United States'), $html);
 ?>
 <section class="section">
   <div class="container container--narrow prose">
-    <p class="prose__updated">Last updated: <?= !empty($legal['updated']) ? e($legal['updated']) : placeholder('Effective date') ?></p>
+    <?php if (!empty($legal['updated']) || viewer_is_admin()): ?>
+      <p class="prose__updated">Last updated: <?= !empty($legal['updated']) ? e($legal['updated']) : placeholder('Effective date') ?></p>
+    <?php endif; ?>
     <?php if (empty($legal['updated'])): ?>
       <?= setup_notice('Review this page with a qualified professional, then add the effective date in Admin → Legal pages.') ?>
     <?php endif; ?>

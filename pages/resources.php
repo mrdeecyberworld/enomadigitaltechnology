@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 $guides = content('resources');
 $crumbs = [['Home', '/'], ['Resources', '/resources']];
@@ -15,7 +15,7 @@ $page = [
             '@type' => 'CollectionPage',
             'name' => 'Resources',
             'url' => abs_url('/resources'),
-            'hasPart' => array_map(static fn (array $g) => ['@type' => 'Article', 'headline' => $g['title'], 'url' => abs_url('/resources#' . $g['slug']), 'author' => ['@id' => abs_url('/#organization')]], $guides),
+            'hasPart' => array_map(static fn (array $g) => ['@type' => 'Article', 'headline' => $g['title'], 'url' => abs_url(resource_url($g)), 'author' => ['@id' => abs_url('/#organization')]], $guides),
         ],
     ],
 ];
@@ -31,26 +31,14 @@ echo page_hero(page_text('resources', 'heading', 'Resources'), [
 <section class="section" aria-labelledby="guides-heading">
   <div class="container">
     <h2 class="sr-only" id="guides-heading">Guides</h2>
-    <nav class="toc reveal" aria-label="Guides on this page">
+    <div class="guide-cards">
       <?php foreach ($guides as $g): ?>
-        <a href="#<?= e($g['slug']) ?>" class="toc__item"><?= icon($g['icon'], 'icon icon-sm') ?><span><?= e($g['title']) ?></span></a>
-      <?php endforeach; ?>
-    </nav>
-
-    <div class="guide-list">
-      <?php foreach ($guides as $g): ?>
-        <article class="guide reveal" id="<?= e($g['slug']) ?>" aria-labelledby="<?= e($g['slug']) ?>-title">
-          <div class="guide__head">
-            <span class="guide__icon"><?= icon($g['icon']) ?></span>
-            <div>
-              <p class="guide__tag"><?= e($g['tag']) ?></p>
-              <h3 class="guide__title" id="<?= e($g['slug']) ?>-title"><?= e($g['title']) ?></h3>
-              <p class="guide__summary"><?= e($g['summary']) ?></p>
-            </div>
-          </div>
-          <ol class="guide__steps">
-            <?php foreach ($g['steps'] as $step): ?><li><?= e($step) ?></li><?php endforeach; ?>
-          </ol>
+        <article class="guide-card reveal" aria-labelledby="<?= e($g['slug']) ?>-title">
+          <span class="guide__icon"><?= icon($g['icon']) ?></span>
+          <p class="guide__tag"><?= e($g['tag']) ?></p>
+          <h3 class="guide-card__title" id="<?= e($g['slug']) ?>-title"><a href="<?= e(resource_url($g)) ?>"><?= e($g['title']) ?></a></h3>
+          <p class="guide__summary"><?= e($g['summary']) ?></p>
+          <span class="guide-card__more" aria-hidden="true"><?= count((array) ($g['steps'] ?? [])) ?> steps · Read guide <?= icon('arrow-right', 'icon icon-xs') ?></span>
         </article>
       <?php endforeach; ?>
     </div>

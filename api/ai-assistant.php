@@ -18,6 +18,10 @@ header('Cache-Control: no-store');
 
 function respond(array $body, int $status = 200): never
 {
+    // Point links at the current page addresses (Admin → Page URLs).
+    foreach ($body['links'] ?? [] as $i => $link) {
+        $body['links'][$i]['url'] = link_path((string) $link['url']);
+    }
     http_response_code($status);
     echo json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     exit;

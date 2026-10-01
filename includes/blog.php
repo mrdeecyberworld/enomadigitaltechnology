@@ -124,7 +124,7 @@ function blog_category(string $slug): array
 
 function blog_url(array $p): string
 {
-    return '/blog/' . $p['slug'];
+    return page_url('blog', '/' . $p['slug']);
 }
 
 function blog_reading_minutes(array $p): int

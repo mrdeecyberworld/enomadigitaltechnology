@@ -27,10 +27,13 @@ function testimonial_card(?array $t = null): string
 function testimonials_section(): string
 {
     $items = content('testimonials');
+    if (!$items && !viewer_is_admin()) {
+        return ''; // nothing to show visitors until real testimonials are added
+    }
     ob_start(); ?>
     <section class="section section--muted" aria-labelledby="testimonials-heading">
       <div class="container">
-        <?= section_header('Client Stories', 'What Clients Say', $items ? null : 'We are collecting feedback from the people we work with. Real client stories will be shared here.', ['id' => 'testimonials-heading']) ?>
+        <?= section_header('Client Stories', 'What Clients Say', $items ? null : 'Only you can see this section while logged in. Add real testimonials in Admin → Testimonials and it appears for visitors.', ['id' => 'testimonials-heading']) ?>
         <div class="testimonial-grid">
           <?php if ($items): foreach ($items as $t): ?>
             <?= testimonial_card($t) ?>

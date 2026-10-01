@@ -69,6 +69,19 @@ $config = [
     // Website color theme: 'dark' (deep navy, default) or 'light'.
     'site_theme' => 'dark',
 
+    // Email for form submissions (Admin → Email). Method: none | php | smtp | resend
+    'mail' => [
+        'method'     => 'none',
+        'to'         => '',
+        'from_email' => '',
+        'from_name'  => '',
+        'smtp'       => ['host' => '', 'port' => '587', 'encryption' => 'tls', 'username' => '', 'password' => ''],
+        'resend_api_key' => '',
+        'auto_reply' => false,
+        'auto_reply_subject' => 'We received your message',
+        'auto_reply_body' => "Hi {name},\n\nThank you for contacting {company}. We have received your message and will reply by email soon.\n\nBest regards,\n{company}",
+    ],
+
     // Show small notices to site owners when an integration is not configured.
     // Turn off once forms and the AI assistant are connected.
     'setup_notices' => true,

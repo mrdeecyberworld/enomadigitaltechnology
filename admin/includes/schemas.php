@@ -94,11 +94,13 @@ function admin_sections(): array
             'icon'  => 'layers-2',
             'intro' => 'Add, edit, reorder or remove services. Each service gets its own page at /slug automatically, and appears in the menu, footer, cards, forms and AI assistant.',
             'schema' => ['type' => 'repeater', 'map_key' => 'slug', 'item_label' => 'name', 'add_label' => 'Add service', 'fields' => [
+                $f('_original', '', 'hidden'),
                 $f('slug', 'URL slug', 'text', ['hint' => 'Lowercase letters, numbers and dashes. The page lives at /slug. Changing it changes the page address.', 'required' => true]),
                 $f('name', 'Service name', 'text', ['required' => true]),
                 $f('short_label', 'Short name (footer)', 'text', ['hint' => 'Optional.']),
                 $f('nav_label', 'Menu name'),
                 $f('icon', 'Icon', 'icon'),
+                $f('layout', 'Page design', 'select', ['options' => ['' => 'Standard service page', 'training' => 'Training page (audiences, topics, programs)']]),
                 $f('summary', 'Card summary', 'textarea', ['rows' => 2]),
                 $f('includes', 'Card bullet list', 'lines'),
                 $f('cta', 'Card link text'),
@@ -155,12 +157,16 @@ function admin_sections(): array
             'icon'  => 'book-open',
             'intro' => 'Short educational guides on the Resources page.',
             'schema' => ['type' => 'repeater', 'item_label' => 'title', 'add_label' => 'Add guide', 'fields' => [
+                $f('_original', '', 'hidden'),
                 $f('title', 'Title'),
-                $f('slug', 'Anchor', 'text', ['hint' => 'Lowercase words with dashes, used for links like /resources#spot-phishing.']),
+                $f('slug', 'Page address', 'text', ['hint' => 'Each guide has its own page at /resources/this-address. Lowercase words with dashes.']),
                 $f('icon', 'Icon', 'icon'),
                 $f('tag', 'Category label'),
                 $f('summary', 'Summary', 'textarea', ['rows' => 2]),
                 $f('steps', 'Steps', 'lines', ['hint' => 'One step per line.']),
+                $f('body', 'Extra introduction (optional)', 'richtext', ['rows' => 6]),
+                $f('meta_title', 'SEO title (optional)', 'text', ['counter' => 60]),
+                $f('meta_description', 'SEO description (optional)', 'textarea', ['rows' => 2, 'counter' => 160]),
             ]],
         ],
 
@@ -187,6 +193,17 @@ function admin_sections(): array
                     $f('alt', 'Alt text (describe the photo)'),
                 ]]),
                 array_keys(content_default('images') + content('images'))
+            )],
+        ],
+
+        'routes' => [
+            'title' => 'Page URLs',
+            'icon'  => 'link-2',
+            'intro' => 'Choose the web address of every page. When you change one, the old address automatically redirects to the new one and every link on the site updates. Service, guide and blog post addresses are set on each item.',
+            'schema' => ['type' => 'group', 'fields' => array_map(
+                static fn (string $key, string $label) => $f($key, $label, 'text', ['prefix' => '/', 'hint' => $key === 'blog' ? 'Blog posts live at /this-address/post-address.' : ($key === 'resources' ? 'Guides live at /this-address/guide-address.' : '')]),
+                array_keys(PAGE_FILES),
+                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service']
             )],
         ],
 
@@ -243,9 +260,8 @@ function admin_sections(): array
         'settings' => [
             'title' => 'Settings',
             'icon'  => 'wrench',
-            'intro' => 'Contact details, social links, founder profile, form email delivery and the AI assistant.',
+            'intro' => 'Contact details, social links, founder profile, scheduling link and the AI assistant. Email delivery is under Email; colors under Appearance.',
             'schema' => ['type' => 'group', 'fields' => [
-                $f('site_theme', 'Website color theme', 'select', ['options' => ['dark' => 'Dark premium (deep navy)', 'light' => 'Light (white)'], 'hint' => 'Changes the background and colors across the whole website.']),
                 $f('contact_email', 'Public contact email', 'email', ['hint' => 'Shown in the footer and used in messages. Leave blank to hide.']),
                 $f('contact_phone', 'Public phone number', 'text', ['hint' => 'Leave blank to hide.']),
                 $f('booking_url', 'Online scheduling link', 'url', ['hint' => 'Calendly, Microsoft Bookings, etc. Adds a "pick a time" button to Book a Consultation.']),
@@ -256,17 +272,12 @@ function admin_sections(): array
                 $f('founder', 'Founder profile', 'group', ['fields' => [
                     $f('name', 'Name'), $f('title', 'Title'), $f('bio', 'Short bio', 'textarea', ['rows' => 4]), $f('photo', 'Photo', 'image'),
                 ]]),
-                $f('forms', 'Form email delivery', 'group', ['hint' => 'Every submission is always saved in Messages. Turn this on to also receive them by email.', 'fields' => [
-                    $f('delivery', 'Email delivery', 'select', ['options' => ['none' => 'Off (Messages inbox only)', 'mail' => 'On (send with the server’s mail function)']]),
-                    $f('to', 'Send submissions to', 'email'),
-                    $f('from', 'Send from address', 'email', ['hint' => 'Use an address on your own domain, e.g. no-reply@enomadigitaltech.com.']),
-                ]]),
                 $f('ai', 'AI assistant', 'group', ['fields' => [
-                    $f('api_key', 'Anthropic API key', 'password', ['hint' => 'Stored privately on the server and never sent to browsers. Without a key, the assistant runs in guided mode using your site content.']),
+                    $f('api_key', 'Anthropic API key', 'password', ['is_set' => (string) cfg('ai.api_key') !== '', 'hint' => 'Stored privately on the server and never sent to browsers. Without a key, the assistant runs in guided mode using your site content.']),
                     $f('model', 'Model', 'text'),
                     $f('rate_limit', 'Messages per visitor per hour', 'text'),
                 ]]),
-                $f('setup_notices', 'Show yellow setup notes on the site', 'bool'),
+                $f('setup_notices', 'Show me setup reminders on the website while I’m logged in', 'bool'),
                 $f('base_url', 'Website address', 'url', ['hint' => 'Used for canonical links and the sitemap. No trailing slash.']),
             ]],
         ],
@@ -285,9 +296,15 @@ function admin_section_data(string $section): array
     if ($section === 'services') {
         $list = [];
         foreach ($data as $slug => $svc) {
-            $list[] = ['slug' => $slug] + $svc;
+            $list[] = ['slug' => $slug, '_original' => $slug] + $svc;
         }
         return $list;
+    }
+    if ($section === 'resources') {
+        return array_map(static fn ($g) => ['_original' => $g['slug'] ?? ''] + $g, $data);
+    }
+    if ($section === 'routes') {
+        return routes();
     }
     return $data;
 }

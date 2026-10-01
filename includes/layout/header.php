@@ -29,7 +29,8 @@ $canonical = abs_url($page['path']);
 $ogImage = abs_url($page['og_image']);
 $graph = array_merge(schema_base(), $page['schema']);
 ?><!doctype html>
-<html lang="en-US" data-site-theme="<?= cfg('site_theme') === 'light' ? 'light' : 'dark' ?>">
+<?php $look = appearance(); ?>
+<html lang="en-US" data-site-theme="<?= e($look['theme']) ?>" data-palette="<?= e($look['palette']) ?>">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +54,7 @@ $graph = array_merge(schema_base(), $page['schema']);
   <meta name="twitter:description" content="<?= e($page['description']) ?>">
   <meta name="twitter:image" content="<?= e($ogImage) ?>">
 
-  <meta name="theme-color" content="<?= cfg('site_theme') === 'light' ? '#ffffff' : '#0b1322' ?>">
+  <meta name="theme-color" content="<?= $look['theme'] === 'light' ? '#ffffff' : e(palettes()[$look['palette']]['swatch'][0]) ?>">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
@@ -63,6 +64,7 @@ $graph = array_merge(schema_base(), $page['schema']);
   <link rel="preload" href="/assets/fonts/manrope-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="<?= e(asset('css/main.css')) ?>">
+  <?php if ($look['accent'] !== ''): ?><link rel="stylesheet" href="/theme.css?v=<?= e(substr(md5($look['accent'] . $look['theme']), 0, 8)) ?>"><?php endif; ?>
   <script src="<?= e(asset('js/main.js')) ?>" defer></script>
 
   <?= json_ld(['@context' => 'https://schema.org', '@graph' => $graph]) ?>

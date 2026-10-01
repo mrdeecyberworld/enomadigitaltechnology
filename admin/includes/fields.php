@@ -67,9 +67,11 @@ function field_render(array $f, string $name, mixed $value): string
                 . '<button type="button" class="btn btn--light" data-media-clear aria-label="Remove image">Clear</button></div></div>';
 
         case 'password':
-            $set = cfg('ai.api_key') !== '' && cfg('ai.api_key') !== null;
+            // Secrets are never sent back to the browser; leaving the box empty keeps the saved value.
+            $set = !empty($f['is_set']);
             return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint
-                . '<input type="password" id="' . $id . '" name="' . e($name) . '" value="" autocomplete="new-password" placeholder="' . ($set ? 'A key is saved. Leave blank to keep it.' : 'Not set') . '">'
+                . '<input type="password" id="' . $id . '" name="' . e($name) . '" value="" autocomplete="new-password" placeholder="' . ($set ? 'Saved. Leave blank to keep it, or type a new one.' : 'Not set') . '">'
+                . ($set ? '<label class="check small"><input type="checkbox" name="' . e(substr($name, 0, -1) . '__clear]') . '" value="1"> Remove the saved value</label>' : '')
                 . '</div>';
 
         case 'textarea':
@@ -89,6 +91,9 @@ function field_render(array $f, string $name, mixed $value): string
             return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint
                 . '<textarea id="' . $id . '" name="' . e($name) . '" rows="' . $rows . '"' . $counter . $required . '>' . e($text) . '</textarea></div>';
 
+        case 'hidden':
+            return '<input type="hidden" name="' . e($name) . '" value="' . e((string) ($value ?? '')) . '">';
+
         case 'datetime':
             $ts = $value ? strtotime((string) $value) : false;
             return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint
@@ -97,8 +102,11 @@ function field_render(array $f, string $name, mixed $value): string
         default: // text, url, email
             $inputType = in_array($type, ['url', 'email'], true) ? $type : 'text';
             $counter = isset($f['counter']) ? ' data-counter="' . (int) $f['counter'] . '"' : '';
-            return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint
-                . '<input type="' . $inputType . '" id="' . $id . '" name="' . e($name) . '" value="' . e((string) ($value ?? '')) . '"' . $counter . $required . '></div>';
+            $input = '<input type="' . $inputType . '" id="' . $id . '" name="' . e($name) . '" value="' . e((string) ($value ?? '')) . '"' . $counter . $required . '>';
+            if (!empty($f['prefix'])) {
+                $input = '<div class="input-prefix"><span>' . e((parse_url((string) cfg('base_url'), PHP_URL_HOST) ?: '') . $f['prefix']) . '</span>' . $input . '</div>';
+            }
+            return '<div class="field"><label for="' . $id . '">' . $label . '</label>' . $hint . $input . '</div>';
     }
 }
 
@@ -147,6 +155,10 @@ function field_parse(array $f, mixed $input, mixed $old): mixed
         case 'group':
             $out = is_array($old) ? $old : [];
             foreach ($f['fields'] as $child) {
+                if ($child['type'] === 'password' && is_array($input) && !empty($input[$child['key'] . '__clear'])) {
+                    $out[$child['key']] = '';
+                    continue;
+                }
                 $out[$child['key']] = field_parse($child, is_array($input) ? ($input[$child['key']] ?? null) : null, $out[$child['key']] ?? null);
             }
             return $out;

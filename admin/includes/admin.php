@@ -147,6 +147,8 @@ function admin_header(string $title, string $active = ''): void
     }
     $tools = [
         ['Media library', '/admin/media', 'media', 'hard-drive'],
+        ['Email', '/admin/email', 'email', 'mail'],
+        ['Appearance', '/admin/appearance', 'appearance', 'sparkles'],
         ['Settings', '/admin/edit?section=settings', 'edit:settings', 'wrench'],
         ['Account', '/admin/account', 'account', 'user'],
         ['Backup', '/admin/backup', 'backup', 'database'],

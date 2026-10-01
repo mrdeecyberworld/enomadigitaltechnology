@@ -8,4 +8,4 @@ $formPage = [
     'key'   => 'consultation',
     'icons' => ['message-square-text', 'lightbulb', 'calendar-check'],
 ];
-require __DIR__ . '/includes/templates/form-page.php';
+require dirname(__DIR__) . '/includes/templates/form-page.php';

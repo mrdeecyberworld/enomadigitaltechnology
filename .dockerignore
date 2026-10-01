@@ -1,0 +1,8 @@
+.git
+storage/content
+storage/admin
+storage/submissions
+storage/blog
+storage/media
+storage/cache
+storage/ratelimit

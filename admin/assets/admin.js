@@ -187,6 +187,43 @@
     });
   });
 
+  // Email settings: presets + show only the fields for the chosen method
+  var emailForm = document.querySelector('[data-email-form]');
+  if (emailForm) {
+    var method = emailForm.querySelector('select[name="data[method]"]');
+    var smtpGroup = emailForm.querySelector('input[name="data[smtp][host]"]').closest('fieldset');
+    var resendField = emailForm.querySelector('input[name="data[resend_api_key]"]').closest('.field');
+    function syncMethod() {
+      smtpGroup.hidden = method.value !== 'smtp';
+      resendField.hidden = method.value !== 'resend';
+    }
+    method.addEventListener('change', syncMethod);
+    syncMethod();
+    emailForm.querySelectorAll('[data-preset]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var p = JSON.parse(b.getAttribute('data-preset'));
+        method.value = p.method;
+        if (p.host) {
+          emailForm.querySelector('input[name="data[smtp][host]"]').value = p.host;
+          emailForm.querySelector('input[name="data[smtp][port]"]').value = p.port;
+          emailForm.querySelector('select[name="data[smtp][encryption]"]').value = p.encryption;
+        }
+        syncMethod();
+        method.dispatchEvent(new Event('change', { bubbles: true }));
+        var focusEl = p.method === 'resend' ? resendField.querySelector('input') : emailForm.querySelector('input[name="data[smtp][username]"]');
+        if (focusEl) focusEl.focus();
+      });
+    });
+  }
+
+  // Appearance: show the chosen accent hex and tick "use custom" when it changes
+  var accentInput = document.querySelector('[data-accent-input]');
+  if (accentInput) {
+    var hexOut = document.querySelector('[data-accent-hex]');
+    var useCustom = document.querySelector('[data-use-custom]');
+    accentInput.addEventListener('input', function () { hexOut.textContent = accentInput.value; useCustom.checked = true; });
+  }
+
   // Media picker
   var modal = document.querySelector('[data-media-modal]');
   var targetField = null;

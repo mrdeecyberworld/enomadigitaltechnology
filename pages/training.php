@@ -1,22 +1,23 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
-$svc = service('training');
+$trainingKey = service_key((string) ($_GET['slug'] ?? 'training'));
+$svc = service($trainingKey);
 if ($svc === null) {
     require __DIR__ . '/404.php';
     exit;
 }
 $training = content('training');
 $formId = 'training-form';
-$formState = handle_form($formId, 'inquiry', 'training');
-$crumbs = [['Home', '/'], ['Services', '/services'], ['Training', '/training']];
+$formState = handle_form($formId, 'inquiry', $trainingKey);
+$crumbs = [['Home', '/'], ['Services', '/services'], [$svc['short_label'] ?: $svc['name'], service_path($trainingKey)]];
 
 $page = [
     'title'       => $svc['meta_title'],
     'description' => $svc['meta_description'],
-    'path'        => '/training',
-    'schema'      => [schema_service('training', $svc), schema_breadcrumbs($crumbs), schema_faq($svc['faqs'])],
+    'path'        => service_path($trainingKey),
+    'schema'      => [schema_service($trainingKey, $svc), schema_breadcrumbs($crumbs), schema_faq($svc['faqs'])],
 ];
 require INC . '/layout/header.php';
 

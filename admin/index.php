@@ -15,14 +15,13 @@ $founder = cfg('founder', []);
 $legal = content('legal');
 $checklist = [
     ['Add your public contact email', (bool) cfg('contact_email'), '/admin/edit?section=settings'],
-    ['Turn on email delivery for form submissions', cfg('forms.delivery') === 'mail' && cfg('forms.to'), '/admin/edit?section=settings'],
+    ['Set up email so form submissions reach your inbox', mail_enabled(), '/admin/email'],
     ['Add the founder name, bio and photo', !empty($founder['name']) && !empty($founder['bio']), '/admin/edit?section=settings'],
     ['Add an online scheduling link (optional)', (bool) cfg('booking_url'), '/admin/edit?section=settings'],
     ['Connect the AI assistant with an API key (optional)', (bool) cfg('ai.api_key'), '/admin/edit?section=settings'],
     ['Add your social media links', (bool) array_filter(cfg('social', [])), '/admin/edit?section=settings'],
     ['Review the legal pages and add effective dates', !empty($legal['privacy']['updated']) && !empty($legal['terms']['updated']), '/admin/edit?section=legal'],
     ['Add real client testimonials', (bool) content('testimonials'), '/admin/edit?section=testimonials'],
-    ['Hide the yellow setup notes once you’re done', !cfg('setup_notices'), '/admin/edit?section=settings'],
 ];
 $done = count(array_filter(array_column($checklist, 1)));
 

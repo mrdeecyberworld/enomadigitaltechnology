@@ -72,15 +72,26 @@ function services(): array
     return $cache;
 }
 
+/** A service by its address; also finds services whose address was changed. */
 function service(string $slug): ?array
 {
-    return services()[$slug] ?? null;
+    return services()[service_key($slug)] ?? null;
+}
+
+/** Current key (address) of a service, following any address change. */
+function service_key(string $slug): string
+{
+    if (isset(services()[$slug])) {
+        return $slug;
+    }
+    $moved = ltrim(link_path('/' . $slug), '/');
+    return isset(services()[$moved]) ? $moved : $slug;
 }
 
 /** Public path for a service (the training service lives at /training). */
 function service_path(string $slug): string
 {
-    return '/' . $slug;
+    return '/' . service_key($slug);
 }
 
 /** HTML-escape. */
@@ -92,7 +103,7 @@ function e(?string $value): string
 /** Absolute URL for canonical / Open Graph / sitemap use. */
 function abs_url(string $path = '/'): string
 {
-    return rtrim((string) cfg('base_url'), '/') . $path;
+    return rtrim((string) cfg('base_url'), '/') . link_path($path);
 }
 
 /** Versioned asset URL for long-term browser caching. */
@@ -113,7 +124,7 @@ function current_path(): string
 
 function is_current(string $path): bool
 {
-    return current_path() === $path;
+    return current_path() === link_path($path);
 }
 
 /** Inline Lucide icon. Decorative by default (aria-hidden). */
@@ -302,9 +313,27 @@ function schema_service(string $slug, array $svc): array
 }
 
 /** Show a notice to the site owner when a setup step is outstanding. */
+/**
+ * Is the person viewing the site logged in to the admin? Only checks when an
+ * admin session cookie exists, so ordinary visitors never get a session.
+ */
+function viewer_is_admin(): bool
+{
+    static $is = null;
+    if ($is === null) {
+        $is = false;
+        if (isset($_COOKIE['enoma_sid'])) {
+            start_session();
+            $is = !empty($_SESSION['admin_user']) && time() - (int) ($_SESSION['admin_seen'] ?? 0) < 7200;
+        }
+    }
+    return $is;
+}
+
+/** Show a setup reminder. Only visible to you while logged in to the admin. */
 function setup_notice(string $message): string
 {
-    if (!cfg('setup_notices')) {
+    if (!cfg('setup_notices') || !viewer_is_admin()) {
         return '';
     }
     return '<p class="setup-notice" role="note">' . icon('circle-alert', 'icon icon-sm') . '<span><strong>Setup note:</strong> ' . e($message) . '</span></p>';
@@ -313,7 +342,14 @@ function setup_notice(string $message): string
 /** Placeholder text for owner-supplied details that are not filled in yet. */
 function placeholder(string $label): string
 {
-    return '<span class="placeholder-text">[' . e($label) . ']</span>';
+    return viewer_is_admin() ? '<span class="placeholder-text" title="Only you can see this while logged in">[' . e($label) . ']</span>' : '';
+}
+
+/** Has the founder profile been filled in (Admin → Settings)? */
+function founder_ready(): bool
+{
+    $f = cfg('founder', []);
+    return trim((string) ($f['name'] ?? '')) !== '';
 }
 
 /** Page SEO/header text from the "pages" content section. */
@@ -368,4 +404,20 @@ function simple_format(string $text, int $headingLevel = 2): string
         }
     }
     return $html;
+}
+
+/** Resource guides (Admin → Resources), each with its own page. */
+function resource_url(array $guide): string
+{
+    return page_url('resources', '/' . $guide['slug']);
+}
+
+function resource_find(string $slug): ?array
+{
+    foreach (content('resources') as $g) {
+        if (($g['slug'] ?? '') === $slug) {
+            return $g;
+        }
+    }
+    return null;
 }

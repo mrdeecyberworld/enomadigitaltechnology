@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 $slug = preg_replace('/[^a-z0-9-]/', '', (string) ($_GET['slug'] ?? ''));
 

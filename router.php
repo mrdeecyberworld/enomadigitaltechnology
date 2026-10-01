@@ -1,49 +1,42 @@
 <?php
 /**
- * Local development router for PHP's built-in server (mirrors .htaccess):
+ * Router for PHP's built-in web server, used when running the site on your
+ * own computer (see LOCAL-SETUP.md):
+ *
  *   php -S localhost:8000 router.php
- * Not used on Apache hosting.
+ *
+ * It mirrors the .htaccess rules used on real hosting. Not used on Apache.
  */
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/';
+$path = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/');
 $root = __DIR__;
 
-if (preg_match('#^/(includes|storage|admin/includes)(/|$)|^/(config\.sample\.php|router\.php)$#', $path)) {
+// Private folders and files are never served.
+if (preg_match('#^/(includes|storage|pages|admin/includes)(/|$)|^/(config\.sample\.php|router\.php|README\.md|LOCAL-SETUP\.md|Dockerfile|docker-compose\.yml|\.user\.ini|start[.-][^/]*)$|/\.#', $path)
+    || preg_match('#^/assets/uploads/.*\.(php\d?|phtml|phar|html?|svg)$#i', $path)) {
     http_response_code(403);
     exit('Forbidden');
 }
-if ($path === '/blog/feed.xml') {
-    require $root . '/blog-feed.php';
-    return true;
-}
-if (preg_match('#^/blog/([a-z0-9-]+)/?$#', $path, $m)) {
-    $_GET['slug'] = $m[1];
-    require $root . '/blog-post.php';
-    return true;
-}
-if ($path === '/sitemap.xml') {
-    require $root . '/sitemap.php';
-    return true;
-}
+
+// Real static files (CSS, JS, images, fonts) are served directly.
 if ($path !== '/' && is_file($root . $path) && !str_ends_with($path, '.php')) {
-    return false; // static file
+    return false;
 }
-$clean = rtrim($path, '/');
-$file = $clean === '' ? $root . '/index.php' : $root . $clean . '.php';
-if ($clean !== '' && is_dir($root . $clean) && is_file($root . $clean . '/index.php')) {
-    $file = $root . $clean . '/index.php';
+
+// Admin and API scripts: /admin, /admin/login, /api/ai-assistant
+if (preg_match('#^/(admin|api)(/[A-Za-z0-9_/-]*)?$#', $path)) {
+    $file = rtrim($root . $path, '/');
+    $file = is_dir($file) ? $file . '/index.php' : $file . '.php';
+    if (is_file($file)) {
+        chdir(dirname($file));
+        require $file;
+        return true;
+    }
 }
-if (str_ends_with($path, '.php') && is_file($root . $path)) {
-    $file = $root . $path;
-}
-if (is_file($file)) {
-    chdir(dirname($file));
-    require $file;
+if (preg_match('#^/(admin|api)/.+\.php$#', $path) && is_file($root . $path)) {
+    require $root . $path;
     return true;
 }
-if (preg_match('#^/([a-z0-9-]+)/?$#', $path, $m)) {
-    $_GET['slug'] = $m[1];
-    require $root . '/service.php';
-    return true;
-}
-require $root . '/404.php';
+
+// Everything else goes to the front controller.
+require $root . '/index.php';
 return true;

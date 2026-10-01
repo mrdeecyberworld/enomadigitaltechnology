@@ -1,7 +1,7 @@
 <?php
 /** RSS feed at /blog/feed.xml */
 declare(strict_types=1);
-require __DIR__ . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 header('Content-Type: application/rss+xml; charset=utf-8');
 header_remove('Content-Security-Policy');

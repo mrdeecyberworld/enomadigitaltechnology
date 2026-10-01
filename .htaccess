@@ -3,7 +3,7 @@
 
 Options -Indexes -MultiViews
 DirectoryIndex index.php
-ErrorDocument 404 /404.php
+ErrorDocument 404 /index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -15,36 +15,20 @@ ErrorDocument 404 /404.php
   # RewriteRule ^ https://enomadigitaltech.com%{REQUEST_URI} [L,R=301]
 
   # Block private folders and files.
-  RewriteRule ^(includes|storage)(/|$) - [F,L]
-  RewriteRule ^admin/(includes)(/|$) - [F,L]
-  RewriteRule ^(config\.sample\.php|router\.php|README\.md|\.git.*)$ - [F,L]
+  RewriteRule ^(includes|storage|pages)(/|$) - [F,L]
+  RewriteRule ^admin/includes(/|$) - [F,L]
+  RewriteRule ^(config\.sample\.php|router\.php|README\.md|LOCAL-SETUP\.md|Dockerfile|docker-compose\.yml|start[.-][^/]*|\.dockerignore|\.user\.ini|\.git.*)$ - [F,L]
 
-  # Sitemap and blog.
-  RewriteRule ^sitemap\.xml$ sitemap.php [L]
-  RewriteRule ^blog/feed\.xml$ blog-feed.php [L]
-  RewriteRule ^blog/([a-z0-9-]+)/?$ blog-post.php?slug=$1 [L,QSA]
-
-  # Redirect /index(.php) to / and /page.php to /page (external requests only).
-  RewriteCond %{THE_REQUEST} \s/+index(\.php)?[\s?] [NC]
-  RewriteRule ^ / [R=301,L]
-  RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
-  RewriteCond %{REQUEST_URI} !^/api/
-  RewriteRule ^ /%1 [R=301,L,NE]
-
-  # Remove trailing slashes on non-directories.
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.+)/$ /$1 [R=301,L]
-
-  # Serve clean URLs from .php files, e.g. /web-development -> web-development.php
+  # Admin and API scripts without ".php": /admin/login, /api/ai-assistant
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{DOCUMENT_ROOT}/$1.php -f
-  RewriteRule ^([A-Za-z0-9/_-]+)$ $1.php [L]
+  RewriteRule ^((?:admin|api)/[A-Za-z0-9_/-]+)$ $1.php [L]
 
-  # Everything else that looks like a page slug is a service page (managed in the admin).
+  # Every page address goes to the front controller (index.php), which reads
+  # the address table from Admin → Page URLs and handles redirects.
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^([a-z0-9-]+)$ service.php?slug=$1 [L,QSA]
+  RewriteRule ^ index.php [L,QSA]
 </IfModule>
 
 # ── Security headers (also sent by PHP) ──

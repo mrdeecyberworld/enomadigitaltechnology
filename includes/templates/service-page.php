@@ -11,7 +11,7 @@ require_once dirname(__DIR__) . '/bootstrap.php';
 $svc = service($serviceSlug);
 if ($svc === null) {
     http_response_code(404);
-    require SITE_ROOT . '/404.php';
+    require SITE_ROOT . '/pages/404.php';
     exit;
 }
 

@@ -38,25 +38,4 @@ return [
         ['label' => 'Privacy Policy',   'path' => '/privacy-policy'],
         ['label' => 'Terms of Service', 'path' => '/terms-of-service'],
     ],
-
-    // Every public page (used for the XML sitemap).
-    'sitemap' => [
-        ['path' => '/',                       'priority' => '1.0'],
-        ['path' => '/services',               'priority' => '0.9'],
-        ['path' => '/web-development',        'priority' => '0.9'],
-        ['path' => '/cybersecurity',          'priority' => '0.9'],
-        ['path' => '/it-support',             'priority' => '0.8'],
-        ['path' => '/training',               'priority' => '0.8'],
-        ['path' => '/cloud-services',         'priority' => '0.8'],
-        ['path' => '/technology-consulting',  'priority' => '0.8'],
-        ['path' => '/about',                  'priority' => '0.7'],
-        ['path' => '/resources',              'priority' => '0.7'],
-        ['path' => '/blog',                   'priority' => '0.8'],
-        ['path' => '/faq',                    'priority' => '0.6'],
-        ['path' => '/contact',                'priority' => '0.7'],
-        ['path' => '/get-a-quote',            'priority' => '0.7'],
-        ['path' => '/book-a-consultation',    'priority' => '0.7'],
-        ['path' => '/privacy-policy',         'priority' => '0.3'],
-        ['path' => '/terms-of-service',       'priority' => '0.3'],
-    ],
 ];

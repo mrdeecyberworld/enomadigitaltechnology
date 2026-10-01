@@ -1,0 +1,13 @@
+# Run the website locally with Apache (same as most web hosts):
+#   docker compose up --build
+# Then open http://localhost:8080   (admin: http://localhost:8080/admin)
+# Your edits in the admin are saved in ./storage and ./assets/uploads on your computer.
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      ENOMA_BASE_URL: "http://localhost:8080"
+    volumes:
+      - ./:/var/www/html

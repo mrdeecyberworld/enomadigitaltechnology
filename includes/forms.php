@@ -4,7 +4,7 @@
  *
  * Forms post back to the page they are on (works without JavaScript), are
  * validated server-side, protected with a CSRF token, a honeypot and a
- * minimum fill time, then delivered according to cfg('forms.delivery').
+ * minimum fill time, saved to Admin → Messages and emailed per Admin → Email.
  */
 
 declare(strict_types=1);
@@ -157,31 +157,88 @@ function handle_form(string $formId, string $type, ?string $defaultService = nul
 
 /**
  * Deliver a validated submission: it is always saved to the admin inbox
- * (Admin → Messages) and, when email is configured, also emailed.
+ * (Admin → Messages) and, when email is set up in Admin → Email, also emailed
+ * to you (plus an optional automatic reply to the visitor).
  * Returns ['status' => 'success'|'error', 'message' => string].
  */
 function deliver_form(string $type, array $v): array
 {
     $serviceName = service_options()[$v['service']] ?? $v['service'];
-    $saved = save_submission($type, $v, $serviceName);
+    $id = save_submission($type, $v, $serviceName);
 
     $emailed = false;
-    if (cfg('forms.delivery') === 'mail' && cfg('forms.to')) {
-        $emailed = send_form_email($type, $v, $serviceName);
+    if (mail_enabled()) {
+        $result = send_mail(form_notification($type, $v, $serviceName, $id));
+        $emailed = $result['ok'];
+        if (!$result['ok']) {
+            error_log('Enoma form email failed: ' . $result['error']);
+            if ($id) {
+                $file = storage_dir('submissions') . '/' . $id . '.json';
+                $rec = json_read($file, []);
+                $rec['email_error'] = $result['error'];
+                json_write($file, $rec);
+            }
+        }
+        $m = mail_settings();
+        if (!empty($m['auto_reply'])) {
+            send_mail(form_auto_reply($v));
+        }
     }
 
-    if ($saved || $emailed) {
+    if ($id || $emailed) {
         return ['status' => 'success', 'message' => 'Thank you, ' . $v['name'] . '. Your ' . strtolower(FORM_TYPES[$type] ?? 'message') . ' has been received. We will reply by email.'];
     }
     $email = cfg('contact_email');
     return ['status' => 'error', 'message' => 'Sorry, your message could not be saved right now. Please try again later' . ($email ? ' or email us at ' . $email : '') . '.'];
 }
 
+/** The email you receive for each submission. */
+function form_notification(string $type, array $v, string $serviceName, ?string $id): array
+{
+    $label = FORM_TYPES[$type] ?? 'Website message';
+    $text = implode("\n", array_filter([
+        'New ' . strtolower($label) . ' from your website.',
+        '',
+        'Name: ' . $v['name'],
+        'Email: ' . $v['email'],
+        $v['phone'] !== '' ? 'Phone: ' . $v['phone'] : null,
+        $v['company'] !== '' ? 'Company: ' . $v['company'] : null,
+        'Service: ' . $serviceName,
+        $v['budget'] !== '' ? 'Budget: ' . $v['budget'] : null,
+        '',
+        'Message:',
+        $v['message'],
+        '',
+        $id ? 'View in admin: ' . rtrim((string) cfg('base_url'), '/') . '/admin/messages?id=' . $id : null,
+        'Reply to this email to answer ' . $v['name'] . ' directly.',
+    ], static fn ($l) => $l !== null));
+    return [
+        'to'       => mail_settings()['to'],
+        'subject'  => $label . ' from ' . $v['name'] . ' – ' . $serviceName,
+        'text'     => $text,
+        'reply_to' => $v['email'],
+    ];
+}
+
+/** Optional automatic reply to the visitor (Admin → Email). */
+function form_auto_reply(array $v): array
+{
+    $m = mail_settings();
+    $body = (string) ($m['auto_reply_body'] ?: "Hi {name},\n\nThank you for contacting {company}. We have received your message and will reply by email soon.\n\nBest regards,\n{company}");
+    $body = strtr($body, ['{name}' => $v['name'], '{company}' => (string) site('name')]);
+    return [
+        'to'       => $v['email'],
+        'subject'  => (string) ($m['auto_reply_subject'] ?: 'We received your message'),
+        'text'     => $body,
+        'reply_to' => $m['to'],
+    ];
+}
+
 /** Store a submission as a JSON file in storage/submissions (not web accessible). */
-function save_submission(string $type, array $v, string $serviceName): bool
+function save_submission(string $type, array $v, string $serviceName): ?string
 {
     $id = date('Ymd-His') . '-' . bin2hex(random_bytes(3));
-    return json_write(storage_dir('submissions') . '/' . $id . '.json', [
+    $ok = json_write(storage_dir('submissions') . '/' . $id . '.json', [
         'id'           => $id,
         'type'         => $type,
         'type_label'   => FORM_TYPES[$type] ?? $type,
@@ -196,31 +253,5 @@ function save_submission(string $type, array $v, string $serviceName): bool
         'created_at'   => date('c'),
         'read'         => false,
     ]);
-}
-
-/** Send via PHP mail(). Replace with SMTP / an email API for production-grade deliverability. */
-function send_form_email(string $type, array $v, string $serviceName): bool
-{
-    $clean = static fn (string $s): string => str_replace(["\r", "\n"], ' ', $s);
-    $subject = '[' . site('short_name') . '] ' . (FORM_TYPES[$type] ?? 'Website message') . ' from ' . $clean($v['name']);
-    $body = implode("\n", [
-        'Form: ' . (FORM_TYPES[$type] ?? $type),
-        'Name: ' . $v['name'],
-        'Email: ' . $v['email'],
-        'Phone: ' . ($v['phone'] ?: '-'),
-        'Company: ' . ($v['company'] ?: '-'),
-        'Service: ' . $serviceName,
-        'Budget: ' . ($v['budget'] ?: '-'),
-        '',
-        'Message:',
-        $v['message'],
-        '',
-        'Sent from ' . abs_url(current_path()) . ' on ' . date('Y-m-d H:i T'),
-    ]);
-    $headers = implode("\r\n", [
-        'From: ' . site('short_name') . ' <' . $clean((string) cfg('forms.from')) . '>',
-        'Reply-To: ' . $clean($v['email']),
-        'Content-Type: text/plain; charset=UTF-8',
-    ]);
-    return mail((string) cfg('forms.to'), '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers);
+    return $ok ? $id : null;
 }
