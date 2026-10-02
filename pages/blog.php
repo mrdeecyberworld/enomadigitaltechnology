@@ -52,6 +52,7 @@ echo page_hero($activeCat ? $activeCat['name'] : (string) ($settings['heading'] 
     'eyebrow' => (string) ($settings['eyebrow'] ?? 'Blog'),
     'text'    => $activeCat ? 'Articles about ' . strtolower($activeCat['name']) . '.' : (string) ($settings['intro'] ?? ''),
     'crumbs'  => $crumbs,
+    'image'   => $activeCat ? '' : 'blog',
 ]);
 ?>
 <section class="section section--blog">

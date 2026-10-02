@@ -298,3 +298,9 @@ img.focus-bottom-left { object-position: 15% 85%; } img.focus-bottom { object-po
 .palette__text { display: grid; gap: 2px; }
 .accent-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 12px; }
 .accent-row input[type=color] { width: 56px; height: 40px; padding: 2px; border: 1px solid var(--line-2); border-radius: 9px; background: #fff; cursor: pointer; }
+
+/* Photos: store-on-site panel */
+.photo-store { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
+.photo-store > div { flex: 1 1 420px; min-width: 0; }
+.photo-store h2 { margin-bottom: 6px; }
+.photo-store p { margin: 0; }

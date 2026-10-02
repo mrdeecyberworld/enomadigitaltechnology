@@ -16,6 +16,7 @@ function blog_seed_if_needed(): void
 {
     $marker = blog_dir() . '/.seeded';
     if (is_file($marker)) {
+        blog_add_seed_covers();
         return;
     }
     $now = time();
@@ -27,6 +28,25 @@ function blog_seed_if_needed(): void
         $post['updated_at'] = date('c', $now);
         $post['author'] = '';
         blog_write($post);
+    }
+    @file_put_contents($marker, date('c'));
+    @file_put_contents(blog_dir() . '/.covers', date('c'));
+}
+
+/** Give starter posts saved before cover photos existed their photo (once; posts you've changed keep your choice). */
+function blog_add_seed_covers(): void
+{
+    $marker = blog_dir() . '/.covers';
+    if (is_file($marker)) {
+        return;
+    }
+    foreach (content_default('blog-seed') as $seed) {
+        $file = blog_dir() . '/' . $seed['slug'] . '.json';
+        $post = is_file($file) ? json_read($file) : null;
+        if (is_array($post) && ($post['cover'] ?? '') === '' && !empty($seed['cover'])) {
+            $post['cover'] = $seed['cover'];
+            blog_write($post);
+        }
     }
     @file_put_contents($marker, date('c'));
 }
@@ -151,7 +171,11 @@ function blog_cover(array $p, string $sizes = '(min-width: 1024px) 33vw, 100vw',
         . '<span class="cover-art__label">' . e($cat['name']) . '</span></div>';
     $cover = (string) $p['cover'];
     if ($cover !== '') {
-        $img = photo($cover, $sizes, ['alt' => (string) ($p['cover_alt'] ?: ''), 'eager' => $eager]);
+        $opts = ['eager' => $eager];
+        if ((string) $p['cover_alt'] !== '') {
+            $opts['alt'] = (string) $p['cover_alt'];
+        }
+        $img = photo($cover, $sizes, $opts);
         if ($img !== '') {
             return $art . $img;
         }

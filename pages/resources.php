@@ -25,6 +25,7 @@ echo page_hero(page_text('resources', 'heading', 'Resources'), [
     'eyebrow' => page_text('resources', 'eyebrow'),
     'text'    => page_text('resources', 'intro'),
     'crumbs'  => $crumbs,
+    'image'   => 'resources',
 ]);
 ?>
 

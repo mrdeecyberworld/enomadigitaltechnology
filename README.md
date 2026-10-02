@@ -26,10 +26,12 @@ Docker users can run `docker compose up --build` instead.
 4. Visit `https://yourdomain.com/admin`. It asks for a one-time setup code, saved in
    `storage/admin/setup-code.txt`; open that file with your hosting File Manager. Then choose your
    username and password. Do this right after uploading, so nobody else can claim the admin.
-5. In the admin, go through the **Launch checklist** on the dashboard (email, contact details,
+5. In **Admin → Photos**, click **Save photos to this website** (stores the site's photos on your
+   hosting so they load fast).
+6. In the admin, go through the **Launch checklist** on the dashboard (email, contact details,
    founder profile, legal dates and so on).
-6. Once SSL is active, uncomment the HTTPS redirect (and optionally HSTS) in `.htaccess`.
-7. Submit `https://yourdomain.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+7. Once SSL is active, uncomment the HTTPS redirect (and optionally HSTS) in `.htaccess`.
+8. Submit `https://yourdomain.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
 
 Image uploads up to 25 MB work on hosts that read `.user.ini`. If large uploads fail, raise
 `upload_max_filesize` and `post_max_size` in cPanel → MultiPHP INI Editor.
@@ -47,7 +49,7 @@ Image uploads up to 25 MB work on hosts that read `.user.ini`. If large uploads 
 | **Services** | Add, edit, reorder or remove services; each gets its own page and address |
 | **Pages** | SEO titles/descriptions and header text for every other page |
 | **FAQs, Training, Resources, Testimonials** | Lists you can add to, reorder and remove. Each resource guide has its own page |
-| **Photos, Media library** | Drag-and-drop uploads that are automatically rotated, resized, compressed and cropped to fit, with a focus point |
+| **Photos, Media library** | Real photos for every page and the starter blog posts (free Unsplash photos). **Save photos to this website** stores copies on your own site so they load faster and don't depend on Unsplash. Or drag and drop your own: uploads are automatically rotated, resized, compressed and cropped to fit, with a focus point |
 | **Page URLs** | The web address of every page (e.g. `/about` → `/about-us`). Old addresses redirect automatically and all links update |
 | **Blog settings, News sources, Legal pages** | Blog text and categories, news feeds, Privacy Policy and Terms |
 | **Email** | Send form submissions by **SMTP** (Gmail, Outlook/Microsoft 365, Zoho, your host), **Resend API** or PHP mail. Optional automatic reply to visitors. **Send test** button |
@@ -97,6 +99,7 @@ includes/
   components/, layout/, templates/   Reusable UI
   mailer.php             SMTP, Resend and PHP mail()
   media.php              Image processing for uploads
+  photos.php             Saves the site's Unsplash photos onto your own hosting
   appearance.php         Palettes and custom accent color
   blog.php, forms.php, functions.php, assistant-engine.php, news.php, storage.php
 assets/                  CSS, JS, fonts, images; uploads in assets/uploads/

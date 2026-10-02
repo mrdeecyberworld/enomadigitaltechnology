@@ -166,6 +166,10 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
     foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
         $candidates[] = 'img/photos/' . $key . '.' . $ext;
     }
+    // The Unsplash photo saved onto this website (Admin → Photos → Save photos).
+    if (($stock = stock_local($key, (string) ($img['id'] ?? ''))) !== null) {
+        $candidates[] = $stock;
+    }
     foreach ($candidates as $local) {
         if (is_file(SITE_ROOT . '/assets/' . $local)) {
             $src = asset($local);

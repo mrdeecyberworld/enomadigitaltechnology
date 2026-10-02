@@ -18,6 +18,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
     'eyebrow' => page_text('about', 'eyebrow'),
     'text'    => page_text('about', 'intro'),
     'crumbs'  => $crumbs,
+    'image'   => 'about',
 ]);
 ?>
 

@@ -185,7 +185,7 @@ function admin_sections(): array
         'images' => [
             'title' => 'Photos',
             'icon'  => 'monitor-check',
-            'intro' => 'Photos used across the site. Upload your own image, or use an Unsplash photo ID. Always write alt text that describes the photo.',
+            'intro' => 'Photos used across the site. Upload your own image, or use an Unsplash photo ID (unsplash.com, free to use). Always write alt text that describes the photo.',
             'schema' => ['type' => 'group', 'fields' => array_map(
                 static fn (string $key) => $f($key, (image_usage()[$key] ?? ucfirst($key) . ' photo'), 'group', ['fields' => [
                     $f('file', 'Uploaded image', 'image', ['hint' => 'Takes priority over the Unsplash ID.']),
@@ -325,7 +325,15 @@ function image_usage(): array
         'training'   => 'Homepage training section + Training page',
         'cloud'      => 'Cloud & Digital Technology page',
         'consulting' => 'Technology Consulting page',
-        'team'       => 'About page',
+        'team'       => 'About page (our story section)',
         'services'   => 'Services page',
+        'people'     => 'Homepage about section',
+        'about'      => 'About page header',
+        'blog'       => 'Blog page header',
+        'resources'  => 'Resources page header',
+        'post-mfa'      => 'Starter blog post: Multi-Factor Authentication',
+        'post-phishing' => 'Starter blog post: Phishing signs',
+        'post-website'  => 'Starter blog post: Website essentials',
+        'post-backup'   => 'Starter blog post: 3-2-1 Backup Rule',
     ];
 }

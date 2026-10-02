@@ -280,4 +280,13 @@
         .catch(function () { grid.innerHTML = '<p class="hint">Upload failed. Try again.</p>'; });
     });
   }
+
+  // Long-running buttons: show progress and prevent double submits.
+  document.addEventListener('submit', function (e) {
+    var btn = e.target.querySelector('button[data-busy-label]');
+    if (!btn) return;
+    btn.textContent = btn.getAttribute('data-busy-label');
+    btn.setAttribute('aria-busy', 'true');
+    setTimeout(function () { btn.disabled = true; }, 0);
+  });
 })();

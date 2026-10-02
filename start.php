@@ -90,6 +90,11 @@ foreach (['storage', 'assets/uploads'] as $dir) {
     }
 }
 
+// Save the site's photos onto this computer (first run; needs internet, skipped when offline).
+if (getenv('ENOMA_SKIP_PHOTOS') !== '1') {
+    passthru(escapeshellarg(PHP_BINARY) . ' ' . implode(' ', $flags) . ' ' . escapeshellarg(__DIR__ . '/includes/cli/download-photos.php'));
+}
+
 // Admin setup code (first run only).
 $usersFile = __DIR__ . '/storage/admin/users.json';
 $codeFile = __DIR__ . '/storage/admin/setup-code.txt';

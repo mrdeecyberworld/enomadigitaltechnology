@@ -17,6 +17,21 @@ $file = admin_section_file($key);
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     admin_csrf_check();
+    if ($key === 'images' && isset($_POST['save_photos'])) {
+        $r = stock_download_all();
+        if ($r['offline']) {
+            flash('This server couldn’t reach Unsplash, so no photos were saved. Photos keep loading from Unsplash in the meantime. Try again later, or ask your host whether outgoing connections are allowed.', 'error');
+        } elseif ($r['failed']) {
+            $list = [];
+            foreach ($r['failed'] as $slot => $why) {
+                $list[] = (image_usage()[$slot] ?? $slot) . ': ' . $why;
+            }
+            flash('Saved ' . $r['saved'] . ' photo' . ($r['saved'] === 1 ? '' : 's') . '. Not saved: ' . implode('; ', $list) . '.', 'error');
+        } else {
+            flash($r['saved'] ? 'Saved ' . $r['saved'] . ' photo' . ($r['saved'] === 1 ? '' : 's') . ' to your website. They now load from your own site.' : 'All photos are already saved on your website.');
+        }
+        redirect('/admin/edit?section=images');
+    }
     if (isset($_POST['reset'])) {
         if (($_POST['confirm_reset'] ?? '') === 'yes') {
             @unlink($file);
@@ -128,6 +143,28 @@ admin_header($section['title'], 'edit:' . $key);
     <p class="muted"><?= e($section['intro']) ?></p>
   </div>
 </header>
+
+<?php if ($key === 'images'): ?>
+  <?php $stockSlots = stock_slots(); $stockSaved = count(array_filter($stockSlots)); ?>
+  <section class="panel photo-store">
+    <div>
+      <h2>Photos stored on your website</h2>
+      <p class="muted">
+        <strong><?= $stockSaved ?> of <?= count($stockSlots) ?></strong> Unsplash photos are saved on this website.
+        Saved photos load faster, keep visitors' browsing private and don't depend on Unsplash.
+        <?php if ($stockSaved < count($stockSlots)): ?>The others load from Unsplash until you save them.<?php endif; ?>
+        When you change a photo ID, save again.
+      </p>
+    </div>
+    <?php if ($stockSaved < count($stockSlots)): ?>
+    <form method="post">
+      <?= csrf_field() ?>
+      <input type="hidden" name="save_photos" value="1">
+      <button type="submit" class="btn btn--primary" data-busy-label="Saving photos… this can take a minute"><?= icon('download', 'icon icon-sm') ?> Save photos to this website</button>
+    </form>
+    <?php endif; ?>
+  </section>
+<?php endif; ?>
 
 <form method="post" class="editor" data-editor>
   <?= csrf_field() ?>

@@ -7,6 +7,7 @@
 return [
     [
         'slug'     => 'multi-factor-authentication-explained',
+        'cover'    => 'post-mfa',
         'title'    => 'Multi-Factor Authentication Explained: The Simplest Way to Protect Your Accounts',
         'category' => 'cybersecurity',
         'tags'     => ['MFA', 'Account security', 'Passwords'],
@@ -57,6 +58,7 @@ MD,
     ],
     [
         'slug'     => 'how-to-spot-a-phishing-email',
+        'cover'    => 'post-phishing',
         'title'    => '7 Signs an Email Is a Phishing Attempt',
         'category' => 'cybersecurity',
         'tags'     => ['Phishing', 'Email security', 'Scams'],
@@ -108,6 +110,7 @@ MD,
     ],
     [
         'slug'     => 'small-business-website-essentials',
+        'cover'    => 'post-website',
         'title'    => 'What Every Small Business Website Needs',
         'category' => 'web-development',
         'tags'     => ['Small business', 'Website design', 'SEO'],
@@ -150,6 +153,7 @@ MD,
     ],
     [
         'slug'     => 'the-3-2-1-backup-rule',
+        'cover'    => 'post-backup',
         'title'    => 'The 3-2-1 Backup Rule: A Simple Plan to Protect Your Files',
         'category' => 'cloud',
         'tags'     => ['Backups', 'Ransomware', 'Data protection'],

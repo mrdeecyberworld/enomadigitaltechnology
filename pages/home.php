@@ -206,7 +206,7 @@ require INC . '/layout/header.php';
       <?php if (founder_ready() || viewer_is_admin()): ?>
         <?= founder_card() ?>
       <?php else: ?>
-        <div class="media-frame media-frame--tall"><?= photo('team', '(min-width: 1024px) 45vw, 100vw') ?></div>
+        <div class="media-frame media-frame--tall"><?= photo('people', '(min-width: 1024px) 45vw, 100vw') ?></div>
       <?php endif; ?>
     </div>
     <div class="split__content">

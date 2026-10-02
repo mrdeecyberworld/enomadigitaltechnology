@@ -82,7 +82,9 @@ visit `/admin`). Stop with **Ctrl + C**.
 
 ## Good to know
 
-- **Photos from Unsplash** need an internet connection. Images you upload in the admin work offline.
+- **Photos:** the first time you start the site with internet, the start window saves all the
+  site's photos onto your computer ("Saving 17 photos..."). After that they work offline.
+  Images you upload in the admin always work offline.
 - **Email** works locally too: set it up in Admin → Email and use **Save & send test**.
   (PHP mail() usually does *not* work on a personal computer; use SMTP or Resend.)
 - **News headlines** (Admin → Tech & security news) need an internet connection.
