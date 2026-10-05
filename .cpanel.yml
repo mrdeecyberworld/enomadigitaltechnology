@@ -1,0 +1,8 @@
+---
+# cPanel → Git Version Control → Manage → Pull or Deploy → "Deploy HEAD Commit"
+# copies the website into public_html. See DEPLOY-CPANEL.md.
+# To deploy somewhere else (for example an addon domain's folder), change DEPLOYPATH.
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/public_html/
+    - /bin/bash deploy/cpanel-deploy.sh

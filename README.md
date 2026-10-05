@@ -19,6 +19,11 @@ Docker users can run `docker compose up --build` instead.
 
 ## Put it on your web hosting
 
+**With cPanel Git™ Version Control (recommended):** see **[DEPLOY-CPANEL.md](DEPLOY-CPANEL.md)**.
+The website is copied from GitHub into `public_html`, and future updates take two clicks.
+
+**By uploading files instead:**
+
 1. Upload **everything in this folder** to your web root (usually `public_html/`), including the hidden
    `.htaccess` and `.user.ini` files.
 2. Make sure the site uses PHP 8.1 or newer (cPanel → *Select PHP Version* / *MultiPHP Manager*).

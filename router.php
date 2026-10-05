@@ -11,7 +11,7 @@ $path = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/');
 $root = __DIR__;
 
 // Private folders and files are never served.
-if (preg_match('#^/(includes|storage|pages|admin/includes)(/|$)|^/(config\.sample\.php|router\.php|README\.md|LOCAL-SETUP\.md|Dockerfile|docker-compose\.yml|\.user\.ini|start[.-][^/]*)$|/\.#', $path)
+if (preg_match('#^/(includes|storage|pages|deploy|admin/includes)(/|$)|^/(config\.sample\.php|router\.php|README\.md|LOCAL-SETUP\.md|DEPLOY-CPANEL\.md|Dockerfile|docker-compose\.yml|\.user\.ini|start[.-][^/]*)$|/\.#', $path)
     || preg_match('#^/assets/uploads/.*\.(php\d?|phtml|phar|html?|svg)$#i', $path)) {
     http_response_code(403);
     exit('Forbidden');

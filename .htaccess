@@ -15,9 +15,9 @@ ErrorDocument 404 /index.php
   # RewriteRule ^ https://enomadigitaltech.com%{REQUEST_URI} [L,R=301]
 
   # Block private folders and files.
-  RewriteRule ^(includes|storage|pages)(/|$) - [F,L]
+  RewriteRule ^(includes|storage|pages|deploy)(/|$) - [F,L]
   RewriteRule ^admin/includes(/|$) - [F,L]
-  RewriteRule ^(config\.sample\.php|router\.php|README\.md|LOCAL-SETUP\.md|Dockerfile|docker-compose\.yml|start[.-][^/]*|\.dockerignore|\.user\.ini|\.git.*)$ - [F,L]
+  RewriteRule ^(config\.sample\.php|router\.php|README\.md|LOCAL-SETUP\.md|DEPLOY-CPANEL\.md|Dockerfile|docker-compose\.yml|start[.-][^/]*|\.dockerignore|\.user\.ini|\.cpanel\.yml|\.git.*)$ - [F,L]
 
   # Admin and API scripts without ".php": /admin/login, /api/ai-assistant
   RewriteCond %{REQUEST_FILENAME} !-f
