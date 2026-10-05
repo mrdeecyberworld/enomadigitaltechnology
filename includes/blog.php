@@ -42,7 +42,7 @@ function blog_add_seed_covers(): void
     }
     foreach (content_default('blog-seed') as $seed) {
         $file = blog_dir() . '/' . $seed['slug'] . '.json';
-        $post = is_file($file) ? json_read($file) : null;
+        $post = json_read($file);
         if (is_array($post) && ($post['cover'] ?? '') === '' && !empty($seed['cover'])) {
             $post['cover'] = $seed['cover'];
             blog_write($post);
@@ -63,8 +63,8 @@ function blog_write(array $post): bool
 function blog_delete(string $id): void
 {
     $id = preg_replace('/[^a-z0-9-]/', '', $id);
-    if ($id !== '' && is_file(blog_dir() . '/' . $id . '.json')) {
-        unlink(blog_dir() . '/' . $id . '.json');
+    if ($id !== '') {
+        store_delete(blog_dir() . '/' . $id . '.json');
     }
 }
 
@@ -94,7 +94,7 @@ function blog_posts(bool $includeDrafts = false): array
     }
     blog_seed_if_needed();
     $posts = [];
-    foreach (glob(blog_dir() . '/*.json') ?: [] as $file) {
+    foreach (store_list('blog') as $file) {
         $p = json_read($file);
         if (!is_array($p)) {
             continue;

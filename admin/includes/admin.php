@@ -121,7 +121,7 @@ function redirect(string $to): never
 function unread_count(): int
 {
     $n = 0;
-    foreach (glob(storage_dir('submissions') . '/*.json') ?: [] as $file) {
+    foreach (store_list('submissions') as $file) {
         $m = json_read($file, []);
         if (empty($m['read'])) {
             $n++;

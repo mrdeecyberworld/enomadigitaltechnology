@@ -261,7 +261,7 @@ function media_delete(string $name): bool
     foreach ((array) $meta['variants'] as $size) {
         @unlink(media_upload_dir() . '/' . $stem . '-' . (int) $size . '.' . $ext);
     }
-    @unlink(media_meta_file($name));
+    store_delete(media_meta_file($name));
     return unlink($file);
 }
 

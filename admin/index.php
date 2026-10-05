@@ -4,13 +4,13 @@ require __DIR__ . '/includes/admin.php';
 require_admin();
 
 $messages = [];
-foreach (array_reverse(glob(storage_dir('submissions') . '/*.json') ?: []) as $file) {
+foreach (array_reverse(store_list('submissions')) as $file) {
     $messages[] = json_read($file, []);
     if (count($messages) >= 5) {
         break;
     }
 }
-$total = count(glob(storage_dir('submissions') . '/*.json') ?: []);
+$total = count(store_list('submissions'));
 $founder = cfg('founder', []);
 $legal = content('legal');
 $checklist = [

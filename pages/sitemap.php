@@ -10,10 +10,10 @@ header('Content-Type: application/xml; charset=utf-8');
 header_remove('Content-Security-Policy');
 
 $latest = static function (string ...$files): string {
-    $times = array_map(static fn ($f) => is_file($f) ? filemtime($f) : 0, $files);
+    $times = array_map(static fn ($f) => store_mtime($f), $files);
     return date('Y-m-d', max($times) ?: time());
 };
-$contentFile = static fn (string $name): string => is_file(content_override_file($name)) ? content_override_file($name) : INC . '/content/' . $name . '.php';
+$contentFile = static fn (string $name): string => store_exists(content_override_file($name)) ? content_override_file($name) : INC . '/content/' . $name . '.php';
 
 $priorities = ['services' => '0.9', 'about' => '0.7', 'blog' => '0.8', 'resources' => '0.7', 'faq' => '0.6', 'contact' => '0.7', 'quote' => '0.7', 'consultation' => '0.7', 'privacy' => '0.3', 'terms' => '0.3'];
 $entries = [['/', '1.0', $latest($contentFile('home'), $contentFile('site'))]];

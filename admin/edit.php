@@ -36,7 +36,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     }
     if (isset($_POST['reset'])) {
         if (($_POST['confirm_reset'] ?? '') === 'yes') {
-            @unlink($file);
+            store_delete($file);
             flash($section['title'] . ' was reset to the original content.');
         } else {
             flash('Tick the confirmation box to reset this section.', 'error');
@@ -154,7 +154,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     redirect('/admin/edit?section=' . $key);
 }
 
-$hasOverride = is_file($file);
+$hasOverride = store_exists($file);
 admin_header($section['title'], 'edit:' . $key);
 ?>
 <header class="page-head">

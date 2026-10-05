@@ -12,11 +12,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $action = (string) ($_POST['action'] ?? '');
     foreach ($ids as $id) {
         $file = $dir . '/' . $id . '.json';
-        if (!is_file($file)) {
+        if (!store_exists($file)) {
             continue;
         }
         if ($action === 'delete') {
-            unlink($file);
+            store_delete($file);
         } elseif ($action === 'read' || $action === 'unread') {
             $m = json_read($file, []);
             $m['read'] = $action === 'read';
@@ -28,7 +28,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 }
 
 $all = [];
-foreach (glob($dir . '/*.json') ?: [] as $file) {
+foreach (store_list('submissions') as $file) {
     $all[] = json_read($file, []);
 }
 usort($all, static fn ($a, $b) => strcmp($b['created_at'] ?? '', $a['created_at'] ?? ''));
