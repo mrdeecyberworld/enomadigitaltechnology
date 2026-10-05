@@ -185,7 +185,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
   <div class="container">
     <?= section_header('How we work', 'Remote-first, clear and collaborative', null, ['id' => 'how-heading']) ?>
     <div class="detail-grid">
-      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('globe', 'icon icon-sm') ?></span><h3 class="detail-card__title">Remote services across the U.S.</h3><p class="detail-card__text">We deliver our services remotely using secure tools, which keeps things convenient and flexible for clients wherever they are.</p></div>
+      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('globe', 'icon icon-sm') ?></span><h3 class="detail-card__title">Remote services worldwide</h3><p class="detail-card__text">We deliver our services remotely using secure tools, which keeps things convenient and flexible for clients wherever they are.</p></div>
       <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('message-square-text', 'icon icon-sm') ?></span><h3 class="detail-card__title">Plain-language communication</h3><p class="detail-card__text">You will always know what we are doing and why, without jargon.</p></div>
       <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('lock', 'icon icon-sm') ?></span><h3 class="detail-card__title">Respect for your data</h3><p class="detail-card__text">Remote access happens only with your permission, and we only request the access a task requires.</p></div>
     </div>

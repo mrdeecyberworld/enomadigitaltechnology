@@ -8,7 +8,7 @@ return [
         'eyebrow'  => 'Build. Secure. Empower.',
         'headline' => 'Build Smarter. Stay Secure.',
         'text'     => 'Enoma Digital Technologies helps businesses and individuals build professional digital experiences, solve technology challenges, and strengthen their cybersecurity.',
-        'points'   => ['Remote services across the U.S.', 'Security built in from day one', 'Clear, human communication'],
+        'points'   => ['Remote services worldwide', 'Security built in from day one', 'Clear, human communication'],
     ],
 
     'trust' => [

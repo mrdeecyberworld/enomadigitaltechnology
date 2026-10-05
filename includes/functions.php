@@ -255,7 +255,7 @@ function schema_base(): array
         'image' => abs_url('/assets/img/og-image.png'),
         'slogan' => site('tagline'),
         'description' => site('description'),
-        'areaServed' => ['@type' => 'Country', 'name' => 'United States'],
+        'areaServed' => 'Worldwide',
         'knowsAbout' => ['Web development', 'Website design', 'Cybersecurity', 'Cybersecurity awareness training', 'IT support', 'Cloud services', 'Technology consulting'],
     ];
     if (cfg('contact_email')) {
@@ -313,7 +313,7 @@ function schema_service(string $slug, array $svc): array
         'serviceType' => $svc['name'],
         'description' => $svc['summary'],
         'provider' => ['@id' => abs_url('/#organization')],
-        'areaServed' => ['@type' => 'Country', 'name' => 'United States'],
+        'areaServed' => 'Worldwide',
         'url' => abs_url(service_path($slug)),
         'hasOfferCatalog' => [
             '@type' => 'OfferCatalog',

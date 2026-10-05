@@ -25,8 +25,8 @@ return [
         'a' => 'Yes. We offer cybersecurity awareness training and technology education for business teams, schools, community organizations, young people, adults and seniors.',
     ],
     [
-        'q' => 'Do you work with clients in the United States?',
-        'a' => 'Yes. Our services are designed for clients across the United States and are delivered remotely, so location is rarely a barrier.',
+        'q' => 'Do you work with clients outside the United States?',
+        'a' => 'Yes. We are based in the United States and work with clients worldwide. Our services are delivered remotely using secure tools, and we schedule calls and sessions to suit your time zone.',
     ],
     [
         'q' => 'Can you help secure my business website?',

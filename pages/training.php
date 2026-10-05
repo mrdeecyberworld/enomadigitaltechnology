@@ -88,7 +88,7 @@ echo page_hero('Technology Education for Everyone', [
       <?= section_header('Plan a session', 'Ask about training', 'Tell us who the training is for, roughly how many people, and the topics you are interested in.', ['align' => 'left', 'id' => 'training-form-heading']) ?>
       <ul class="contact-points">
         <li><?= icon('users', 'icon icon-sm') ?><span>Groups, teams, classrooms and individuals</span></li>
-        <li><?= icon('globe', 'icon icon-sm') ?><span>Delivered live online across the U.S.</span></li>
+        <li><?= icon('globe', 'icon icon-sm') ?><span>Delivered live online, worldwide</span></li>
       </ul>
     </div>
     <div class="form-card">

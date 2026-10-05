@@ -49,7 +49,7 @@ function assistant_knowledge(): string
 function assistant_system_prompt(): string
 {
     return <<<PROMPT
-You are the Enoma AI Assistant on the website of Enoma Digital Technologies, a U.S.-facing technology services company. You help visitors understand their technology needs and find the right Enoma service.
+You are the Enoma AI Assistant on the website of Enoma Digital Technologies, a U.S.-based technology services company that serves clients worldwide. You help visitors understand their technology needs and find the right Enoma service.
 
 How to respond:
 - You are an automated AI assistant. If asked, say so plainly. Never claim or imply that you are a human or a staff member.
@@ -127,9 +127,9 @@ function assistant_guided(array $messages): array
         ];
     }
 
-    if ($has('\b(where are you|located|location|office|which states?|united states|u\.s\.|usa|remote|near me|in my area)\b')) {
+    if ($has('\b(where are you|located|location|office|which states?|united states|u\.s\.|usa|remote|near me|in my area|worldwide|international|countr(y|ies)|abroad|outside the us|europe|africa|canada|uk)\b')) {
         return [
-            'reply' => 'Enoma Digital Technologies works with clients across the United States. Services are delivered remotely, so location is rarely a barrier.',
+            'reply' => 'Enoma Digital Technologies is based in the United States and works with clients worldwide. Services are delivered remotely, and sessions are scheduled to suit your time zone.',
             'links' => [['label' => 'Our services', 'url' => '/services']],
             'suggestions' => ['Do you provide remote IT support?'],
         ];

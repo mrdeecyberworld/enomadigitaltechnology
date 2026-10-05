@@ -11,7 +11,7 @@ return [
     'tagline'     => 'Build. Secure. Empower.',
     'statement'   => 'Technology solutions built around your needs.',
     'description' => 'Enoma Digital Technologies provides web development, cybersecurity, IT support and technology training for businesses and individuals.',
-    'service_area' => 'Remote technology services for clients across the United States.',
+    'service_area' => 'Remote technology services for clients worldwide.',
 
     // Primary navigation (kept short; the logo links home and every service is in
     // the Services menu). 'children' => 'services' renders the services menu.

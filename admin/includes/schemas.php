@@ -41,7 +41,7 @@ function admin_sections(): array
                 $f('tagline', 'Primary tagline'),
                 $f('statement', 'Supporting statement'),
                 $f('description', 'Default site description', 'textarea', ['rows' => 2, 'hint' => 'Used for search engines and social sharing when a page has no description of its own.']),
-                $f('service_area', 'Service area statement', 'text', ['hint' => 'Shown in the footer. Keep it accurate: e.g. remote services across the U.S.']),
+                $f('service_area', 'Service area statement', 'text', ['hint' => 'Shown in the footer. Keep it accurate: e.g. remote services for clients worldwide']),
                 $f('nav', 'Main menu', 'repeater', ['item_label' => 'label', 'fields' => [
                     $f('label', 'Menu label'),
                     $f('path', 'Link', 'text', ['hint' => 'e.g. /about or /cybersecurity']),
@@ -386,7 +386,7 @@ function admin_section_file(string $section): string
 function image_usage(): array
 {
     return [
-        'hero'       => 'Homepage hero (top of the homepage)',
+        'hero'       => 'Homepage hero (not shown now: the top of the homepage uses a designed graphic)',
         'cyber'      => 'Homepage cybersecurity section + Cybersecurity page',
         'webdev'     => 'Web Development page',
         'itsupport'  => 'IT Support page',

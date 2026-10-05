@@ -18,11 +18,11 @@ return [
     ],
     'about' => [
         'meta_title'       => 'About Enoma Digital Technologies | Technology With a Human Approach',
-        'meta_description' => 'Enoma Digital Technologies was created to make technology more accessible, practical and secure for small businesses, organizations and individuals across the United States.',
+        'meta_description' => 'Enoma Digital Technologies was created to make technology more accessible, practical and secure for small businesses, organizations and individuals worldwide.',
         'eyebrow'          => 'About Enoma',
         'heading'          => 'Technology With a Human Approach',
         'intro'            => 'Enoma Digital Technologies was created to make technology more accessible, practical and secure for the people and organizations who depend on it every day.',
-        'body'             => 'We work with small businesses, startups, entrepreneurs, professionals, nonprofits, schools and individuals, including people who simply need a patient guide to everyday technology. Our services are delivered remotely to clients across the United States.',
+        'body'             => 'We work with small businesses, startups, entrepreneurs, professionals, nonprofits, schools and individuals, including people who simply need a patient guide to everyday technology. Our services are delivered remotely to clients in the United States and around the world.',
     ],
     'resources' => [
         'meta_title'       => 'Cybersecurity & Technology Resources | Enoma Digital Technologies',
@@ -49,7 +49,7 @@ return [
         'side_points'      => [
             'Tell us what you need in your own words. No technical jargon required.',
             'We review every message and reply by email.',
-            'Remote services for clients across the United States.',
+            'Remote services for clients worldwide.',
         ],
     ],
     'quote' => [
