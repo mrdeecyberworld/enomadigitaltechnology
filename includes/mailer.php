@@ -26,6 +26,8 @@ function mail_settings(): array
         $m['to'] = $m['to'] ?: (string) cfg('forms.to');
         $m['from_email'] = $m['from_email'] ?: (string) cfg('forms.from');
     }
+    // Form messages go to the public contact address unless another one is set in Admin → Email.
+    $m['to'] = $m['to'] ?: (string) cfg('contact_email');
     $m['from_email'] = $m['from_email'] ?: 'no-reply@' . (parse_url((string) cfg('base_url'), PHP_URL_HOST) ?: 'localhost');
     $m['from_name'] = $m['from_name'] ?: (string) site('name');
     return $m;

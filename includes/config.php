@@ -25,7 +25,9 @@ $config = [
 
     // ── Contact details ─────────────────────────────────────────────────
     // Leave empty until real details exist. Empty values are hidden on the
-    // site and omitted from structured data (nothing is invented).
+    // site and omitted from structured data (nothing is invented). When set
+    // (Admin → Settings), they show on the Contact, Quote and Consultation
+    // pages and in the footer, and form messages are emailed to this address.
     'contact_email' => '',
     'contact_phone' => '',
 

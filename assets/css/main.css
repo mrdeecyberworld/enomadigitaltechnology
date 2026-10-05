@@ -1573,3 +1573,9 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
   .btn-primary::after { display: none; }
   .media-frame:hover img { transform: none; }
 }
+
+/* Direct contact (Contact, Quote and Consultation pages) */
+.direct-contact { display: grid; gap: 10px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+.direct-contact__link { display: flex; align-items: center; gap: 12px; min-width: 0; color: var(--text); font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+.direct-contact__link:hover { color: var(--accent-text); }
+.direct-contact__kind { display: block; color: var(--text-soft); font-size: .78rem; font-weight: 500; }

@@ -56,7 +56,19 @@ echo page_hero($fp['title'], ['eyebrow' => $fp['eyebrow'], 'text' => $fp['intro'
           <?= button('Open Scheduler', (string) cfg('booking_url'), 'primary', 'calendar-check', ['target' => '_blank', 'rel' => 'noopener']) ?>
         </div>
       <?php elseif ($fp['type'] === 'consultation'): ?>
-        <?= setup_notice('Add an online scheduling link (booking_url) in your private config to show a "pick a time" button here.') ?>
+        <?= setup_notice('Add an online scheduling link in Admin → Settings to show a "pick a time" button here.') ?>
+      <?php endif; ?>
+
+      <?php if (cfg('contact_email') || cfg('contact_phone')): ?>
+        <div class="direct-contact">
+          <p class="side-links__label">Prefer to reach us directly?</p>
+          <?php if (cfg('contact_email')): ?>
+            <a class="direct-contact__link" href="mailto:<?= e(cfg('contact_email')) ?>"><span class="contact-points__icon"><?= icon('mail', 'icon icon-sm') ?></span><span><span class="direct-contact__kind">Email</span><?= e(cfg('contact_email')) ?></span></a>
+          <?php endif; ?>
+          <?php if (cfg('contact_phone')): ?>
+            <a class="direct-contact__link" href="tel:<?= e(preg_replace('/[^0-9+]/', '', (string) cfg('contact_phone'))) ?>"><span class="contact-points__icon"><?= icon('phone', 'icon icon-sm') ?></span><span><span class="direct-contact__kind">Phone</span><?= e(cfg('contact_phone')) ?></span></a>
+          <?php endif; ?>
+        </div>
       <?php endif; ?>
 
       <div class="side-links">
