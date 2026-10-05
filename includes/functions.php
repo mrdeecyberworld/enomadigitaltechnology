@@ -199,7 +199,8 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
         // A built-in backup photo the browser switches to if Unsplash can't be reached (see main.js).
         $backup = content_default('fallback-photos')[$key] ?? null;
         if ($backup) {
-            $extra = ' data-fallback="' . e(asset($backup['file'])) . '" data-fallback-alt="' . e($backup['alt']) . '"';
+            $extra = ' data-fallback="' . e(asset($backup['file'])) . '" data-fallback-alt="' . e($backup['alt']) . '"'
+                . (!empty($backup['focus']) ? ' data-fallback-class="focus-' . e($backup['focus']) . '"' : '');
         }
     }
 

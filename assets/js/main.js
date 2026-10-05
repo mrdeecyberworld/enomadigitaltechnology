@@ -146,6 +146,7 @@
           img.removeAttribute('data-fallback');
           img.removeAttribute('srcset');
           img.alt = img.getAttribute('data-fallback-alt') || img.alt;
+          if (img.getAttribute('data-fallback-class')) img.classList.add(img.getAttribute('data-fallback-class'));
           img.src = backup;
           return;
         }
