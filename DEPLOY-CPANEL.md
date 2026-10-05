@@ -33,6 +33,17 @@ The GitHub repository is public, so no keys or passwords are needed.
    *Run AutoSSL*), open `public_html/.htaccess` in File Manager and remove the `#` in front of
    the two HTTPS redirect lines near the top.
 
+## The one-command way (install, update or repair)
+
+In cPanel → **Terminal**, paste this and press Enter:
+
+```
+cd ~/repositories/enomadigitaltechnology && git pull && bash deploy/install.sh
+```
+
+It downloads the latest version, copies it into `public_html` (keeping your content), fixes
+permissions, tests the site and shows your admin setup code. Everything should say ✓.
+
 ## Updating the website later
 
 1. cPanel → **Git™ Version Control** → **Manage** → **Pull or Deploy**.
