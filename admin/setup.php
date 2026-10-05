@@ -1,7 +1,7 @@
 <?php
 /**
  * First-run setup: create the admin account.
- * Requires the one-time setup code written to storage/admin/setup-code.txt,
+ * Requires the one-time setup code written to storage/admin/setup-code.txt (or enoma-storage/ on hosting),
  * which only someone with hosting (File Manager / FTP) access can read.
  */
 declare(strict_types=1);
@@ -52,7 +52,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
 auth_page('Set up your admin account', function () use ($errors, $username) { ?>
   <p class="muted">To prove you own this website, enter the setup code saved on your server at
-    <code>storage/admin/setup-code.txt</code>. Open it with your hosting File Manager or FTP.</p>
+    <code><?= e(storage_display_path('admin/setup-code.txt')) ?></code>. Open it with your hosting File Manager or FTP.</p>
   <?php foreach ($errors as $err): ?><div class="notice notice--error" role="alert"><?= e($err) ?></div><?php endforeach; ?>
   <form method="post" class="stack">
     <?= csrf_field() ?>

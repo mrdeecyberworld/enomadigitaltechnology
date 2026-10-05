@@ -29,7 +29,8 @@ The website is copied from GitHub into `public_html`, and future updates take tw
 2. Make sure the site uses PHP 8.1 or newer (cPanel → *Select PHP Version* / *MultiPHP Manager*).
 3. Make sure `storage/` and `assets/uploads/` are writable (usually already true; `755` or `775`).
 4. Visit `https://yourdomain.com/admin`. It asks for a one-time setup code, saved in
-   `storage/admin/setup-code.txt`; open that file with your hosting File Manager. Then choose your
+   `storage/admin/setup-code.txt` (or `enoma-storage/admin/setup-code.txt` when deployed with
+   cPanel Git; the admin page shows the exact place); open it with your hosting File Manager. Then choose your
    username and password. Do this right after uploading, so nobody else can claim the admin.
 5. In **Admin → Photos**, click **Save photos to this website** (stores the site's photos on your
    hosting so they load fast).

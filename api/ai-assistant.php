@@ -101,7 +101,7 @@ respond(assistant_guided($messages) + ['mode' => 'guided']);
 
 function rate_limit_file(): ?string
 {
-    $dir = SITE_ROOT . '/storage/ratelimit';
+    $dir = storage_root() . '/ratelimit';
     if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
         return null;
     }

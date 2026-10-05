@@ -38,5 +38,5 @@ auth_page('Log in', function () use ($error, $username) { ?>
     <div class="field"><label for="password">Password</label><input type="password" id="password" name="password" required autocomplete="current-password"></div>
     <button class="btn btn--primary btn--block" type="submit">Log in</button>
   </form>
-  <p class="muted small">Forgot your password? Delete <code>storage/admin/users.json</code> with your hosting File Manager, then visit this page again to set up a new account.</p>
+  <p class="muted small">Forgot your password? Delete <code><?= e(storage_display_path('admin/users.json')) ?></code> with your hosting File Manager, then visit this page again to set up a new account.</p>
 <?php });

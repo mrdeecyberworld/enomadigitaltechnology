@@ -6,9 +6,35 @@
 
 declare(strict_types=1);
 
+/**
+ * Where private data lives. On hosting, the deploy script creates
+ * "enoma-storage" next to the web folder (e.g. /home/you/enoma-storage beside
+ * public_html), so it can never be reached from the web, even if the server
+ * ignores .htaccess. Otherwise (e.g. on your computer) storage/ is used.
+ * ENOMA_STORAGE can point somewhere else.
+ */
+function storage_root(): string
+{
+    static $root = null;
+    if ($root === null) {
+        $env = (string) getenv('ENOMA_STORAGE');
+        $outside = dirname(__DIR__, 2) . '/enoma-storage';
+        $root = rtrim($env !== '' ? $env : (@is_dir($outside) ? $outside : dirname(__DIR__) . '/storage'), '/');
+    }
+    return $root;
+}
+
+/** A storage path as you would find it in cPanel File Manager (relative to your home folder). */
+function storage_display_path(string $sub = ''): string
+{
+    $path = storage_root() . ($sub !== '' ? '/' . ltrim($sub, '/') : '');
+    $home = dirname(__DIR__, 2) . '/';
+    return str_starts_with($path, $home) && !str_starts_with($path, dirname(__DIR__) . '/') ? substr($path, strlen($home)) : 'public_html/storage' . ($sub !== '' ? '/' . ltrim($sub, '/') : '');
+}
+
 function storage_dir(string $sub = ''): string
 {
-    $dir = dirname(__DIR__) . '/storage' . ($sub !== '' ? '/' . trim($sub, '/') : '');
+    $dir = storage_root() . ($sub !== '' ? '/' . trim($sub, '/') : '');
     if (!is_dir($dir)) {
         @mkdir($dir, 0750, true);
     }

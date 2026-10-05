@@ -24,8 +24,9 @@ The GitHub repository is public, so no keys or passwords are needed.
    → **Pull or Deploy** tab → **Deploy HEAD Commit**. After a few seconds, *Last Deployment
    Information* shows the date. The website is now in `public_html`.
 5. **Create your admin login.** Visit `https://yourdomain.com/admin`. It asks for a setup
-   code: in **File Manager**, open `public_html/storage/admin/setup-code.txt` and copy the
-   code. Then choose your username and password.
+   code: in **File Manager** (it opens in your home folder), open
+   `enoma-storage/admin/setup-code.txt` and copy the code. Then choose your username and
+   password. The admin page shows the exact location too.
 6. **Finish setup in the admin:** Photos → **Save photos to this website**, Email, Settings
    (contact details) and the **Launch checklist** on the dashboard.
 7. **Turn on HTTPS:** once your SSL certificate is active (cPanel → **SSL/TLS Status** →
@@ -38,12 +39,29 @@ The GitHub repository is public, so no keys or passwords are needed.
 2. Click **Update from Remote** (downloads the latest version from GitHub).
 3. Click **Deploy HEAD Commit** (copies it to `public_html`).
 
+## Your private data
+
+Messages, settings, blog posts and your admin login are kept in **`enoma-storage`** in your
+home folder, next to `public_html`, so they can never be opened from the web. Deploy creates
+it and moves any data saved earlier in `public_html/storage`. Forgot your password? Delete
+`enoma-storage/admin/users.json` and visit `/admin` again.
+
+## Troubleshooting
+
+- **The site shows a list of files instead of the website:** the website's `.htaccess` is
+  missing or ignored. Deploy again (it replaces any old `.htaccess`; the previous one is kept
+  as `.htaccess.before-deploy`). If the listing stays, ask your host: "Please enable
+  `.htaccess` (AllowOverride All) and mod_rewrite for public_html."
+- **Deploy failed:** cPanel keeps a log in `.cpanel/logs/` (in your home folder; turn on
+  *Show Hidden Files* in File Manager settings). Send it to your developer.
+
 ## Good to know
 
 - **What deploy does:** it runs `deploy/cpanel-deploy.sh` (set up in `.cpanel.yml`), which
   copies the website into `public_html`. It keeps your content, the PHP version setting
-  cPanel adds to `.htaccess`, and anything else already in the folder, and it skips files
-  that are only for running the site on your computer.
+  cPanel adds to `.htaccess`, and anything else already in the folder, skips files that are
+  only for running the site on your computer, and stops with an error if `.htaccess` can't
+  be written.
 - **A different folder** (for example an addon domain): change `DEPLOYPATH` in `.cpanel.yml`.
 - **"Deploy HEAD Commit" is greyed out:** the repository in cPanel has local changes. Never
   edit files inside `repositories/`; edit through the admin panel or in GitHub instead.
