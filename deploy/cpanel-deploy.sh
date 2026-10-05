@@ -44,6 +44,15 @@ if [ -n "$HANDLER" ] && ! grep -q 'BEGIN cPanel-generated handler' "$DEST/.htacc
   printf '\n%s\n' "$HANDLER" >> "$DEST/.htaccess"
 fi
 
+# Standard web permissions, so the web server can read every website file
+# (folders 755, files 644), whatever permissions the copy came with.
+for item in admin api assets includes pages storage; do
+  [ -d "$DEST/$item" ] && find "$DEST/$item" -type d -exec chmod 755 {} + && find "$DEST/$item" -type f -exec chmod 644 {} +
+done
+for f in .htaccess .user.ini index.php config.sample.php favicon.ico favicon.svg robots.txt site.webmanifest; do
+  [ -f "$DEST/$f" ] && chmod 644 "$DEST/$f"
+done
+
 # Check that the website's rules file is in place (it routes every page and blocks private files).
 if ! grep -q 'Enoma' "$DEST/.htaccess" 2>/dev/null; then
   echo "ERROR: $DEST/.htaccess could not be written. Delete it in File Manager and deploy again." >&2
