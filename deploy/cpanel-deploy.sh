@@ -21,6 +21,11 @@ if [ "$SRC" = "$DEST" ]; then
   exit 0
 fi
 mkdir -p "$DEST"
+# Remember the web folder's own permissions (cPanel: 750) so copying never changes them.
+DEST_MODE="$(stat -c '%a' "$DEST" 2>/dev/null || echo 750)"
+# Repair a web folder locked to its owner only (an earlier version of this script did that):
+# the web server needs to enter it.
+[ "$DEST_MODE" = "700" ] && DEST_MODE=750
 
 # Keep cPanel's PHP version block from the live .htaccess, if there is one,
 # then remove the old file so the website's own rules always replace it.
@@ -42,7 +47,8 @@ tar -C "$SRC" \
   --exclude=./Dockerfile --exclude=./docker-compose.yml --exclude=./.dockerignore \
   --exclude='./start-*' --exclude=./start.php --exclude=./router.php \
   --exclude=./LOCAL-SETUP.md --exclude=./README.md \
-  -cf - . | tar -C "$DEST" -xf -
+  -cf - . | tar -C "$DEST" --no-overwrite-dir -xf -
+chmod "$DEST_MODE" "$DEST"
 
 if [ -n "$HANDLER" ]; then
   printf '\n# PHP version set by your host (kept from the previous .htaccess)\n%s\n' "$HANDLER" >> "$DEST/.htaccess"
