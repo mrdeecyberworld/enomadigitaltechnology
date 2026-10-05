@@ -18,7 +18,7 @@ declare(strict_types=1);
 const MEDIA_MAX_BYTES = 25 * 1024 * 1024;
 const MEDIA_MAX_EDGE = 2400;
 const MEDIA_SIZES = [480, 960, 1600];
-const MEDIA_JPEG_QUALITY = 82;
+const MEDIA_JPEG_QUALITY = 88;
 const MEDIA_FOCUS = ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'];
 
 function media_upload_dir(): string
@@ -217,6 +217,10 @@ function media_resize(GdImage $img, int $max, bool $byWidth = false): GdImage
     imagealphablending($out, false);
     imagesavealpha($out, true);
     imagecopyresampled($out, $img, 0, 0, 0, 0, $nw, $nh, $w, $h);
+    // Downscaling softens detail; a light sharpening pass keeps photos crisp.
+    if (!media_has_alpha($out)) {
+        imageconvolution($out, [[-1, -1, -1], [-1, 32, -1], [-1, -1, -1]], 24, 0);
+    }
     return $out;
 }
 

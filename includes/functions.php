@@ -192,8 +192,8 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
     }
 
     if (!isset($src)) {
-        $base = 'https://images.unsplash.com/photo-' . $img['id'] . '?auto=format&fit=crop&q=70';
-        $widths = [480, 768, 1080, 1440, 1920];
+        $base = 'https://images.unsplash.com/photo-' . $img['id'] . '?auto=format&fit=crop&q=85';
+        $widths = [480, 768, 1080, 1440, 1920, 2400];
         $srcset = implode(', ', array_map(static fn (int $width) => $base . '&w=' . $width . ' ' . $width . 'w', $widths));
         $src = $base . '&w=1080';
     }

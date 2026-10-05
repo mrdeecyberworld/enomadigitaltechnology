@@ -164,7 +164,7 @@ function stock_download(string $key, string $id): ?string
     }
     // ENOMA_PHOTO_SOURCE points at a mirror of images.unsplash.com (used for testing).
     $source = rtrim((string) (getenv('ENOMA_PHOTO_SOURCE') ?: 'https://images.unsplash.com'), '/');
-    [$data, $err] = stock_fetch($source . '/photo-' . $id . '?fm=jpg&q=82&w=2400&fit=max');
+    [$data, $err] = stock_fetch($source . '/photo-' . $id . '?fm=jpg&q=92&w=2400&fit=max');
     if ($err !== null) {
         return $err;
     }

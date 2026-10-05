@@ -445,7 +445,7 @@ body.nav-open .site-header::before { background: var(--surface); }
 .media-frame--hero { aspect-ratio: 5 / 4; border: 1px solid rgba(255,255,255,.08); }
 .media-frame--hero::before {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(180deg, transparent 55%, rgba(6, 11, 22, .45));
+  background: linear-gradient(180deg, transparent 65%, rgba(6, 11, 22, .28));
 }
 .media-frame--tall { aspect-ratio: 16 / 11; }
 @media (min-width: 1024px) { .media-frame--tall { aspect-ratio: 4 / 5; } }
@@ -1528,8 +1528,6 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 
 /* Media frames: soft gradient edge and a gentle zoom on hover */
 .media-frame { box-shadow: 0 30px 70px -25px rgba(0, 0, 0, .55), 0 0 0 1px rgba(var(--accent-light-rgb), .14); }
-.media-frame img { transition: transform 1.2s var(--ease); }
-.media-frame:hover img { transform: scale(1.04); }
 
 /* Header: brighter active link and a glowing underline */
 .primary-nav__link[aria-current="page"] { color: var(--text); }
@@ -1571,7 +1569,6 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
   .ticker__track { flex: 1 1 auto; flex-wrap: wrap; justify-content: center; gap: 10px; padding-right: 0; animation: none; }
   .ticker__track[aria-hidden="true"] { display: none; }
   .btn-primary::after { display: none; }
-  .media-frame:hover img { transform: none; }
 }
 
 /* Direct contact (Contact, Quote and Consultation pages) */
