@@ -36,11 +36,36 @@ require INC . '/layout/header.php';
       </ul>
     </div>
 
-    <div class="hero__visual">
+    <div class="hero__visual hero-scene">
       <div class="hero__stage" data-tilt>
-        <div class="media-frame media-frame--hero">
-          <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
-          <span class="media-sheen" aria-hidden="true"></span>
+        <div class="scene-window">
+          <div class="scene-window__bar" aria-hidden="true">
+            <span class="scene-dots"><i></i><i></i><i></i></span>
+            <span class="scene-url"><?= icon('lock', 'icon') ?>yourbusiness.com</span>
+            <span class="scene-live"><i></i>Live</span>
+          </div>
+          <div class="scene-window__body">
+            <div class="scene-site" aria-hidden="true">
+              <div class="scene-site__nav"><b></b><i></i><i></i><i></i><span></span></div>
+              <div class="scene-site__hero">
+                <div class="scene-site__copy">
+                  <span class="scene-chip"><?= icon('sparkles', 'icon') ?>Build. Secure. Empower.</span>
+                  <span class="ln ln--xl"></span><span class="ln ln--lg"></span><span class="ln"></span><span class="ln ln--sm"></span>
+                  <span class="scene-btns"><span></span><span></span></span>
+                </div>
+              </div>
+              <div class="scene-site__cards">
+                <span><?= icon('code-xml', 'icon') ?><i></i><i></i></span>
+                <span><?= icon('shield-check', 'icon') ?><i></i><i></i></span>
+                <span><?= icon('graduation-cap', 'icon') ?><i></i><i></i></span>
+              </div>
+            </div>
+            <div class="scene-photo">
+              <?= photo('hero', '(min-width: 1024px) 24vw, 50vw', ['eager' => true]) ?>
+              <span class="media-sheen" aria-hidden="true"></span>
+            </div>
+            <span class="scene-scan" aria-hidden="true"></span>
+          </div>
         </div>
         <span class="hero__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       </div>
@@ -49,8 +74,12 @@ require INC . '/layout/header.php';
         <span><strong>MFA enabled</strong><small>Account protected</small></span>
       </div>
       <div class="float-card float-card--mid" aria-hidden="true">
-        <span class="float-card__icon float-card__icon--ok"><?= icon('hard-drive', 'icon icon-sm') ?></span>
-        <span><strong>Backup complete</strong><small>Files protected</small></span>
+        <span class="float-card__icon"><?= icon('rocket', 'icon icon-sm') ?></span>
+        <span><strong>Website live</strong><small>Fast, secure, mobile-ready</small></span>
+      </div>
+      <div class="float-card float-card--bottom" aria-hidden="true">
+        <span class="float-card__icon float-card__icon--gold"><?= icon('graduation-cap', 'icon icon-sm') ?></span>
+        <span><strong>Team trained</strong><small>Phishing awareness</small></span>
       </div>
       <span class="hero__ring" aria-hidden="true"></span>
     </div>

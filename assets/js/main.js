@@ -138,7 +138,7 @@
 
   /* ---------- Remote image fallback ---------- */
   function initImages() {
-    document.querySelectorAll('.media-frame img, .post-card__media img').forEach(function (img) {
+    document.querySelectorAll('.media-frame img, .post-card__media img, .scene-photo img').forEach(function (img) {
       function fail() {
         var backup = img.getAttribute('data-fallback');
         if (backup) {
