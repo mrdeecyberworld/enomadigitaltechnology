@@ -175,6 +175,9 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
             $src = asset($local);
             $srcset = media_srcset($local);
             $focus = media_focus_class($local);
+            if ($focus === '' && !empty($img['focus']) && preg_match('/^[a-z-]+$/', (string) $img['focus'])) {
+                $focus = 'focus-' . $img['focus']; // crop focus set for a built-in photo
+            }
             if ($focus !== '') {
                 $class = trim($class . ' ' . $focus);
             }

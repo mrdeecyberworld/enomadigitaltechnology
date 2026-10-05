@@ -48,10 +48,6 @@ require INC . '/layout/header.php';
         <span class="float-card__icon float-card__icon--ok"><?= icon('hard-drive', 'icon icon-sm') ?></span>
         <span><strong>Backup complete</strong><small>Files protected</small></span>
       </div>
-      <div class="float-card float-card--bottom" aria-hidden="true">
-        <span class="float-card__icon"><?= icon('code-xml', 'icon icon-sm') ?></span>
-        <span><strong>Site performance</strong><small class="float-card__bar"><span></span></small></span>
-      </div>
       <span class="hero__ring" aria-hidden="true"></span>
     </div>
   </div>
