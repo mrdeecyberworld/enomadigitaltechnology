@@ -37,6 +37,12 @@ if (preg_match('#^/(admin|api)/.+\.php$#', $path) && is_file($root . $path)) {
     return true;
 }
 
+// Website health check (a real file, run directly like on Apache).
+if ($path === '/check.php') {
+    require $root . '/check.php';
+    return true;
+}
+
 // Everything else goes to the front controller.
 require $root . '/index.php';
 return true;

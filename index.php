@@ -6,6 +6,14 @@
  */
 
 declare(strict_types=1);
+
+// Used by check.php to confirm that clean page addresses (.htaccess rewrites) work.
+if (parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) === '/enoma-rewrite-test') {
+    header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
+    exit('rewrite-ok');
+}
+
 require __DIR__ . '/includes/bootstrap.php';
 
 $requestPath = rawurldecode(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/');
