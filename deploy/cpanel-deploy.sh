@@ -27,6 +27,10 @@ mkdir -p "$DEST"
 HANDLER=""
 if [ -f "$DEST/.htaccess" ]; then
   HANDLER="$(sed -n '/# php -- BEGIN cPanel-generated handler/,/# php -- END cPanel-generated handler/p' "$DEST/.htaccess")"
+  # Some hosts write the PHP handler without cPanel's markers: keep those lines too.
+  if [ -z "$HANDLER" ]; then
+    HANDLER="$(grep -iE '^[[:space:]]*(AddHandler|SetHandler|AddType)[[:space:]].*(php|lsphp)' "$DEST/.htaccess" | grep -v 'Enoma' || true)"
+  fi
   cp "$DEST/.htaccess" "$DEST/.htaccess.before-deploy" 2>/dev/null || true
   rm -f "$DEST/.htaccess"
 fi
@@ -40,8 +44,8 @@ tar -C "$SRC" \
   --exclude=./LOCAL-SETUP.md --exclude=./README.md \
   -cf - . | tar -C "$DEST" -xf -
 
-if [ -n "$HANDLER" ] && ! grep -q 'BEGIN cPanel-generated handler' "$DEST/.htaccess"; then
-  printf '\n%s\n' "$HANDLER" >> "$DEST/.htaccess"
+if [ -n "$HANDLER" ]; then
+  printf '\n# PHP version set by your host (kept from the previous .htaccess)\n%s\n' "$HANDLER" >> "$DEST/.htaccess"
 fi
 
 # Standard web permissions, so the web server can read every website file
