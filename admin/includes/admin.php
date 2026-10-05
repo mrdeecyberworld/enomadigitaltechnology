@@ -44,7 +44,8 @@ function admin_logged_in(): bool
     return true;
 }
 
-function require_admin(): void
+/** Pages call this first. $forPasswordChange lets the Account page open while a temporary password is in use. */
+function require_admin(bool $forPasswordChange = false): void
 {
     if (!admin_is_setup()) {
         header('Location: /admin/setup');
@@ -52,6 +53,11 @@ function require_admin(): void
     }
     if (!admin_logged_in()) {
         header('Location: /admin/login');
+        exit;
+    }
+    // A temporary password must be replaced before anything else.
+    if (!$forPasswordChange && !empty(admin_user()['must_change_password'])) {
+        header('Location: /admin/account');
         exit;
     }
 }

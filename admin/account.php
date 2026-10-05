@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 require __DIR__ . '/includes/admin.php';
-require_admin();
+require_admin(true);
 
 $user = admin_user();
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
@@ -13,6 +13,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         flash('Your current password is not correct.', 'error');
     } elseif (!preg_match('/^[A-Za-z0-9._@-]{3,60}$/', $username)) {
         flash('Username must be 3–60 characters: letters, numbers, dots, dashes or @.', 'error');
+    } elseif (!empty($user['must_change_password']) && $new === '') {
+        flash('Please choose a new password to replace the temporary one.', 'error');
+    } elseif (!empty($user['must_change_password']) && hash_equals($current, $new)) {
+        flash('Your new password must be different from the temporary one.', 'error');
     } elseif ($new !== '' && mb_strlen($new) < 10) {
         flash('New password must be at least 10 characters.', 'error');
     } elseif ($new !== '' && $new !== ($_POST['password2'] ?? '')) {
@@ -21,6 +25,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $user['username'] = $username;
         if ($new !== '') {
             $user['password_hash'] = password_hash($new, PASSWORD_DEFAULT);
+            unset($user['must_change_password']);
         }
         json_write(admin_users_file(), $user);
         admin_login($username);
@@ -32,6 +37,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 admin_header('Account', 'account');
 ?>
 <header class="page-head"><div><h1>Account</h1><p class="muted">Change your admin username or password.</p></div></header>
+<?php if (!empty($user['must_change_password'])): ?>
+  <div class="notice notice--warn" role="alert"><strong>You're using a temporary password.</strong> Choose your own username and password below to continue. The temporary password stops working as soon as you save.</div>
+<?php endif; ?>
 <form method="post" class="panel stack narrow">
   <?= csrf_field() ?>
   <div class="field"><label for="username">Username</label><input id="username" name="username" value="<?= e($user['username']) ?>" required autocomplete="username"></div>

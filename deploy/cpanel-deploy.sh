@@ -88,6 +88,18 @@ if [ ! -d "$PRIVATE" ]; then
 fi
 chmod 750 "$PRIVATE"
 
+# Temporary admin login (deploy/temp-admin.json): applied once, only when no
+# admin account exists yet. The site makes you choose your own password at the
+# first login; the file holds only a password hash, never the password.
+if [ -f "$SRC/deploy/temp-admin.json" ] && [ ! -f "$PRIVATE/admin/users.json" ] && [ ! -f "$PRIVATE/admin/.temp-admin-applied" ]; then
+  mkdir -p "$PRIVATE/admin"
+  cp "$SRC/deploy/temp-admin.json" "$PRIVATE/admin/users.json"
+  chmod 640 "$PRIVATE/admin/users.json"
+  date > "$PRIVATE/admin/.temp-admin-applied"
+  rm -f "$PRIVATE/admin/setup-code.txt"
+  echo "Temporary admin login installed (you'll be asked to choose your own password)."
+fi
+
 # Folders the website writes to.
 mkdir -p "$DEST/storage" "$DEST/assets/uploads"
 chmod 755 "$DEST/storage" "$DEST/assets/uploads"
