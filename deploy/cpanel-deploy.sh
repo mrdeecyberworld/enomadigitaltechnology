@@ -23,9 +23,14 @@ fi
 mkdir -p "$DEST"
 # Remember the web folder's own permissions (cPanel: 750) so copying never changes them.
 DEST_MODE="$(stat -c '%a' "$DEST" 2>/dev/null || echo 750)"
-# Repair a web folder locked to its owner only (an earlier version of this script did that):
-# the web server needs to enter it.
+# The web server must be able to enter the web folder. cPanel normally gives
+# public_html the group "nobody" (the web server) with 750; when the folder's
+# group is anything else, 750 locks the web server out (every page 404 while a
+# folder listing still appears), so use 755 instead.
 [ "$DEST_MODE" = "700" ] && DEST_MODE=750
+if [ "$(stat -c '%G' "$DEST" 2>/dev/null)" != "nobody" ] && [ $((8#$DEST_MODE & 8#005)) -ne 5 ]; then
+  DEST_MODE=755
+fi
 
 # Keep cPanel's PHP version block from the live .htaccess, if there is one,
 # then remove the old file so the website's own rules always replace it.
