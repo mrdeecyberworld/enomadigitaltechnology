@@ -52,6 +52,24 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $data['ai']['rate_limit'] = max(1, (int) ($data['ai']['rate_limit'] ?? 20));
         $data['base_url'] = rtrim((string) ($data['base_url'] ?? ''), '/') ?: cfg('base_url');
     }
+    if ($key === 'images') {
+        // Photo links pasted from unsplash.com become photo IDs; a link that can't be read keeps the previous photo.
+        $problems = [];
+        foreach ($data as $slot => $img) {
+            if (!is_array($img) || !isset($img['id'])) {
+                continue;
+            }
+            [$id, $why] = stock_resolve_id((string) $img['id']);
+            if ($why !== null) {
+                $problems[] = (image_usage()[$slot] ?? $slot) . ': ' . $why;
+                $id = (string) ($old[$slot]['id'] ?? '');
+            }
+            $data[$slot]['id'] = $id;
+        }
+        if ($problems) {
+            flash('Some photos were not changed. ' . implode('; ', $problems) . '.', 'error');
+        }
+    }
     if ($key === 'services' && !$data) {
         flash('Keep at least one service.', 'error');
         redirect('/admin/edit?section=services');
@@ -155,7 +173,7 @@ admin_header($section['title'], 'edit:' . $key);
         <strong><?= $stockSaved ?> of <?= count($stockSlots) ?></strong> Unsplash photos are saved on this website.
         Saved photos load faster, keep visitors' browsing private and don't depend on Unsplash.
         <?php if ($stockSaved < count($stockSlots)): ?>The others load from Unsplash until you save them.<?php endif; ?>
-        When you change a photo ID, save again.
+        After you change a photo, click save again.
       </p>
     </div>
     <?php if ($stockSaved < count($stockSlots)): ?>
@@ -165,6 +183,19 @@ admin_header($section['title'], 'edit:' . $key);
       <button type="submit" class="btn btn--primary" data-busy-label="Saving photos… this can take a minute"><?= icon('download', 'icon icon-sm') ?> Save photos to this website</button>
     </form>
     <?php endif; ?>
+    <ul class="photo-grid" aria-label="Every photo on the site">
+      <?php foreach (content('images') as $slot => $img): ?>
+        <?php
+          $slot = (string) $slot;
+          $state = !empty($img['file']) ? ['Your upload', 'ok'] : (!empty($stockSlots[$slot]) ? ['Saved on your site', 'ok'] : (empty($img['id']) ? ['No photo', 'warn'] : ['Loads from Unsplash', 'muted']));
+        ?>
+        <li class="photo-grid__item">
+          <div class="photo-grid__img"><?= photo($slot, '200px', ['alt' => '']) ?></div>
+          <span class="photo-grid__label"><?= e(image_usage()[$slot] ?? ucfirst($slot)) ?></span>
+          <span class="photo-grid__state photo-grid__state--<?= $state[1] ?>"><?= e($state[0]) ?></span>
+        </li>
+      <?php endforeach; ?>
+    </ul>
   </section>
 <?php endif; ?>
 

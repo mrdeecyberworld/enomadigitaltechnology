@@ -49,7 +49,7 @@ Image uploads up to 25 MB work on hosts that read `.user.ini`. If large uploads 
 | **Services** | Add, edit, reorder or remove services; each gets its own page and address |
 | **Pages** | SEO titles/descriptions and header text for every other page |
 | **FAQs, Training, Resources, Testimonials** | Lists you can add to, reorder and remove. Each resource guide has its own page |
-| **Photos, Media library** | Real photos for every page and the starter blog posts (free Unsplash photos). **Save photos to this website** stores copies on your own site so they load faster and don't depend on Unsplash. Or drag and drop your own: uploads are automatically rotated, resized, compressed and cropped to fit, with a focus point |
+| **Photos, Media library** | Every photo on the site at a glance. Change any photo by pasting a link from unsplash.com (free photos) or uploading your own. **Save photos to this website** stores copies on your own site so they load faster and don't depend on Unsplash. Uploads are automatically rotated, resized, compressed and cropped to fit, with a focus point |
 | **Page URLs** | The web address of every page (e.g. `/about` → `/about-us`). Old addresses redirect automatically and all links update |
 | **Blog settings, News sources, Legal pages** | Blog text and categories, news feeds, Privacy Policy and Terms |
 | **Email** | Send form submissions by **SMTP** (Gmail, Outlook/Microsoft 365, Zoho, your host), **Resend API** or PHP mail. Optional automatic reply to visitors. **Send test** button |

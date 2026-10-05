@@ -84,6 +84,68 @@ function stock_fetch(string $url): array
     return [(string) $data, null];
 }
 
+/**
+ * Turn what was pasted in Admin → Photos into the photo ID the site uses.
+ * Accepts a photo page link (unsplash.com/photos/...), an images.unsplash.com
+ * link or a bare ID such as 1498050108023-c5249f4df085.
+ * @return array{0: string, 1: ?string} [photo ID ('' if none), error message]
+ */
+function stock_resolve_id(string $input): array
+{
+    $input = trim($input);
+    if ($input === '') {
+        return ['', null];
+    }
+    if (preg_match('/^[0-9]+-[0-9a-f]+$/', $input)) {
+        return [$input, null];
+    }
+    if (str_contains($input, 'plus.unsplash.com') || str_contains($input, 'premium_photo')) {
+        return ['', 'that is an Unsplash+ photo, which needs a paid Unsplash subscription. Choose a free photo (without the “Unsplash+” badge)'];
+    }
+    if (preg_match('#photo-([0-9]+-[0-9a-f]+)#', $input, $m)) {
+        return [$m[1], null];
+    }
+    if (preg_match('#unsplash\.com/(?:[a-z]{2}(?:-[A-Z]{2})?/)?(?:photos|fotos)/([A-Za-z0-9_-]+)#', $input, $m) && strlen($m[1]) >= 11) {
+        // Page links end in the photo's short ID; its download link redirects to the image file, whose address has the full ID.
+        $short = substr($m[1], -11);
+        $site = rtrim((string) (getenv('ENOMA_UNSPLASH_SITE') ?: 'https://unsplash.com'), '/');
+        $url = $site . '/photos/' . rawurlencode($short) . '/download';
+        for ($hop = 0; $hop < 4 && $url !== null; $hop++) {
+            if (preg_match('#photo-([0-9]+-[0-9a-f]+)#', $url, $mm)) {
+                return [$mm[1], null];
+            }
+            $url = stock_redirect_target($url);
+        }
+        return ['', 'couldn’t look up that Unsplash link (check your internet connection, or paste the image address instead: right-click the photo → Copy image address)'];
+    }
+    return ['', 'that isn’t an Unsplash link. Open the photo on unsplash.com and copy the address from your browser'];
+}
+
+/** Where a link redirects to, without downloading anything. */
+function stock_redirect_target(string $url): ?string
+{
+    if (!function_exists('curl_init')) {
+        $ctx = stream_context_create(['http' => ['method' => 'GET', 'follow_location' => 0, 'timeout' => 10, 'ignore_errors' => true, 'user_agent' => 'EnomaWebsite/1.0']]);
+        @file_get_contents($url, false, $ctx, 0, 1);
+        foreach ((array) ($http_response_header ?? []) as $h) {
+            if (stripos($h, 'Location:') === 0) {
+                return trim(substr($h, 9));
+            }
+        }
+        return null;
+    }
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => false, CURLOPT_HEADER => false,
+        CURLOPT_CONNECTTIMEOUT => 8, CURLOPT_TIMEOUT => 15, CURLOPT_USERAGENT => 'EnomaWebsite/1.0',
+        CURLOPT_PROTOCOLS => getenv('ENOMA_UNSPLASH_SITE') ? CURLPROTO_HTTP | CURLPROTO_HTTPS : CURLPROTO_HTTPS,
+    ]);
+    curl_exec($ch);
+    $loc = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
+    curl_close($ch);
+    return is_string($loc) && $loc !== '' ? $loc : null;
+}
+
 /** Slot keys become file names: letters, digits and dashes only. */
 function stock_safe_key(string $key): string
 {

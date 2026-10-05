@@ -185,11 +185,11 @@ function admin_sections(): array
         'images' => [
             'title' => 'Photos',
             'icon'  => 'monitor-check',
-            'intro' => 'Photos used across the site. Upload your own image, or use an Unsplash photo ID (unsplash.com, free to use). Always write alt text that describes the photo.',
+            'intro' => 'Every photo on the site. For each one, upload your own image or paste a link to a photo on unsplash.com (free to use). Always write alt text that describes the photo.',
             'schema' => ['type' => 'group', 'fields' => array_map(
                 static fn (string $key) => $f($key, (image_usage()[$key] ?? ucfirst($key) . ' photo'), 'group', ['fields' => [
                     $f('file', 'Uploaded image', 'image', ['hint' => 'Takes priority over the Unsplash ID.']),
-                    $f('id', 'Unsplash photo ID', 'text', ['hint' => 'The part after "photo-" in an images.unsplash.com link.']),
+                    $f('id', 'Unsplash photo (link or ID)', 'text', ['hint' => 'Find a photo you like on unsplash.com (free to use), copy the address from your browser and paste it here. Then click “Save photos to this website” above.']),
                     $f('alt', 'Alt text (describe the photo)'),
                 ]]),
                 array_keys(content_default('images') + content('images'))
