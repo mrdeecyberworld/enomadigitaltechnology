@@ -139,7 +139,18 @@
   /* ---------- Remote image fallback ---------- */
   function initImages() {
     document.querySelectorAll('.media-frame img, .post-card__media img').forEach(function (img) {
-      function fail() { img.parentNode.classList.add('img-failed'); }
+      function fail() {
+        var backup = img.getAttribute('data-fallback');
+        if (backup) {
+          // Main photo unavailable: use the built-in backup photo once.
+          img.removeAttribute('data-fallback');
+          img.removeAttribute('srcset');
+          img.alt = img.getAttribute('data-fallback-alt') || img.alt;
+          img.src = backup;
+          return;
+        }
+        img.parentNode.classList.add('img-failed');
+      }
       if (img.complete && img.naturalWidth === 0) fail();
       img.addEventListener('error', fail);
     });

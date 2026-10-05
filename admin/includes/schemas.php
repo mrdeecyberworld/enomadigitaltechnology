@@ -203,7 +203,7 @@ function admin_sections(): array
             'schema' => ['type' => 'group', 'fields' => array_map(
                 static fn (string $key, string $label) => $f($key, $label, 'text', ['prefix' => '/', 'hint' => $key === 'blog' ? 'Blog posts live at /this-address/post-address.' : ($key === 'resources' ? 'Guides live at /this-address/guide-address.' : '')]),
                 array_keys(PAGE_FILES),
-                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service']
+                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service', 'Photo credits']
             )],
         ],
 

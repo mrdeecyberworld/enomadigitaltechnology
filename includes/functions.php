@@ -196,10 +196,15 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
         $widths = [480, 768, 1080, 1440, 1920, 2400];
         $srcset = implode(', ', array_map(static fn (int $width) => $base . '&w=' . $width . ' ' . $width . 'w', $widths));
         $src = $base . '&w=1080';
+        // A built-in backup photo the browser switches to if Unsplash can't be reached (see main.js).
+        $backup = content_default('fallback-photos')[$key] ?? null;
+        if ($backup) {
+            $extra = ' data-fallback="' . e(asset($backup['file'])) . '" data-fallback-alt="' . e($backup['alt']) . '"';
+        }
     }
 
     return sprintf(
-        '<img src="%s"%s sizes="%s" alt="%s" width="%d" height="%d" class="%s" loading="%s" decoding="async"%s>',
+        '<img src="%s"%s sizes="%s" alt="%s" width="%d" height="%d" class="%s" loading="%s" decoding="async"%s%s>',
         e($src),
         $srcset !== '' ? ' srcset="' . e($srcset) . '"' : '',
         e($sizes),
@@ -208,7 +213,8 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
         $h,
         e($class),
         $eager ? 'eager' : 'lazy',
-        $eager ? ' fetchpriority="high"' : ''
+        $eager ? ' fetchpriority="high"' : '',
+        $extra ?? ''
     );
 }
 

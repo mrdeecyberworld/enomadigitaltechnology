@@ -18,6 +18,7 @@ const PAGE_FILES = [
     'consultation' => 'consultation.php',
     'privacy'      => 'privacy.php',
     'terms'        => 'terms.php',
+    'credits'      => 'credits.php',
 ];
 
 /** Addresses that can never be used for pages. */

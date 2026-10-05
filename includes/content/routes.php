@@ -17,4 +17,5 @@ return [
     'consultation' => 'book-a-consultation',
     'privacy'      => 'privacy-policy',
     'terms'        => 'terms-of-service',
+    'credits'      => 'photo-credits',
 ];

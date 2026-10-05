@@ -54,7 +54,7 @@ declare(strict_types=1);
     </div>
 
     <div class="site-footer__bottom">
-      <p>&copy; <?= date('Y') ?> <?= e(site('name')) ?>. All rights reserved.</p>
+      <p>&copy; <?= date('Y') ?> <?= e(site('name')) ?>. All rights reserved. <a class="site-footer__credits" href="/photo-credits">Photo credits</a></p>
       <?php
         // Visitors only see profiles that have a link; empty ones are a reminder for the admin.
         $socialLinks = array_filter(cfg('social', []), static fn ($url) => $url || viewer_is_admin());
