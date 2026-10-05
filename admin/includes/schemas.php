@@ -56,8 +56,19 @@ function admin_sections(): array
         'home' => [
             'title' => 'Homepage',
             'icon'  => 'layout-template',
-            'intro' => 'Hero, trust bar, Why Enoma, cybersecurity feature, process and about sections.',
+            'intro' => 'Hero, trust bar, Why Enoma, cybersecurity feature, process and about sections. Choose which sections appear under Sections to show: a shorter homepage is easier to read.',
             'schema' => ['type' => 'group', 'fields' => [
+                $f('sections', 'Sections to show', 'group', ['fields' => [
+                    $f('trust', 'Trust bar (service links under the hero)', 'bool'),
+                    $f('why', 'Why Enoma', 'bool'),
+                    $f('security', 'Cybersecurity feature', 'bool'),
+                    $f('assistant', 'AI assistant and service finder', 'bool'),
+                    $f('training', 'Training feature', 'bool'),
+                    $f('process', 'How it works (process steps)', 'bool'),
+                    $f('about', 'About Enoma', 'bool'),
+                    $f('faq', 'FAQ', 'bool'),
+                ]]),
+                $f('faq_count', 'Number of FAQ questions on the homepage', 'text', ['hint' => 'The rest are on the FAQ page.']),
                 $f('hero', 'Hero', 'group', ['fields' => [
                     $f('eyebrow', 'Small label'),
                     $f('headline', 'Headline (H1)'),

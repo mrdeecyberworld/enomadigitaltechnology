@@ -1764,6 +1764,26 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 @keyframes scene-scan { 0% { transform: translateY(-100%); opacity: 0; } 10% { opacity: 1; } 55% { transform: translateY(460%); opacity: 1; } 62%, 100% { transform: translateY(460%); opacity: 0; } }
 @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, .6); } 80%, 100% { box-shadow: 0 0 0 1.4cqw rgba(74, 222, 128, 0); } }
 
+/* ---------- Shorter, calmer homepage ---------- */
+.page-home { --section-y: clamp(56px, 7vw, 88px); }
+@media (min-width: 640px) { .service-grid--home { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .service-grid--home { grid-template-columns: repeat(3, 1fr); } }
+.page-home .assistant__log { height: 230px; }
+@media (min-width: 1024px) { .page-home .assistant__log { height: 250px; } }
+
+/* Phones: two cards per row and less text, so the homepage stays short */
+@media (max-width: 639px) {
+  .service-grid--home { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .service-grid--home .service-card { padding: 18px 16px; }
+  .service-grid--home .service-card__text { display: none; }
+  .service-grid--home .service-card__title { font-size: 1.02rem; }
+  .service-grid--home .service-card__link { font-size: .85rem; margin-top: 12px; }
+  .page-home .why__grid, .page-home .process__steps { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .page-home .why__grid .feature-card, .page-home .process-step { padding: 18px 16px; }
+  .page-home .why__grid .feature-card__text, .page-home .process-step__text { font-size: .84rem; }
+  .page-home .assist__panel:first-child { display: none; } /* the service finder is easier to tap on a phone */
+}
+
 /* ---------- Client feedback: star ratings and the review form ---------- */
 .testimonial-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .stars { display: inline-flex; gap: 2px; font-size: 1.05rem; line-height: 1; }

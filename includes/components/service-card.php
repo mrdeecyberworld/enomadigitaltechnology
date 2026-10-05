@@ -30,7 +30,7 @@ function service_card(string $slug, array $svc, array $opts = []): string
 
 function service_grid(?array $only = null, array $opts = []): string
 {
-    $html = '<div class="service-grid' . (!empty($opts['compact']) ? ' service-grid--compact' : '') . '">';
+    $html = '<div class="service-grid' . (!empty($opts['compact']) ? ' service-grid--compact' : '') . (!empty($opts['class']) ? ' ' . e((string) $opts['class']) : '') . '">';
     foreach (services() as $slug => $svc) {
         if ($only !== null && !in_array($slug, $only, true)) {
             continue;

@@ -12,7 +12,7 @@ return [
     'intro'            => 'Practical, plain-language articles to help you protect your accounts, improve your website and make smarter technology decisions.',
     'home_heading'     => 'Latest Insights',
     'home_intro'       => 'Practical tips on cybersecurity, websites and everyday technology.',
-    'show_on_home'     => true,
+    'show_on_home'     => false,
     'posts_per_page'   => '9',
     'default_author'   => 'Enoma Digital Technologies',
     'categories'       => [

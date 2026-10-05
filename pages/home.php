@@ -4,7 +4,10 @@ require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 $home = content('home');
 $training = content('training');
-$faqs = content('faqs');
+$sectionDefaults = content_default('home')['sections'];
+$show = static fn (string $key): bool => (bool) ((array) ($home['sections'] ?? []) + $sectionDefaults)[$key];
+$faqCount = max(1, (int) ($home['faq_count'] ?? 4));
+$faqs = array_slice(content('faqs'), 0, $faqCount);
 
 $page = [
     'title'       => page_text('home', 'meta_title', site('name')),
@@ -113,6 +116,7 @@ require INC . '/layout/header.php';
   </div>
 </section>
 
+<?php if ($show('trust')): ?>
 <!-- 3. Trust bar -->
 <section class="trust" aria-labelledby="trust-heading">
   <div class="container trust__inner">
@@ -124,12 +128,13 @@ require INC . '/layout/header.php';
     </ul>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- 4. Services -->
 <section class="section" id="services" aria-labelledby="services-heading">
   <div class="container">
     <?= section_header('Our Services', 'Technology Services Built Around You', 'From building your digital presence to protecting it, Enoma Digital Technologies provides practical technology services designed around your goals.', ['id' => 'services-heading']) ?>
-    <?= service_grid() ?>
+    <?= service_grid(null, ['compact' => true, 'class' => 'service-grid--home']) ?>
   </div>
 </section>
 
@@ -147,6 +152,7 @@ require INC . '/layout/header.php';
 </section>
 <?php endif; ?>
 
+<?php if ($show('why')): ?>
 <!-- 5. Why Enoma -->
 <section class="section section--dark why" aria-labelledby="why-heading">
   <div class="section__bg" aria-hidden="true"></div>
@@ -166,7 +172,9 @@ require INC . '/layout/header.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
+<?php if ($show('security')): ?>
 <!-- 6. Cybersecurity feature -->
 <section class="section security" aria-labelledby="security-heading">
   <div class="container split">
@@ -192,7 +200,9 @@ require INC . '/layout/header.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
+<?php if ($show('assistant')): ?>
 <!-- 7. AI Assistant + 7B. Service Finder -->
 <section class="section section--muted assist" id="assistant" aria-labelledby="assistant-heading">
   <div class="container">
@@ -209,7 +219,9 @@ require INC . '/layout/header.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
+<?php if ($show('training')): ?>
 <!-- 8. Training -->
 <section class="section training-feature" aria-labelledby="training-heading">
   <div class="container split split--reverse">
@@ -236,6 +248,7 @@ require INC . '/layout/header.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- Courses & Tools (only once something is for sale) -->
 <?php $homeProducts = array_slice(shop_products(), 0, 3); ?>
@@ -253,6 +266,7 @@ require INC . '/layout/header.php';
 </section>
 <?php endif; ?>
 
+<?php if ($show('process')): ?>
 <!-- 9. Process -->
 <section class="section section--dark process" aria-labelledby="process-heading">
   <div class="section__bg" aria-hidden="true"></div>
@@ -270,7 +284,9 @@ require INC . '/layout/header.php';
     </ol>
   </div>
 </section>
+<?php endif; ?>
 
+<?php if ($show('about')): ?>
 <!-- 10. About -->
 <section class="section about-feature" aria-labelledby="about-heading">
   <div class="container split">
@@ -291,6 +307,7 @@ require INC . '/layout/header.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- 11. Testimonials -->
 <?= testimonials_section() ?>
@@ -309,6 +326,7 @@ require INC . '/layout/header.php';
 </section>
 <?php endif; ?>
 
+<?php if ($show('faq')): ?>
 <!-- 12. FAQ -->
 <section class="section section--muted" aria-labelledby="faq-heading">
   <div class="container container--narrow">
@@ -317,6 +335,7 @@ require INC . '/layout/header.php';
     <p class="section-foot">More questions? <a href="/faq">See all FAQs</a> or <a href="/contact">contact us</a>.</p>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- 13. Final CTA -->
 <?= cta_banner() ?>

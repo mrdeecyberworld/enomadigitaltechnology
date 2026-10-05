@@ -4,6 +4,20 @@
  */
 
 return [
+    // Which homepage sections are shown (Admin → Homepage → Sections to show).
+    // Kept short on purpose: details live on their own pages.
+    'sections' => [
+        'trust'     => false,
+        'why'       => true,
+        'security'  => false,
+        'assistant' => true,
+        'training'  => false,
+        'process'   => true,
+        'about'     => false,
+        'faq'       => true,
+    ],
+    'faq_count' => '4',
+
     'hero' => [
         'eyebrow'  => 'Build. Secure. Empower.',
         'headline' => 'Build Smarter. Stay Secure.',
