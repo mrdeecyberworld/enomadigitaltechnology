@@ -31,6 +31,18 @@ function start_session(): void
         return;
     }
     session_name('enoma_sid');
+    // Some hosts point PHP at a session folder it can't write to, so logins
+    // never stick (endless redirects back to the login page). Use a private
+    // folder next to the site's data instead.
+    $savePath = (string) session_save_path();
+    $dir = str_contains($savePath, ';') ? substr($savePath, strrpos($savePath, ';') + 1) : $savePath;
+    if ($dir === '' || !is_dir($dir) || !is_writable($dir)) {
+        $own = storage_dir('sessions');
+        if (is_writable($own)) {
+            session_save_path($own);
+            ini_set('session.gc_probability', '1');
+        }
+    }
     session_set_cookie_params([
         'lifetime' => 0,
         'path'     => '/',

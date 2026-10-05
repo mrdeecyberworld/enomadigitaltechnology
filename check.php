@@ -31,6 +31,22 @@ if (function_exists('curl_init')) {
 }
 $modules = function_exists('apache_get_modules') ? apache_get_modules() : null;
 
+// Admin login status (no names or passwords are shown).
+$users = is_file($private . '/admin/users.json') ? json_decode((string) file_get_contents($private . '/admin/users.json'), true) : null;
+$adminState = is_array($users) && !empty($users['password_hash'])
+    ? (!empty($users['must_change_password']) ? 'exists (temporary password: you will be asked to choose a new one)' : 'exists')
+    : (is_file($private . '/admin/setup-code.txt') ? 'not created yet (setup code is waiting)' : 'not created yet');
+
+// Can PHP keep visitors signed in? Saves a counter in a session; reload to see it go up.
+$savePath = (string) session_save_path();
+$saveDir = str_contains($savePath, ';') ? substr($savePath, strrpos($savePath, ';') + 1) : $savePath;
+$saveDirOk = $saveDir !== '' && is_dir($saveDir) && is_writable($saveDir);
+session_name('enoma_check');
+@session_start();
+$_SESSION['n'] = (int) ($_SESSION['n'] ?? 0) + 1;
+$visits = $_SESSION['n'];
+session_write_close();
+
 $rewriteOk = $rewrite === 'yes' ? true : (str_starts_with($rewrite, 'no') ? false : null);
 $rows = [
     ['PHP is running', 'yes', true],
@@ -48,6 +64,9 @@ $rows = [
     ['Uploads folder writable', is_writable($here . '/assets/uploads') ? 'yes' : 'NO', is_writable($here . '/assets/uploads')],
     ['Extensions', implode(', ', array_map(static fn ($e) => $e . (extension_loaded($e) ? ' ✓' : ' ✗'), ['mbstring', 'gd', 'curl', 'openssl', 'fileinfo', 'exif', 'pdo_mysql'])), extension_loaded('mbstring')],
     ['HTTPS', $https ? 'yes' : 'no', $https ? true : null],
+    ['Admin login', $adminState, is_array($users) ? true : null],
+    ['PHP session folder writable', $saveDirOk ? 'yes' : 'NO (' . ($saveDir ?: 'not set') . '): the website uses its own folder instead', $saveDirOk ? true : null],
+    ['Sign-in test (reload this page)', 'count: ' . $visits . ($visits > 1 ? ', sign-ins are kept ✓' : ', reload: it should become 2'), $visits > 1 ? true : null],
 ];
 ?><!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Website check</title>
