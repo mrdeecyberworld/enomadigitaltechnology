@@ -63,6 +63,12 @@ function resolve_route(string $path): array
         return ['file' => 'blog-post.php', 'get' => ['slug' => $m[1]]];
     }
 
+    // Courses & Tools: /courses-and-tools/product-address
+    if (preg_match('#^' . preg_quote($routes['shop'], '#') . '/([a-z0-9-]+)$#', $slug, $m)
+        && (shop_find($m[1], viewer_is_admin()) || link_path('/' . $slug) === '/' . $slug)) {
+        return ['file' => 'product.php', 'get' => ['slug' => $m[1]]];
+    }
+
     // Resource guides: /resources/guide-address
     if (preg_match('#^' . preg_quote($routes['resources'], '#') . '/([a-z0-9-]+)$#', $slug, $m)
         && (resource_find($m[1]) || link_path('/' . $slug) === '/' . $slug)) {

@@ -37,7 +37,7 @@ declare(strict_types=1);
       <nav class="site-footer__col" aria-labelledby="footer-company">
         <h2 class="site-footer__heading" id="footer-company">Company</h2>
         <ul>
-          <?php foreach (site('footer_company') as $link): ?>
+          <?php foreach (nav_items('footer_company') as $link): ?>
             <li><a href="<?= e($link['path']) ?>"><?= e($link['label']) ?></a></li>
           <?php endforeach; ?>
         </ul>

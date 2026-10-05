@@ -6,11 +6,35 @@ $home = content('home');
 $f = cfg('founder', []);
 $crumbs = [['Home', '/'], ['About', '/about']];
 
+// Founder profile from the CV (Admin → About me). Only filled-in parts are shown.
+$profile = content('profile');
+$filled = static fn ($rows, string $key) => array_values(array_filter((array) $rows, static fn ($r) => is_array($r) && trim((string) ($r[$key] ?? '')) !== ''));
+$experience = $filled($profile['experience'] ?? [], 'role');
+$education = $filled($profile['education'] ?? [], 'qualification');
+$certifications = array_values(array_filter(array_map('trim', (array) ($profile['certifications'] ?? []))));
+$skills = array_values(array_filter(array_map('trim', (array) ($profile['skills'] ?? []))));
+$story = trim((string) ($profile['story'] ?? ''));
+$inspiration = trim((string) ($profile['inspiration'] ?? ''));
+$quote = trim((string) ($profile['quote'] ?? ''));
+$hasCv = $experience || $education || $certifications || $skills;
+$person = null;
+if (founder_ready()) {
+    $person = array_filter([
+        '@type'     => 'Person',
+        'name'      => $f['name'],
+        'jobTitle'  => ($f['title'] ?? '') ?: 'Founder',
+        'worksFor'  => ['@id' => abs_url('/#organization')],
+        'knowsAbout' => $skills ?: null,
+        'alumniOf'  => array_values(array_filter(array_map(static fn ($e) => trim((string) ($e['institution'] ?? '')) !== '' ? ['@type' => 'EducationalOrganization', 'name' => $e['institution']] : null, $education))) ?: null,
+        'hasCredential' => $certifications ? array_map(static fn ($c) => ['@type' => 'EducationalOccupationalCredential', 'name' => $c], $certifications) : null,
+    ]);
+}
+
 $page = [
     'title'       => page_text('about', 'meta_title', 'About | ' . site('name')),
     'description' => page_text('about', 'meta_description', site('description')),
     'path'        => '/about',
-    'schema'      => [schema_breadcrumbs($crumbs), ['@type' => 'AboutPage', 'url' => abs_url('/about'), 'name' => 'About ' . site('name'), 'about' => ['@id' => abs_url('/#organization')]]],
+    'schema'      => array_values(array_filter([schema_breadcrumbs($crumbs), ['@type' => 'AboutPage', 'url' => abs_url('/about'), 'name' => 'About ' . site('name'), 'about' => ['@id' => abs_url('/#organization')]], $person])),
 ];
 require INC . '/layout/header.php';
 
@@ -67,12 +91,91 @@ echo page_hero(page_text('about', 'heading', 'About'), [
         <p class="prose-p reveal"><?= e($f['bio']) ?></p>
       <?php else: ?>
         <p class="prose-p reveal"><?= placeholder('Founder biography: add a short, factual introduction, including background, areas of focus and why Enoma Digital Technologies was started.') ?></p>
-        <?= setup_notice('Add the founder name, bio and photo under "founder" in your private config file.') ?>
+        <?= setup_notice('Add your name, short bio and photo in Admin → Settings (Founder), and your story and CV in Admin → About me.') ?>
       <?php endif; ?>
       <div class="btn-row">
         <?= button('Book a Consultation', '/book-a-consultation', 'primary', 'calendar-check') ?>
         <?= button('Contact Us', '/contact', 'ghost', 'arrow-right') ?>
       </div>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<?php if ($story !== '' || $inspiration !== '' || $quote !== '' || viewer_is_admin()): ?>
+<section class="section section--muted founder-story" aria-label="The founder’s story">
+  <div class="container container--narrow">
+    <?php if ($story === '' && $inspiration === '' && viewer_is_admin()): ?>
+      <?= setup_notice('Add your story and what inspires you, plus your experience, education, certifications and skills from your CV, in Admin → About me. Visitors only see what you fill in.') ?>
+    <?php endif; ?>
+    <?php if ($story !== ''): ?>
+      <h2 class="section-title reveal"><?= e((string) $profile['story_heading'] ?: 'My story') ?></h2>
+      <div class="prose founder-story__text reveal"><?= simple_format($story) ?></div>
+    <?php endif; ?>
+    <?php if ($quote !== ''): ?>
+      <figure class="founder-quote reveal">
+        <blockquote><p><?= e($quote) ?></p></blockquote>
+        <?php if (trim((string) $profile['quote_source']) !== ''): ?><figcaption><?= e((string) $profile['quote_source']) ?></figcaption><?php endif; ?>
+      </figure>
+    <?php endif; ?>
+    <?php if ($inspiration !== ''): ?>
+      <h2 class="section-title reveal"><?= e((string) $profile['inspiration_heading'] ?: 'What inspires me') ?></h2>
+      <div class="prose founder-story__text reveal"><?= simple_format($inspiration) ?></div>
+    <?php endif; ?>
+  </div>
+</section>
+<?php endif; ?>
+
+<?php if ($hasCv): ?>
+<section class="section" aria-labelledby="cv-heading">
+  <div class="container">
+    <?= section_header('Background', 'Experience and qualifications', null, ['id' => 'cv-heading']) ?>
+    <div class="cv">
+      <?php if ($experience): ?>
+        <div class="cv__main">
+          <h3 class="cv__heading"><?= icon('briefcase', 'icon icon-sm') ?> Experience</h3>
+          <ol class="timeline">
+            <?php foreach ($experience as $job): ?>
+              <li class="timeline__item reveal">
+                <div class="timeline__head">
+                  <h4 class="timeline__role"><?= e($job['role']) ?></h4>
+                  <?php if (trim((string) ($job['period'] ?? '')) !== ''): ?><span class="timeline__period"><?= e($job['period']) ?></span><?php endif; ?>
+                </div>
+                <?php if (trim((string) ($job['organization'] ?? '')) !== ''): ?><p class="timeline__org"><?= e($job['organization']) ?></p><?php endif; ?>
+                <?php if (trim((string) ($job['summary'] ?? '')) !== ''): ?><p class="timeline__summary"><?= e($job['summary']) ?></p><?php endif; ?>
+                <?php $hl = array_values(array_filter(array_map('trim', (array) ($job['highlights'] ?? [])))); ?>
+                <?php if ($hl): ?><ul class="timeline__highlights"><?php foreach ($hl as $h): ?><li><?= e($h) ?></li><?php endforeach; ?></ul><?php endif; ?>
+              </li>
+            <?php endforeach; ?>
+          </ol>
+        </div>
+      <?php endif; ?>
+      <?php if ($education || $certifications || $skills): ?>
+        <aside class="cv__side">
+          <?php if ($education): ?>
+            <div class="cv__block reveal">
+              <h3 class="cv__heading"><?= icon('graduation-cap', 'icon icon-sm') ?> Education</h3>
+              <ul class="cv__list">
+                <?php foreach ($education as $ed): ?>
+                  <li><strong><?= e($ed['qualification']) ?></strong><?php if (trim((string) ($ed['institution'] ?? '')) !== ''): ?><span><?= e($ed['institution']) ?><?= trim((string) ($ed['year'] ?? '')) !== '' ? ' · ' . e($ed['year']) : '' ?></span><?php endif; ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+          <?php if ($certifications): ?>
+            <div class="cv__block reveal">
+              <h3 class="cv__heading"><?= icon('badge-check', 'icon icon-sm') ?> Certifications</h3>
+              <ul class="cv__list"><?php foreach ($certifications as $c): ?><li><?= e($c) ?></li><?php endforeach; ?></ul>
+            </div>
+          <?php endif; ?>
+          <?php if ($skills): ?>
+            <div class="cv__block reveal">
+              <h3 class="cv__heading"><?= icon('wrench', 'icon icon-sm') ?> Skills</h3>
+              <ul class="cv__chips"><?php foreach ($skills as $sk): ?><li><?= e($sk) ?></li><?php endforeach; ?></ul>
+            </div>
+          <?php endif; ?>
+        </aside>
+      <?php endif; ?>
     </div>
   </div>
 </section>

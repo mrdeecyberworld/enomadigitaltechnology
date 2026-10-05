@@ -84,7 +84,7 @@ $graph = array_merge(schema_base(), $page['schema']);
 
     <nav class="primary-nav" aria-label="Primary">
       <ul class="primary-nav__list">
-        <?php foreach (site('nav') as $item): ?>
+        <?php foreach (nav_items() as $item): ?>
           <?php $active = is_current($item['path']) || (($item['children'] ?? '') === 'services' && is_current('/services')); ?>
           <?php if (($item['children'] ?? '') === 'services'): ?>
             <li class="has-menu" data-menu>
@@ -114,7 +114,6 @@ $graph = array_merge(schema_base(), $page['schema']);
     </nav>
 
     <div class="site-header__actions">
-      <a class="btn btn-ghost btn-sm header-quote" href="<?= e(site('cta_secondary')['path']) ?>"><span><?= e(site('cta_secondary')['label']) ?></span></a>
       <a class="btn btn-primary btn-sm header-book" href="<?= e(site('cta_primary')['path']) ?>"><span><?= e(site('cta_primary')['label']) ?></span></a>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" data-nav-toggle>
         <span class="sr-only">Open menu</span>
@@ -126,7 +125,7 @@ $graph = array_merge(schema_base(), $page['schema']);
   <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
     <nav aria-label="Mobile">
       <ul class="mobile-nav__list">
-        <?php foreach (site('nav') as $item): ?>
+        <?php foreach (nav_items() as $item): ?>
           <?php if (($item['children'] ?? '') === 'services'): ?>
             <li>
               <details class="mobile-nav__group">

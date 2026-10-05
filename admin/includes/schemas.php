@@ -170,6 +170,69 @@ function admin_sections(): array
             ]],
         ],
 
+        'profile' => [
+            'title' => 'About me',
+            'icon'  => 'user-round',
+            'intro' => 'Your story, what inspires you and your experience from your CV, shown on the About page. Your name, title, short bio and photo are in Settings → Founder. Each part appears on the website once you fill it in.',
+            'schema' => ['type' => 'group', 'fields' => [
+                $f('story_heading', 'Story heading'),
+                $f('story', 'My story', 'richtext', ['rows' => 8, 'hint' => 'Your background in your own words: where you started, what you have done and why you started Enoma Digital Technologies.']),
+                $f('inspiration_heading', 'Inspiration heading'),
+                $f('inspiration', 'What inspires me', 'richtext', ['rows' => 6, 'hint' => 'The people, moments and beliefs that drive your work.']),
+                $f('quote', 'A favorite quote or personal motto (optional)', 'textarea', ['rows' => 2]),
+                $f('quote_source', 'Who said it (optional)'),
+                $f('experience', 'Experience', 'repeater', ['item_label' => 'role', 'add_label' => 'Add a role', 'fields' => [
+                    $f('role', 'Job title'),
+                    $f('organization', 'Organization'),
+                    $f('period', 'Dates', 'text', ['hint' => 'e.g. 2019 – Present']),
+                    $f('summary', 'What you did', 'textarea', ['rows' => 3]),
+                    $f('highlights', 'Highlights (optional)', 'lines', ['hint' => 'One achievement per line.']),
+                ]]),
+                $f('education', 'Education', 'repeater', ['item_label' => 'qualification', 'add_label' => 'Add education', 'fields' => [
+                    $f('qualification', 'Degree or qualification'),
+                    $f('institution', 'School or institution'),
+                    $f('year', 'Year (optional)'),
+                ]]),
+                $f('certifications', 'Certifications', 'lines', ['hint' => 'One per line, e.g. CompTIA Security+ (2023).']),
+                $f('skills', 'Skills', 'lines', ['hint' => 'One per line, e.g. Network security.']),
+            ]],
+        ],
+
+        'shop' => [
+            'title' => 'Courses & Tools',
+            'icon'  => 'shopping-bag',
+            'intro' => 'Courses, templates and tools clients can buy. Each one gets its own page. Payments happen on your payment provider’s secure checkout (a Stripe Payment Link, PayPal, Gumroad, Lemon Squeezy or Payhip link), so this website never handles card details. The menu link appears once at least one product is published.',
+            'schema' => ['type' => 'group', 'fields' => [
+                $f('eyebrow', 'Small label above the heading'),
+                $f('heading', 'Shop page heading (H1)'),
+                $f('intro', 'Shop page intro', 'textarea', ['rows' => 2]),
+                $f('empty', 'Message while nothing is for sale yet', 'textarea', ['rows' => 2]),
+                $f('checkout_note', 'Note under the Buy button', 'text'),
+                $f('home_heading', 'Homepage section heading'),
+                $f('home_intro', 'Homepage section intro'),
+                ...$seo,
+                $f('products', 'Products', 'repeater', ['item_label' => 'name', 'add_label' => 'Add a course or tool', 'fields' => [
+                    $f('_original', '', 'hidden'),
+                    $f('name', 'Name'),
+                    $f('slug', 'Page address', 'text', ['hint' => 'Its page will be at /courses-and-tools/this-address. Lowercase words with dashes; leave blank to use the name.']),
+                    $f('status', 'Visible on the website?', 'select', ['options' => ['published' => 'Published (visible)', 'draft' => 'Draft (only you can see it)']]),
+                    $f('type', 'Type', 'select', ['options' => ['Course' => 'Course', 'Tool' => 'Tool', 'Template' => 'Template', 'Guide' => 'Guide (e-book / PDF)', 'Bundle' => 'Bundle', 'Workshop' => 'Workshop']]),
+                    $f('featured', 'Feature it (shown first and on the homepage)', 'bool'),
+                    $f('price', 'Price', 'text', ['hint' => 'e.g. 49 or 49.99 (US dollars). Type 0 for free, or any text such as “Pay what you want”.']),
+                    $f('price_note', 'Price note (optional)', 'text', ['hint' => 'e.g. One-time payment · Lifetime access']),
+                    $f('image', 'Cover image', 'image'),
+                    $f('summary', 'Short description', 'textarea', ['rows' => 2, 'hint' => 'One or two sentences for the product card.']),
+                    $f('description', 'Full description', 'richtext', ['rows' => 8]),
+                    $f('includes', 'What’s included', 'lines', ['hint' => 'One item per line, e.g. “6 video lessons (2 hours)”.']),
+                    $f('format', 'Format and access (optional)', 'text', ['hint' => 'e.g. Online, self-paced · Instant download (PDF + Excel)']),
+                    $f('buy_url', 'Checkout link', 'url', ['hint' => 'Your Stripe Payment Link, PayPal, Gumroad, Lemon Squeezy or Payhip product link. Without one, visitors are invited to contact you to buy.']),
+                    $f('buy_label', 'Buy button text (optional)', 'text', ['hint' => 'Default: “Buy now” (or “Get it free” for free items).']),
+                    $f('meta_title', 'SEO title (optional)', 'text', ['counter' => 60]),
+                    $f('meta_description', 'SEO description (optional)', 'textarea', ['rows' => 2, 'counter' => 160]),
+                ]]),
+            ]],
+        ],
+
         'testimonials' => [
             'title' => 'Testimonials',
             'icon'  => 'quote',
@@ -203,7 +266,7 @@ function admin_sections(): array
             'schema' => ['type' => 'group', 'fields' => array_map(
                 static fn (string $key, string $label) => $f($key, $label, 'text', ['prefix' => '/', 'hint' => $key === 'blog' ? 'Blog posts live at /this-address/post-address.' : ($key === 'resources' ? 'Guides live at /this-address/guide-address.' : '')]),
                 array_keys(PAGE_FILES),
-                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service', 'Photo credits']
+                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service', 'Photo credits', 'Courses & Tools (shop)']
             )],
         ],
 
@@ -302,6 +365,10 @@ function admin_section_data(string $section): array
     }
     if ($section === 'resources') {
         return array_map(static fn ($g) => ['_original' => $g['slug'] ?? ''] + $g, $data);
+    }
+    if ($section === 'shop') {
+        $data['products'] = array_map(static fn ($p) => ['_original' => $p['slug'] ?? ''] + (array) $p, (array) ($data['products'] ?? []));
+        return $data;
     }
     if ($section === 'routes') {
         return routes();

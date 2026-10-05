@@ -93,7 +93,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $problems[] = $problem;
             }
             $seen[$slug] = true;
-            $moves[] = ['/' . $current[$pageKey], '/' . $slug, in_array($pageKey, ['blog', 'resources'], true)];
+            $moves[] = ['/' . $current[$pageKey], '/' . $slug, in_array($pageKey, ['blog', 'resources', 'shop'], true)];
         }
     }
     if ($key === 'services') {
@@ -126,6 +126,23 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             }
         }
         unset($g);
+    }
+    if ($key === 'shop') {
+        $base = page_url('shop') . '/';
+        $used = [];
+        foreach ($data['products'] as &$p) {
+            $p['slug'] = trim(preg_replace('/[^a-z0-9]+/', '-', strtolower((string) (($p['slug'] ?? '') ?: ($p['name'] ?? 'product')))), '-') ?: 'product';
+            while (isset($used[$p['slug']])) {
+                $p['slug'] .= '-2';
+            }
+            $used[$p['slug']] = true;
+            $orig = (string) ($p['_original'] ?? '');
+            unset($p['_original']);
+            if ($orig !== '' && $orig !== $p['slug']) {
+                $moves[] = [$base . $orig, $base . $p['slug'], false];
+            }
+        }
+        unset($p);
     }
     if ($problems) {
         foreach (array_unique($problems) as $msg) {

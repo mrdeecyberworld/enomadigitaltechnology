@@ -432,3 +432,73 @@ function resource_find(string $slug): ?array
     }
     return null;
 }
+
+/* ---------- Courses & Tools (shop) ---------- */
+
+/** Published products (all products, including drafts, when $includeDrafts is true). */
+function shop_products(bool $includeDrafts = false): array
+{
+    $out = [];
+    foreach ((array) (content('shop')['products'] ?? []) as $p) {
+        if (!is_array($p) || trim((string) ($p['name'] ?? '')) === '' || trim((string) ($p['slug'] ?? '')) === '') {
+            continue;
+        }
+        if (!$includeDrafts && ($p['status'] ?? 'published') !== 'published') {
+            continue;
+        }
+        $out[] = $p + ['type' => 'Course', 'price' => '', 'price_note' => '', 'image' => '', 'summary' => '', 'description' => '', 'includes' => [], 'format' => '', 'buy_url' => '', 'buy_label' => '', 'featured' => false];
+    }
+    // Featured first, otherwise in the order you listed them.
+    usort($out, static fn ($a, $b) => (int) !empty($b['featured']) <=> (int) !empty($a['featured']));
+    return $out;
+}
+
+function shop_find(string $slug, bool $includeDrafts = false): ?array
+{
+    foreach (shop_products($includeDrafts) as $p) {
+        if ($p['slug'] === $slug) {
+            return $p;
+        }
+    }
+    return null;
+}
+
+function shop_url(array $p): string
+{
+    return page_url('shop', '/' . $p['slug']);
+}
+
+/** Numeric price (for structured data), or null when the price isn't a plain number. */
+function shop_price_value(array $p): ?float
+{
+    $raw = preg_replace('/[^0-9.]/', '', (string) $p['price']);
+    return $raw !== '' && is_numeric($raw) ? (float) $raw : null;
+}
+
+/** Price as shown to visitors: "$49", "$49.50", "Free" or the text you typed. */
+function shop_price(array $p): string
+{
+    $text = trim((string) $p['price']);
+    if ($text === '') {
+        return '';
+    }
+    $n = shop_price_value($p);
+    if ($n === null || !preg_match('/^\$?\s*[0-9][0-9,]*(\.[0-9]{1,2})?$/', $text)) {
+        return $text;
+    }
+    return $n == 0.0 ? 'Free' : '$' . number_format($n, fmod($n, 1.0) == 0.0 ? 0 : 2);
+}
+
+/** Whether the shop has anything to show visitors (the menu link is hidden until then). */
+function shop_is_open(): bool
+{
+    return shop_products() !== [];
+}
+
+/** Menu links from Brand & navigation, minus the shop link while nothing is for sale (admins always see it). */
+function nav_items(string $which = 'nav'): array
+{
+    $shop = page_url('shop');
+    $open = shop_is_open() || viewer_is_admin();
+    return array_values(array_filter((array) site($which), static fn ($item) => $open || link_path((string) ($item['path'] ?? '')) !== $shop));
+}

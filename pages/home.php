@@ -181,6 +181,22 @@ require INC . '/layout/header.php';
   </div>
 </section>
 
+<!-- Courses & Tools (only once something is for sale) -->
+<?php $homeProducts = array_slice(shop_products(), 0, 3); ?>
+<?php if ($homeProducts): $shop = content('shop'); ?>
+<section class="section" aria-labelledby="shop-home-heading">
+  <div class="container">
+    <div class="section-split-head">
+      <?= section_header((string) ($shop['eyebrow'] ?: 'Courses & Tools'), (string) ($shop['home_heading'] ?: 'Courses & Tools'), (string) $shop['home_intro'], ['align' => 'left', 'id' => 'shop-home-heading']) ?>
+      <?= button('See all courses & tools', page_url('shop'), 'ghost', 'arrow-right') ?>
+    </div>
+    <div class="product-grid">
+      <?php foreach ($homeProducts as $p): ?><?= product_card($p, 'h3') ?><?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- 9. Process -->
 <section class="section section--dark process" aria-labelledby="process-heading">
   <div class="section__bg" aria-hidden="true"></div>

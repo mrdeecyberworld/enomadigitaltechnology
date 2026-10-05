@@ -18,4 +18,5 @@ return [
     'privacy'      => 'privacy-policy',
     'terms'        => 'terms-of-service',
     'credits'      => 'photo-credits',
+    'shop'         => 'courses-and-tools',
 ];

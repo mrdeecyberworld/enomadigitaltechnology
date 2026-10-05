@@ -13,16 +13,14 @@ return [
     'description' => 'Enoma Digital Technologies provides web development, cybersecurity, IT support and technology training for businesses and individuals.',
     'service_area' => 'Remote technology services for clients across the United States.',
 
-    // Primary navigation. 'children' => 'services' renders the services menu.
+    // Primary navigation (kept short; the logo links home and every service is in
+    // the Services menu). 'children' => 'services' renders the services menu.
+    // The Courses & Tools link only shows once a product is published.
     'nav' => [
-        ['label' => 'Home',            'path' => '/'],
         ['label' => 'Services',        'path' => '/services', 'children' => 'services'],
-        ['label' => 'Cybersecurity',   'path' => '/cybersecurity'],
-        ['label' => 'Web Development', 'path' => '/web-development'],
-        ['label' => 'Training',        'path' => '/training'],
+        ['label' => 'Courses & Tools', 'path' => '/courses-and-tools'],
         ['label' => 'About',           'path' => '/about'],
         ['label' => 'Blog',            'path' => '/blog'],
-        ['label' => 'Resources',       'path' => '/resources'],
         ['label' => 'Contact',         'path' => '/contact'],
     ],
 
@@ -31,6 +29,7 @@ return [
 
     'footer_company' => [
         ['label' => 'About',            'path' => '/about'],
+        ['label' => 'Courses & Tools',  'path' => '/courses-and-tools'],
         ['label' => 'Blog',             'path' => '/blog'],
         ['label' => 'Resources',        'path' => '/resources'],
         ['label' => 'FAQ',              'path' => '/faq'],

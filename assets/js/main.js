@@ -132,7 +132,7 @@
       if (e.target.closest('a')) close(false);
     });
     window.addEventListener('resize', function () {
-      if (window.innerWidth >= 1280 && !panel.hidden) close(false);
+      if (window.innerWidth >= 1024 && !panel.hidden) close(false);
     });
   }
 
@@ -502,7 +502,7 @@
   /* Cards: a soft light follows the pointer (CSS reads --mx / --my). */
   function initSpotlight() {
     if (!window.matchMedia || !matchMedia('(hover: hover)').matches) return;
-    var sel = '.service-card, .feature-card, .guide-card, .post-card, .detail-card';
+    var sel = '.service-card, .feature-card, .guide-card, .post-card, .detail-card, .product-card';
     document.addEventListener('pointermove', function (e) {
       var card = e.target.closest && e.target.closest(sel);
       if (!card) return;

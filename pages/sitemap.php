@@ -15,13 +15,19 @@ $latest = static function (string ...$files): string {
 };
 $contentFile = static fn (string $name): string => store_exists(content_override_file($name)) ? content_override_file($name) : INC . '/content/' . $name . '.php';
 
-$priorities = ['services' => '0.9', 'about' => '0.7', 'blog' => '0.8', 'resources' => '0.7', 'faq' => '0.6', 'contact' => '0.7', 'quote' => '0.7', 'consultation' => '0.7', 'privacy' => '0.3', 'terms' => '0.3'];
+$priorities = ['services' => '0.9', 'about' => '0.7', 'blog' => '0.8', 'resources' => '0.7', 'faq' => '0.6', 'contact' => '0.7', 'quote' => '0.7', 'consultation' => '0.7', 'privacy' => '0.3', 'terms' => '0.3', 'shop' => '0.8'];
 $entries = [['/', '1.0', $latest($contentFile('home'), $contentFile('site'))]];
 foreach (PAGE_FILES as $key => $file) {
+    if ($key === 'shop' && !shop_is_open()) {
+        continue; // listed once something is for sale
+    }
     $entries[] = [page_url($key), $priorities[$key] ?? '0.6', $latest(__DIR__ . '/' . $file, $contentFile('pages'))];
 }
 foreach (services() as $slug => $svc) {
     $entries[] = [service_path($slug), '0.9', $latest($contentFile('services'))];
+}
+foreach (shop_products() as $p) {
+    $entries[] = [shop_url($p), '0.7', $latest($contentFile('shop'))];
 }
 foreach (content('resources') as $g) {
     $entries[] = [resource_url($g), '0.6', $latest($contentFile('resources'))];
