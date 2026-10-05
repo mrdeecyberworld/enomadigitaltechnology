@@ -1341,19 +1341,19 @@ html[data-site-theme="dark"][data-palette="royal"] {
 html { scrollbar-color: var(--line-strong) var(--page-bg); }
 
 /* Aurora: slow drifting light behind the hero and page headers */
-.aurora { position: absolute; inset: -20% -10%; overflow: hidden; pointer-events: none; filter: blur(60px); opacity: .9; }
-.aurora i { position: absolute; display: block; border-radius: 50%; mix-blend-mode: screen; will-change: transform; }
-.aurora i:nth-child(1) { width: 46%; aspect-ratio: 1; left: 48%; top: 4%; background: radial-gradient(circle, rgba(var(--accent-bright-rgb), .55), transparent 65%); animation: aurora-a 22s ease-in-out infinite alternate; }
-.aurora i:nth-child(2) { width: 38%; aspect-ratio: 1; left: 70%; top: 46%; background: radial-gradient(circle, rgba(var(--accent2-rgb), .38), transparent 65%); animation: aurora-b 26s ease-in-out infinite alternate; }
-.aurora i:nth-child(3) { width: 34%; aspect-ratio: 1; left: 8%; top: 58%; background: radial-gradient(circle, rgba(var(--accent-rgb), .30), transparent 65%); animation: aurora-c 30s ease-in-out infinite alternate; }
+.aurora { position: absolute; inset: -20% -10%; overflow: hidden; pointer-events: none; opacity: .9; contain: strict; }
+.aurora i { position: absolute; display: block; border-radius: 50%; will-change: transform; }
+.aurora i:nth-child(1) { width: 46%; aspect-ratio: 1; left: 48%; top: 4%; background: radial-gradient(circle closest-side, rgba(var(--accent-bright-rgb), .5), rgba(var(--accent-bright-rgb), .18) 45%, transparent); animation: aurora-a 22s ease-in-out infinite alternate; }
+.aurora i:nth-child(2) { width: 38%; aspect-ratio: 1; left: 70%; top: 46%; background: radial-gradient(circle closest-side, rgba(var(--accent2-rgb), .34), rgba(var(--accent2-rgb), .12) 45%, transparent); animation: aurora-b 26s ease-in-out infinite alternate; }
+.aurora i:nth-child(3) { width: 34%; aspect-ratio: 1; left: 8%; top: 58%; background: radial-gradient(circle closest-side, rgba(var(--accent-rgb), .28), rgba(var(--accent-rgb), .1) 45%, transparent); animation: aurora-c 30s ease-in-out infinite alternate; }
 @keyframes aurora-a { to { transform: translate(-14%, 10%) scale(1.12); } }
 @keyframes aurora-b { to { transform: translate(-22%, -16%) scale(.9); } }
 @keyframes aurora-c { to { transform: translate(18%, -12%) scale(1.15); } }
 
 .page-hero__bg::before {
   content: ""; position: absolute; width: 520px; max-width: 70%; aspect-ratio: 1; right: 4%; top: -30%;
-  border-radius: 50%; filter: blur(70px); pointer-events: none;
-  background: radial-gradient(circle, rgba(var(--accent-bright-rgb), .45), rgba(var(--accent2-rgb), .12) 55%, transparent 70%);
+  border-radius: 50%; pointer-events: none; will-change: transform;
+  background: radial-gradient(circle closest-side, rgba(var(--accent-bright-rgb), .4), rgba(var(--accent2-rgb), .12) 55%, transparent);
   animation: aurora-a 24s ease-in-out infinite alternate;
 }
 
@@ -1364,7 +1364,6 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
   border: 1px solid rgba(var(--accent2-light-rgb), .25);
   background: linear-gradient(90deg, rgba(var(--accent2-rgb), .12), rgba(var(--accent-rgb), .08));
   box-shadow: 0 0 24px rgba(var(--accent2-rgb), .12), inset 0 1px 0 rgba(255, 255, 255, .06);
-  backdrop-filter: blur(6px);
 }
 .hero__eyebrow::before, .page-hero .eyebrow::before {
   width: 8px; height: 8px; border-radius: 50%; opacity: 1;
@@ -1385,8 +1384,8 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 @keyframes shimmer-text { from { background-position: 0% 0; } to { background-position: -220% 0; } }
 .hero__visual::before {
   content: ""; position: absolute; inset: 8% 6%; z-index: -1; border-radius: 40px;
-  background: radial-gradient(closest-side, rgba(var(--accent-bright-rgb), .55), rgba(var(--accent2-rgb), .18) 60%, transparent);
-  filter: blur(50px); opacity: .85;
+  background: radial-gradient(closest-side, rgba(var(--accent-bright-rgb), .45), rgba(var(--accent2-rgb), .14) 60%, transparent);
+  opacity: .85;
 }
 .media-frame--hero {
   border: 1px solid transparent;
@@ -1397,7 +1396,8 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 }
 .float-card {
   border-color: rgba(var(--accent-light-rgb), .22);
-  background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03)), rgba(10, 16, 30, .72);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03)), rgba(10, 16, 30, .86);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
   box-shadow: 0 20px 50px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .08);
   animation: float-y 7s ease-in-out infinite;
 }
@@ -1482,7 +1482,7 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 
 /* Trust bar: glass tiles */
 [data-site-theme="dark"] .trust { background: linear-gradient(180deg, var(--deep), var(--page-bg)); }
-.trust__list a { background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01)); backdrop-filter: blur(6px); }
+.trust__list a { background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01)); }
 .trust__list a:hover { border-color: rgba(var(--accent-light-rgb), .45); box-shadow: 0 10px 30px -10px rgba(var(--accent-bright-rgb), .5); }
 .trust__list .icon { color: var(--accent-text); }
 
@@ -1518,8 +1518,8 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 @keyframes cta-spin { to { --cta-angle: 360deg; } }
 .cta-band__glow::before {
   content: ""; position: absolute; left: 50%; top: -40%; width: 60%; aspect-ratio: 1; transform: translateX(-50%);
-  border-radius: 50%; filter: blur(80px);
-  background: radial-gradient(circle, rgba(var(--accent-bright-rgb), .5), transparent 65%);
+  border-radius: 50%;
+  background: radial-gradient(circle closest-side, rgba(var(--accent-bright-rgb), .4), rgba(var(--accent-bright-rgb), .12) 50%, transparent);
 }
 
 /* FAQ: highlight the open question */
@@ -1559,6 +1559,9 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
   -webkit-background-clip: text; background-clip: text; color: transparent; pointer-events: none;
 }
 .social a:hover { border-color: rgba(var(--accent-light-rgb), .5); text-decoration: none; }
+
+/* Ambient animations pause while their section is off screen (set by main.js) */
+.is-offscreen, .is-offscreen *, .is-offscreen::before, .is-offscreen::after, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }
 
 /* Calm everything down for people who prefer less motion */
 @media (prefers-reduced-motion: reduce) {

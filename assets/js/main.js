@@ -500,8 +500,18 @@
     }, { passive: true });
   }
 
+  /* Pause ambient animation in sections that are off screen (saves battery and CPU). */
+  function initAmbient() {
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle('is-offscreen', !en.isIntersecting); });
+    });
+    document.querySelectorAll('.hero, .page-hero, .post-hero, .ticker, .cta-band__panel').forEach(function (el) { io.observe(el); });
+  }
+
   function init() {
     initReveal();
+    initAmbient();
     initSpotlight();
     initHeader();
     initMenus();

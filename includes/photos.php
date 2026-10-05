@@ -18,7 +18,8 @@ const STOCK_PREFIX = 'stock-';
 /** Saved copy of a slot's photo (relative to assets/), if it is the slot's current photo. */
 function stock_local(string $key, string $id): ?string
 {
-    if ($id === '') {
+    $key = stock_safe_key($key);
+    if ($id === '' || $key === '') {
         return null;
     }
     $rel = 'uploads/' . STOCK_PREFIX . $key . '.jpg';
@@ -83,9 +84,19 @@ function stock_fetch(string $url): array
     return [(string) $data, null];
 }
 
+/** Slot keys become file names: letters, digits and dashes only. */
+function stock_safe_key(string $key): string
+{
+    return preg_replace('/[^a-z0-9-]/', '', strtolower($key)) ?? '';
+}
+
 /** Download one slot's photo and store it on the site. Returns an error message, or null when saved. */
 function stock_download(string $key, string $id): ?string
 {
+    $key = stock_safe_key($key);
+    if ($key === '') {
+        return 'invalid photo slot name';
+    }
     if (!preg_match('/^[0-9]+-[0-9a-f]+$/', $id)) {
         return 'the photo ID doesn’t look like an Unsplash ID (for example 1498050108023-c5249f4df085)';
     }
@@ -118,16 +129,23 @@ function stock_download(string $key, string $id): ?string
 /**
  * Save every slot's photo that isn't on the site yet.
  * $progress is called as fn(string $key, int $done, int $total, ?string $error).
- * Stops early when there is no internet connection.
- * @return array{saved: int, already: int, failed: array<string, string>, offline: bool}
+ * Stops early when there is no internet connection, or when $seconds (if set)
+ * have passed, so a web request stays within the host's time limit; 'remaining'
+ * then counts the photos left for the next run.
+ * @return array{saved: int, already: int, failed: array<string, string>, offline: bool, remaining: int}
  */
-function stock_download_all(?callable $progress = null): array
+function stock_download_all(?callable $progress = null, ?int $seconds = null): array
 {
     @set_time_limit(600);
+    $started = microtime(true);
     $images = content('images');
     $todo = array_keys(array_filter(stock_slots(), static fn (bool $saved) => !$saved));
-    $result = ['saved' => 0, 'already' => count(stock_slots()) - count($todo), 'failed' => [], 'offline' => false];
+    $result = ['saved' => 0, 'already' => count(stock_slots()) - count($todo), 'failed' => [], 'offline' => false, 'remaining' => 0];
     foreach ($todo as $i => $key) {
+        if ($seconds !== null && $i > 0 && microtime(true) - $started > $seconds) {
+            $result['remaining'] = count($todo) - $i;
+            break;
+        }
         $err = stock_download($key, (string) $images[$key]['id']);
         if ($err === null) {
             $result['saved']++;

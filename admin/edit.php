@@ -18,7 +18,9 @@ $file = admin_section_file($key);
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     admin_csrf_check();
     if ($key === 'images' && isset($_POST['save_photos'])) {
-        $r = stock_download_all();
+        // Stay well inside the 30-second limit many shared hosts set; the rest is saved on the next click.
+        $r = stock_download_all(null, 18);
+        $more = $r['remaining'] ? ' ' . $r['remaining'] . ' more to go: click “Save photos to this website” again to continue.' : '';
         if ($r['offline']) {
             flash('This server couldn’t reach Unsplash, so no photos were saved. Photos keep loading from Unsplash in the meantime. Try again later, or ask your host whether outgoing connections are allowed.', 'error');
         } elseif ($r['failed']) {
@@ -26,9 +28,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             foreach ($r['failed'] as $slot => $why) {
                 $list[] = (image_usage()[$slot] ?? $slot) . ': ' . $why;
             }
-            flash('Saved ' . $r['saved'] . ' photo' . ($r['saved'] === 1 ? '' : 's') . '. Not saved: ' . implode('; ', $list) . '.', 'error');
+            flash('Saved ' . $r['saved'] . ' photo' . ($r['saved'] === 1 ? '' : 's') . '. Not saved: ' . implode('; ', $list) . '.' . $more, 'error');
         } else {
-            flash($r['saved'] ? 'Saved ' . $r['saved'] . ' photo' . ($r['saved'] === 1 ? '' : 's') . ' to your website. They now load from your own site.' : 'All photos are already saved on your website.');
+            flash($r['saved'] ? 'Saved ' . $r['saved'] . ' photo' . ($r['saved'] === 1 ? '' : 's') . ' to your website.' . ($more ?: ' They now load from your own site.') : 'All photos are already saved on your website.');
         }
         redirect('/admin/edit?section=images');
     }
