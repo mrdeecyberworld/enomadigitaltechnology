@@ -37,8 +37,12 @@ require INC . '/layout/header.php';
     </div>
 
     <div class="hero__visual">
-      <div class="media-frame media-frame--hero">
-        <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
+      <div class="hero__stage" data-tilt>
+        <div class="media-frame media-frame--hero">
+          <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
+          <span class="media-sheen" aria-hidden="true"></span>
+        </div>
+        <span class="hero__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       </div>
       <div class="float-card float-card--top" aria-hidden="true">
         <span class="float-card__icon float-card__icon--ok"><?= icon('shield-check', 'icon icon-sm') ?></span>

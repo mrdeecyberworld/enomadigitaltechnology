@@ -512,6 +512,31 @@
     }, { passive: true });
   }
 
+  /* Hero photo: a gentle 3D tilt that follows the pointer (CSS reads --rx / --ry / --gx). */
+  function initTilt() {
+    if (reduceMotion || !window.matchMedia || !matchMedia('(hover: hover)').matches) return;
+    document.querySelectorAll('[data-tilt]').forEach(function (el) {
+      var frame = 0;
+      el.addEventListener('pointermove', function (e) {
+        if (frame) return;
+        frame = requestAnimationFrame(function () {
+          frame = 0;
+          var r = el.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          el.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+          el.style.setProperty('--rx', (y * -8).toFixed(2) + 'deg');
+          el.style.setProperty('--gx', ((x + 0.5) * 100).toFixed(1) + '%');
+        });
+      }, { passive: true });
+      el.addEventListener('pointerleave', function () {
+        el.style.removeProperty('--rx');
+        el.style.removeProperty('--ry');
+        el.style.removeProperty('--gx');
+      });
+    });
+  }
+
   /* Pause ambient animation in sections that are off screen (saves battery and CPU). */
   function initAmbient() {
     if (!('IntersectionObserver' in window)) return;
@@ -525,6 +550,7 @@
     initReveal();
     initAmbient();
     initSpotlight();
+    initTilt();
     initHeader();
     initMenus();
     initMobileNav();
