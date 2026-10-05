@@ -236,12 +236,13 @@ function admin_sections(): array
         'testimonials' => [
             'title' => 'Testimonials',
             'icon'  => 'quote',
-            'intro' => 'Only add real testimonials from real clients, with their permission. While this list is empty, labeled placeholder cards are shown.',
+            'intro' => 'Only add real testimonials from real clients, with their permission. Clients can also send feedback on the /feedback page; approve it in Client feedback and it is added here automatically. While this list is empty, the section is hidden from visitors.',
             'schema' => ['type' => 'repeater', 'item_label' => 'name', 'add_label' => 'Add testimonial', 'fields' => [
                 $f('quote', 'Testimonial', 'textarea', ['rows' => 3]),
                 $f('name', 'Client name'),
                 $f('role', 'Role and company', 'text', ['hint' => 'e.g. Owner, Bright Bakery']),
                 $f('service', 'Service (optional)'),
+                $f('rating', 'Star rating (optional)', 'select', ['options' => ['' => 'No stars', '5' => '★★★★★ 5', '4' => '★★★★ 4', '3' => '★★★ 3', '2' => '★★ 2', '1' => '★ 1']]),
             ]],
         ],
 
@@ -266,7 +267,7 @@ function admin_sections(): array
             'schema' => ['type' => 'group', 'fields' => array_map(
                 static fn (string $key, string $label) => $f($key, $label, 'text', ['prefix' => '/', 'hint' => $key === 'blog' ? 'Blog posts live at /this-address/post-address.' : ($key === 'resources' ? 'Guides live at /this-address/guide-address.' : '')]),
                 array_keys(PAGE_FILES),
-                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service', 'Photo credits', 'Courses & Tools (shop)']
+                ['Services page', 'About page', 'Blog', 'Resources', 'FAQ page', 'Contact page', 'Get a Quote page', 'Book a Consultation page', 'Privacy Policy', 'Terms of Service', 'Photo credits', 'Courses & Tools (shop)', 'Client feedback page']
             )],
         ],
 

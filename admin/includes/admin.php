@@ -139,9 +139,11 @@ function unread_count(): int
 function admin_header(string $title, string $active = ''): void
 {
     $unread = unread_count();
+    $pendingFeedback = feedback_pending_count();
     $nav = [
         ['Dashboard', '/admin/', 'dashboard', 'layout-template'],
         ['Messages', '/admin/messages', 'messages', 'mail'],
+        ['Client feedback', '/admin/feedback', 'feedback', 'quote'],
         ['Blog posts', '/admin/blog', 'blog', 'file-text'],
         ['Tech & security news', '/admin/news', 'news', 'sparkles'],
     ];
@@ -159,9 +161,10 @@ function admin_header(string $title, string $active = ''): void
         ['Account', '/admin/account', 'account', 'user'],
         ['Backup', '/admin/backup', 'backup', 'database'],
     ];
-    $link = static function (array $item) use ($active, $unread): string {
+    $link = static function (array $item) use ($active, $unread, $pendingFeedback): string {
         [$label, $href, $key, $ic] = $item;
-        $badge = $key === 'messages' && $unread ? '<span class="badge">' . $unread . '</span>' : '';
+        $count = ['messages' => $unread, 'feedback' => $pendingFeedback][$key] ?? 0;
+        $badge = $count ? '<span class="badge">' . $count . '</span>' : '';
         return '<li><a href="' . e($href) . '"' . ($active === $key ? ' aria-current="page"' : '') . '>' . icon($ic, 'icon icon-sm') . '<span>' . e($label) . '</span>' . $badge . '</a></li>';
     };
     ?><!doctype html>

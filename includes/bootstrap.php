@@ -26,6 +26,7 @@ require INC . '/routing.php';
 require INC . '/appearance.php';
 require INC . '/mailer.php';
 require INC . '/forms.php';
+require INC . '/feedback.php';
 require INC . '/media.php';
 require INC . '/photos.php';
 require INC . '/blog.php';

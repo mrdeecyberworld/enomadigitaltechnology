@@ -312,3 +312,19 @@ img.focus-bottom-left { object-position: 15% 85%; } img.focus-bottom { object-po
 .photo-grid__state { font-size: .75rem; color: var(--muted, #5b6676); }
 .photo-grid__state--ok { color: #0f7b52; }
 .photo-grid__state--warn { color: #8a5a00; }
+
+/* Client feedback */
+.feedback-list { display: grid; gap: 14px; }
+.feedback-item__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.feedback-item__head h2 { margin: 0; font-size: 1.05rem; }
+.feedback-item__meta { display: flex; align-items: center; gap: 10px; }
+.feedback-item__quote { margin: 12px 0; padding: 12px 16px; border-left: 3px solid var(--blue-d); background: var(--blue-50); border-radius: 6px; line-height: 1.6; }
+.feedback-item--pending { border-color: #f59e0b; }
+.pill--pending { background: #fef3c7; color: #92400e; }
+.pill--published { background: #dcfce7; color: #166534; }
+.pill--archived { background: #e5e7eb; color: #374151; }
+.stars { display: inline-flex; gap: 1px; font-size: 1.05rem; line-height: 1; }
+.star { color: #d1d5db; }
+.star--on { color: #f59e0b; }
+.feedback-item .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.feedback-item .actions form { margin: 0; }

@@ -770,7 +770,7 @@ body.nav-open .site-header::before { background: var(--surface); }
 
 /* ---------- Testimonials ---------- */
 .testimonial-grid { display: grid; gap: 20px; }
-@media (min-width: 900px) { .testimonial-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) { .testimonial-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 380px)); justify-content: center; } }
 .testimonial-card {
   display: flex; flex-direction: column; margin: 0; padding: 28px;
   border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface);
@@ -1610,6 +1610,25 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
   .hero__stage, .media-frame img { transition: none; }
   .media-frame:hover img { transform: none; }
 }
+
+/* ---------- Client feedback: star ratings and the review form ---------- */
+.testimonial-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stars { display: inline-flex; gap: 2px; font-size: 1.05rem; line-height: 1; }
+.star { color: var(--line-strong); }
+.star--on { color: #fbbf24; text-shadow: 0 0 12px rgba(251, 191, 36, .35); }
+.testimonial-cta { margin-top: 28px; text-align: center; color: var(--text-soft); }
+.testimonial-cta a { font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.rating-input { border: 0; padding: 0; margin: 0 0 20px; }
+.rating-input legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.rating-input__stars { display: inline-flex; flex-direction: row-reverse; gap: 4px; }
+.rating-input__stars input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rating-input__stars label { cursor: pointer; font-size: 2rem; line-height: 1; color: var(--line-strong); transition: color .15s, transform .15s; }
+.rating-input__stars label:hover, .rating-input__stars label:hover ~ label,
+.rating-input__stars input:checked ~ label { color: #fbbf24; }
+.rating-input__stars label:hover { transform: scale(1.12); }
+.rating-input__stars input:focus-visible + label { outline: 2px solid var(--accent-text); outline-offset: 3px; border-radius: 4px; }
+.check { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; cursor: pointer; }
+.check input { width: 18px; height: 18px; margin-top: 3px; flex: none; accent-color: var(--accent-mid); }
 
 /* Ambient animations pause while their section is off screen (set by main.js) */
 .is-offscreen, .is-offscreen *, .is-offscreen::before, .is-offscreen::after, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }

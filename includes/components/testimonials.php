@@ -16,8 +16,9 @@ function testimonial_card(?array $t = null): string
             . '<span><strong>Client name</strong><span class="testimonial-card__role">Placeholder</span></span></figcaption>'
             . '</figure>';
     }
+    $stars = rating_stars((int) ($t['rating'] ?? 0), 'stars testimonial-card__stars');
     return '<figure class="testimonial-card reveal">'
-        . icon('quote', 'icon testimonial-card__mark')
+        . '<div class="testimonial-card__top">' . icon('quote', 'icon testimonial-card__mark') . $stars . '</div>'
         . '<blockquote><p>' . e($t['quote']) . '</p></blockquote>'
         . '<figcaption><span class="testimonial-card__avatar" aria-hidden="true">' . e(mb_substr($t['name'], 0, 1)) . '</span>'
         . '<span><strong>' . e($t['name']) . '</strong><span class="testimonial-card__role">' . e($t['role'] ?? '') . (!empty($t['service']) ? ' · ' . e($t['service']) : '') . '</span></span></figcaption>'
@@ -41,6 +42,7 @@ function testimonials_section(): string
             <?= testimonial_card() ?>
           <?php endfor; endif; ?>
         </div>
+        <p class="testimonial-cta reveal">Worked with us? <a class="link-arrow" href="<?= e(page_url('feedback')) ?>">Share your feedback<?= icon('arrow-right', 'icon icon-xs') ?></a></p>
       </div>
     </section>
     <?php

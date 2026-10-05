@@ -15,7 +15,7 @@ $latest = static function (string ...$files): string {
 };
 $contentFile = static fn (string $name): string => store_exists(content_override_file($name)) ? content_override_file($name) : INC . '/content/' . $name . '.php';
 
-$priorities = ['services' => '0.9', 'about' => '0.7', 'blog' => '0.8', 'resources' => '0.7', 'faq' => '0.6', 'contact' => '0.7', 'quote' => '0.7', 'consultation' => '0.7', 'privacy' => '0.3', 'terms' => '0.3', 'shop' => '0.8'];
+$priorities = ['services' => '0.9', 'about' => '0.7', 'blog' => '0.8', 'resources' => '0.7', 'faq' => '0.6', 'contact' => '0.7', 'quote' => '0.7', 'consultation' => '0.7', 'privacy' => '0.3', 'terms' => '0.3', 'shop' => '0.8', 'feedback' => '0.4'];
 $entries = [['/', '1.0', $latest($contentFile('home'), $contentFile('site'))]];
 foreach (PAGE_FILES as $key => $file) {
     if ($key === 'shop' && !shop_is_open()) {

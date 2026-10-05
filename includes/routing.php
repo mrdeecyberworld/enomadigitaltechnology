@@ -20,6 +20,7 @@ const PAGE_FILES = [
     'terms'        => 'terms.php',
     'credits'      => 'credits.php',
     'shop'         => 'shop.php',
+    'feedback'     => 'feedback.php',
 ];
 
 /** Addresses that can never be used for pages. */

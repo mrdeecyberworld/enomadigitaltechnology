@@ -21,7 +21,7 @@ $checklist = [
     ['Connect the AI assistant with an API key (optional)', (bool) cfg('ai.api_key'), '/admin/edit?section=settings'],
     ['Add your social media links', (bool) array_filter(cfg('social', [])), '/admin/edit?section=settings'],
     ['Review the legal pages and add effective dates', !empty($legal['privacy']['updated']) && !empty($legal['terms']['updated']), '/admin/edit?section=legal'],
-    ['Add real client testimonials', (bool) content('testimonials'), '/admin/edit?section=testimonials'],
+    ['Add real client testimonials (or send clients your /feedback page)', (bool) content('testimonials'), '/admin/feedback'],
 ];
 $done = count(array_filter(array_column($checklist, 1)));
 

@@ -33,6 +33,7 @@ return [
         ['label' => 'Blog',             'path' => '/blog'],
         ['label' => 'Resources',        'path' => '/resources'],
         ['label' => 'FAQ',              'path' => '/faq'],
+        ['label' => 'Leave Feedback',   'path' => '/feedback'],
         ['label' => 'Contact',          'path' => '/contact'],
         ['label' => 'Privacy Policy',   'path' => '/privacy-policy'],
         ['label' => 'Terms of Service', 'path' => '/terms-of-service'],
