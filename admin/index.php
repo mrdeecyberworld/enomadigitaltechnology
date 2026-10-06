@@ -35,6 +35,18 @@ admin_header('Dashboard', 'dashboard');
   <a class="btn btn--primary" href="/" target="_blank" rel="noopener"><?= icon('arrow-up-right', 'icon icon-sm') ?> View website</a>
 </header>
 
+<section class="panel sell-panel">
+  <div>
+    <h2><?= icon('shopping-bag', 'icon') ?> Sell courses &amp; software</h2>
+    <p class="muted"><?= count(shop_products(true)) ?> product(s) · <?= count(product_files()) ?> file(s) uploaded · <?= orders_new_count() ?> new order(s)</p>
+  </div>
+  <div class="actions">
+    <a class="btn btn--primary" href="/admin/files"><?= icon('download', 'icon icon-sm') ?> Upload a file</a>
+    <a class="btn btn--light" href="/admin/edit?section=shop"><?= icon('plus', 'icon icon-sm') ?> Add a product &amp; price</a>
+    <a class="btn btn--light" href="/admin/orders"><?= icon('credit-card', 'icon icon-sm') ?> Orders</a>
+  </div>
+</section>
+
 <div class="stats">
   <a class="stat" href="/admin/messages"><span class="stat__num"><?= unread_count() ?></span><span class="stat__label">Unread messages</span></a>
   <a class="stat" href="/admin/messages"><span class="stat__num"><?= $total ?></span><span class="stat__label">Total messages</span></a>

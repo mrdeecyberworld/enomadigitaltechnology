@@ -181,6 +181,16 @@ admin_header($section['title'], 'edit:' . $key);
   </div>
 </header>
 
+<?php if ($key === 'shop'): ?>
+  <section class="panel steps-panel">
+    <ol class="steps">
+      <li><strong>Upload the file</strong> your customers receive (software, course files, e-book).<br><a class="btn btn--light btn--sm" href="/admin/files"><?= icon('download', 'icon icon-sm') ?> Upload courses &amp; software</a></li>
+      <li><strong>Add the product below</strong>: click “Add a course or tool”, choose the type (Course, Software…), set the price, choose the file and set it to Published.</li>
+      <li><strong>Save.</strong> It gets its own page and appears in Courses &amp; Tools. Orders arrive in <a href="/admin/orders">Orders</a>.</li>
+    </ol>
+  </section>
+<?php endif; ?>
+
 <?php if ($key === 'images'): ?>
   <?php $stockSlots = stock_slots(); $stockSaved = count(array_filter($stockSlots)); ?>
   <section class="panel photo-store">

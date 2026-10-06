@@ -145,19 +145,23 @@ function admin_header(string $title, string $active = ''): void
         ['Dashboard', '/admin/', 'dashboard', 'layout-template'],
         ['Messages', '/admin/messages', 'messages', 'mail'],
         ['Client feedback', '/admin/feedback', 'feedback', 'quote'],
-        ['Orders', '/admin/orders', 'orders', 'shopping-bag'],
         ['Blog posts', '/admin/blog', 'blog', 'file-text'],
         ['Tech & security news', '/admin/news', 'news', 'sparkles'],
     ];
+    // Selling courses and software, kept together near the top.
+    $shopNav = [
+        ['Upload courses & software', '/admin/files', 'files', 'download'],
+        ['Products & prices', '/admin/edit?section=shop', 'edit:shop', 'shopping-bag'],
+        ['Orders', '/admin/orders', 'orders', 'credit-card'],
+    ];
     $content = [];
     foreach (admin_sections() as $key => $section) {
-        if ($key !== 'settings') {
+        if ($key !== 'settings' && $key !== 'shop') {
             $content[] = [$section['title'], '/admin/edit?section=' . $key, 'edit:' . $key, $section['icon']];
         }
     }
     $tools = [
         ['Media library', '/admin/media', 'media', 'hard-drive'],
-        ['Product files', '/admin/files', 'files', 'package'],
         ['Email', '/admin/email', 'email', 'mail'],
         ['Appearance', '/admin/appearance', 'appearance', 'sparkles'],
         ['Settings', '/admin/edit?section=settings', 'edit:settings', 'wrench'],
@@ -191,6 +195,8 @@ function admin_header(string $title, string $active = ''): void
     </div>
     <nav id="admin-nav" class="sidebar__nav" aria-label="Admin">
       <ul><?= implode('', array_map($link, $nav)) ?></ul>
+      <p class="sidebar__label">Sell courses &amp; software</p>
+      <ul><?= implode('', array_map($link, $shopNav)) ?></ul>
       <p class="sidebar__label">Content</p>
       <ul><?= implode('', array_map($link, $content)) ?></ul>
       <p class="sidebar__label">Site</p>

@@ -22,7 +22,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 : 'Choose a file to upload.', 'error');
         } else {
             [$name, $error] = product_file_store($_FILES['file']);
-            flash($error ?? 'Uploaded ' . $name . '. Now choose it on a product in Courses & Tools → “File customers receive”.', $error ? 'error' : 'success');
+            flash($error ?? 'Uploaded ' . $name . '. Next: open Products & prices, add your product (or open an existing one) and choose this file under “File customers receive”.', $error ? 'error' : 'success');
         }
     } elseif ($action === 'delete') {
         $path = product_file_path((string) ($_POST['name'] ?? ''));
@@ -36,12 +36,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 }
 
 $files = product_files();
-admin_header('Product files', 'files');
+admin_header('Upload courses & software', 'files');
 ?>
 <header class="page-head">
   <div>
-    <h1>Product files</h1>
-    <p class="muted">Software, course material and other files you sell. They are stored privately: nobody can download them without a download link you create for a paid order in <a href="/admin/orders">Orders</a>.</p>
+    <h1>Upload courses &amp; software</h1>
+    <p class="muted">Step 1: upload the files you sell (software, course material, e-books). Step 2: add the product with its price in <a href="/admin/edit?section=shop">Products &amp; prices</a> and choose the file. Files are stored privately: nobody can download them without a download link you create for a paid order in <a href="/admin/orders">Orders</a>.</p>
   </div>
 </header>
 
