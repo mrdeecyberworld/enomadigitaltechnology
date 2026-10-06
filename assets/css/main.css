@@ -1784,6 +1784,27 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
   .page-home .assist__panel:first-child { display: none; } /* the service finder is easier to tap on a phone */
 }
 
+/* Founder card without a photo: a monogram instead of an empty box */
+.founder-card__monogram {
+  font: 800 clamp(4.5rem, 3rem + 6vw, 7.5rem)/1 var(--font-display, Manrope, sans-serif); letter-spacing: -.04em;
+  background: linear-gradient(135deg, #fff 10%, var(--cyan-300) 55%, var(--blue-300));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 8px 30px rgba(var(--accent-bright-rgb), .45));
+}
+.founder-card__monogram-tag {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; padding: 6px 12px; border-radius: 99px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan-300);
+  background: rgba(var(--accent2-rgb), .12); border: 1px solid rgba(var(--accent2-light-rgb), .3);
+}
+.founder-card__photo--empty:has(.founder-card__monogram) {
+  background:
+    radial-gradient(70% 60% at 50% 30%, rgba(var(--accent-bright-rgb), .35), transparent 70%),
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(160deg, #0f1d38, #081022);
+  border-style: solid; border-color: rgba(var(--accent-light-rgb), .25);
+}
+
 /* ---------- Client feedback: star ratings and the review form ---------- */
 .testimonial-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .stars { display: inline-flex; gap: 2px; font-size: 1.05rem; line-height: 1; }

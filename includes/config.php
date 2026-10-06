@@ -48,9 +48,9 @@ $config = [
     // Founder / about details. Empty values render as clearly marked
     // placeholders so they can be filled in later.
     'founder' => [
-        'name'  => '',
+        'name'  => 'Enoma Divine Omozusi',
         'title' => 'Founder',
-        'bio'   => '',
+        'bio'   => 'IT Support Engineer with an MSc in Cybersecurity and enterprise experience in Windows and macOS support, identity and access management and device management. I founded Enoma Digital Technologies to give small businesses and individuals the same secure, well-run technology that large organizations rely on.',
         // Path relative to the site root, e.g. 'assets/img/founder.jpg'.
         'photo' => '',
     ],

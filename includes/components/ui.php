@@ -125,9 +125,13 @@ function founder_card(): string
       <div class="founder-card__photo<?= $photo ? '' : ' founder-card__photo--empty' ?>">
         <?php if ($photo): ?>
           <?= photo(ltrim($photo, '/'), '(min-width: 1024px) 440px, 90vw', ['alt' => 'Portrait of ' . ($name ?: 'the founder of ' . site('name'))]) ?>
+        <?php elseif ($name !== '' && !viewer_is_admin()): ?>
+          <?php $initials = implode('', array_map(static fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)), array_slice(preg_split('/\s+/', $name), 0, 2))); ?>
+          <span class="founder-card__monogram" aria-hidden="true"><?= e($initials) ?></span>
+          <span class="founder-card__monogram-tag" aria-hidden="true"><?= icon('shield-check', 'icon icon-xs') ?>Build. Secure. Empower.</span>
         <?php else: ?>
           <?= icon('user-round', 'icon founder-card__placeholder-icon') ?>
-          <span class="founder-card__placeholder-label">Founder photo will appear here</span>
+          <span class="founder-card__placeholder-label">Founder photo will appear here (add it in Admin → Settings)</span>
         <?php endif; ?>
       </div>
       <figcaption class="founder-card__caption">
