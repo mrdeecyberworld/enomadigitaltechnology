@@ -44,9 +44,14 @@ require INC . '/layout/header.php';
         <div class="media-frame media-frame--hero">
           <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
           <span class="media-sheen" aria-hidden="true"></span>
+          <span class="hero__scan" aria-hidden="true"></span>
+          <span class="hero__status" aria-hidden="true"><i></i>Secure session</span>
         </div>
         <span class="hero__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       </div>
+      <span class="hero__chip hero__chip--lock" aria-hidden="true"><?= icon('lock', 'icon') ?></span>
+      <span class="hero__chip hero__chip--cloud" aria-hidden="true"><?= icon('cloud', 'icon') ?></span>
+      <span class="hero__chip hero__chip--code" aria-hidden="true"><?= icon('code-xml', 'icon') ?></span>
       <div class="float-card float-card--top" aria-hidden="true">
         <span class="float-card__icon float-card__icon--ok"><?= icon('shield-check', 'icon icon-sm') ?></span>
         <span><strong>MFA enabled</strong><small>Account protected</small></span>
@@ -54,6 +59,10 @@ require INC . '/layout/header.php';
       <div class="float-card float-card--mid" aria-hidden="true">
         <span class="float-card__icon"><?= icon('globe', 'icon icon-sm') ?></span>
         <span><strong>Clients worldwide</strong><small>Remote, any time zone</small></span>
+      </div>
+      <div class="float-card float-card--check" aria-hidden="true">
+        <span class="float-card__icon float-card__icon--ok"><?= icon('circle-check-big', 'icon icon-sm') ?></span>
+        <span><strong>Security check</strong><small class="float-card__ticks"><i>SSL</i><i>Backups</i><i>Updates</i></small></span>
       </div>
       <span class="hero__ring" aria-hidden="true"></span>
     </div>
