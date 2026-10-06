@@ -20,7 +20,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     } elseif ($action === 'link') {
         $product = shop_find((string) $order['product_slug'], true);
         if (!$product || !product_has_delivery($product)) {
-            flash('This product has no file or download link yet. Add one in Courses & Tools (“File customers receive” or “Download or access link”).', 'error');
+            flash('This product has no file or download link yet. Open Products & prices and choose an uploaded file (option A) or paste a download link (option B).', 'error');
         } else {
             $days = max(1, min(90, (int) ($_POST['days'] ?? 7)));
             $max = max(1, min(50, (int) ($_POST['max'] ?? 5)));
@@ -82,7 +82,7 @@ if (!empty($_GET['id'])) {
 
       <h2 class="order-step">2. After payment: send the <?= $isCourse ? 'course access' : 'download' ?> link</h2>
       <?php if (!$hasDelivery): ?>
-        <p class="notice">This product has no file or link to deliver yet. Upload it in <a href="/admin/files">Product files</a> (or paste a Google Drive / Dropbox / course link), then choose it on the product in <a href="/admin/edit?section=shop">Courses &amp; Tools</a>.</p>
+        <p class="notice">This product has nothing to deliver yet. In <a href="/admin/edit?section=shop">Products &amp; prices</a>, paste a download link (Google Drive, Dropbox, course platform…) on the product, or <a href="/admin/files">upload a file</a> and choose it.</p>
       <?php else: ?>
         <form method="post" class="inline-form">
           <?= csrf_field() ?><input type="hidden" name="id" value="<?= e($o['id']) ?>"><input type="hidden" name="action" value="link">

@@ -25,7 +25,8 @@ echo page_hero((string) $shop['heading'], [
   <div class="container">
     <h2 class="sr-only" id="shop-heading">All courses and tools</h2>
     <?php if (viewer_is_admin() && !shop_products(true)): ?>
-      <?= setup_notice('Add your first course or tool in Admin → Courses & Tools. The menu link appears for visitors once one is published.') ?>
+      <?= setup_notice('Only you can see this note. Add your first course or software in Admin → Sell courses & software → Products & prices: set a price, then upload the file or paste a download link. The menu link appears for visitors once one is published.') ?>
+      <p class="section-foot"><?= button('Add a course or software', '/admin/edit?section=shop', 'primary', 'plus') ?></p>
     <?php endif; ?>
     <?php if ($products): ?>
       <div class="product-grid">

@@ -184,8 +184,8 @@ admin_header($section['title'], 'edit:' . $key);
 <?php if ($key === 'shop'): ?>
   <section class="panel steps-panel">
     <ol class="steps">
-      <li><strong>Upload the file</strong> your customers receive (software, course files, e-book).<br><a class="btn btn--light btn--sm" href="/admin/files"><?= icon('download', 'icon icon-sm') ?> Upload courses &amp; software</a></li>
-      <li><strong>Add the product below</strong>: click “Add a course or tool”, choose the type (Course, Software…), set the price, choose the file and set it to Published.</li>
+      <li><strong>Decide what customers get after payment</strong>: upload a file, <em>or</em> just use a link (Google Drive, Dropbox, course platform…), no upload needed.<br><a class="btn btn--light btn--sm" href="/admin/files"><?= icon('download', 'icon icon-sm') ?> Upload a file</a></li>
+      <li><strong>Add the product below</strong>: click “Add a course or tool”, choose the type (Course, Software…), set the price, then choose the uploaded file (option A) <em>or</em> paste the download link (option B), and set it to Published.</li>
       <li><strong>Save.</strong> It gets its own page and appears in Courses &amp; Tools. Orders arrive in <a href="/admin/orders">Orders</a>.</li>
     </ol>
   </section>

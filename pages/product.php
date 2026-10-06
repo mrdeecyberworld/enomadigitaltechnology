@@ -52,7 +52,7 @@ require INC . '/layout/header.php';
         <span class="post-hero__cat"><?= icon($product['type'] === 'Course' || $product['type'] === 'Workshop' ? 'graduation-cap' : 'package', 'icon icon-xs') ?><?= e($product['type']) ?></span>
         <h1 class="post-hero__title" id="product-title"><?= e($product['name']) ?></h1>
         <?php if ($product['summary'] !== ''): ?><p class="post-hero__lead"><?= e($product['summary']) ?></p><?php endif; ?>
-        <?php if (($product['status'] ?? 'published') !== 'published'): ?><?= setup_notice('This product is a draft: only you can see it. Set it to Published in Admin → Courses & Tools.') ?><?php endif; ?>
+        <?php if (($product['status'] ?? 'published') !== 'published'): ?><?= setup_notice('This product is a draft: only you can see it. Set it to Published in Admin → Products & prices.') ?><?php endif; ?>
       </div>
       <aside class="buy-box" aria-label="Purchase">
         <?php if (!empty($product['image']) && ($img = photo(ltrim((string) $product['image'], '/'), '(min-width: 1024px) 420px, 100vw', ['alt' => '', 'eager' => true]))): ?>
@@ -65,7 +65,7 @@ require INC . '/layout/header.php';
             <?= button($buyLabel, $buyUrl, 'primary btn-lg buy-box__button', 'credit-card', ['rel' => 'noopener']) ?>
             <p class="buy-box__secure"><?= icon('lock', 'icon icon-xs') ?> <?= e((string) $shop['checkout_note']) ?></p>
           <?php else: ?>
-            <?= viewer_is_admin() ? setup_notice('No checkout link yet, so visitors place an order and you send payment details by email (Admin → Orders). Add a checkout link in Admin → Courses & Tools when your payments are ready.') : '' ?>
+            <?= viewer_is_admin() ? setup_notice('No checkout link yet, so visitors place an order and you send payment details by email (Admin → Orders). Add a checkout link in Admin → Products & prices when your payments are ready.') : '' ?>
             <?= button($priceValue === 0.0 ? 'Get it free' : 'Order now', '#' . $orderFormId, 'primary btn-lg buy-box__button', 'shopping-bag') ?>
             <p class="buy-box__secure"><?= icon('lock', 'icon icon-xs') ?> No payment needed yet: we email you how to pay, then send your access.</p>
           <?php endif; ?>

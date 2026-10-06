@@ -45,6 +45,14 @@ admin_header('Upload courses & software', 'files');
   </div>
 </header>
 
+<section class="panel sell-panel">
+  <div>
+    <h2><?= icon('link-2', 'icon') ?> Prefer a link instead of uploading?</h2>
+    <p class="muted">You don’t have to upload anything. Put your file on Google Drive, Dropbox, OneDrive or your course platform, then paste its link on the product under “Option B, a download link”. After payment, the customer receives it through their private link.</p>
+  </div>
+  <div class="actions"><a class="btn btn--light" href="/admin/edit?section=shop"><?= icon('link-2', 'icon icon-sm') ?> Add a product with a link</a></div>
+</section>
+
 <form class="panel" method="post" enctype="multipart/form-data">
   <?= csrf_field() ?>
   <input type="hidden" name="action" value="upload">
