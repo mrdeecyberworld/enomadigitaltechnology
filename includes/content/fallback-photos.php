@@ -7,7 +7,6 @@
  */
 
 return [
-    'hero' => ['file' => 'img/fallback/57160dd35c949d4a.jpg', 'alt' => 'Professional in a blazer working at a laptop', 'w' => 681, 'h' => 1024, 'focus' => 'top', 'author' => 'Holidayextras', 'title' => 'Holiday Extras a great place to work', 'source' => 'https://www.flickr.com/photos/holiday-extras/6399473975', 'license' => 'CC BY 2.0', 'license_url' => 'https://creativecommons.org/licenses/by/2.0/'],
     'cyber' => ['file' => 'img/fallback/c565b2690c3af6a7.jpg', 'alt' => 'Two colleagues concentrating on their laptops', 'w' => 1024, 'h' => 768, 'author' => 'Matt', 'title' => 'Geophysics Hackathon', 'source' => 'https://www.flickr.com/photos/kwinkunks/9890061173', 'license' => 'CC BY 2.0', 'license_url' => 'https://creativecommons.org/licenses/by/2.0/'],
     'webdev' => ['file' => 'img/fallback/9b010d0128f888e7.jpg', 'alt' => 'Team working together on laptops around a long table', 'w' => 1024, 'h' => 683, 'author' => 'Théo Chevalier', 'title' => 'IMG_0164', 'source' => 'https://www.flickr.com/photos/79614402@N07/7359727194', 'license' => 'CC BY 2.0', 'license_url' => 'https://creativecommons.org/licenses/by/2.0/'],
     'itsupport' => ['file' => 'img/fallback/9b2773fe0f808238.jpg', 'alt' => 'Man working on a laptop at a desk', 'w' => 1024, 'h' => 1024, 'author' => 'David Sifry', 'title' => 'Hm, what happens if I push this?', 'source' => 'https://www.flickr.com/photos/dsifry/2773358945', 'license' => 'CC BY 2.0', 'license_url' => 'https://creativecommons.org/licenses/by/2.0/'],

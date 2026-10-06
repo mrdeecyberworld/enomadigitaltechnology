@@ -39,63 +39,11 @@ require INC . '/layout/header.php';
       </ul>
     </div>
 
-    <div class="hero__visual hero-scene">
+    <div class="hero__visual">
       <div class="hero__stage" data-tilt>
-        <div class="scene-window">
-          <div class="scene-window__bar" aria-hidden="true">
-            <span class="scene-dots"><i></i><i></i><i></i></span>
-            <span class="scene-url"><?= icon('lock', 'icon') ?>yourbusiness.com</span>
-            <span class="scene-live"><i></i>Live</span>
-          </div>
-          <div class="scene-window__body">
-            <div class="scene-site" aria-hidden="true">
-              <div class="scene-site__nav"><b></b><i></i><i></i><i></i><span></span></div>
-              <div class="scene-site__hero">
-                <div class="scene-site__copy">
-                  <span class="scene-chip"><?= icon('sparkles', 'icon') ?>Build. Secure. Empower.</span>
-                  <span class="ln ln--xl"></span><span class="ln ln--lg"></span><span class="ln"></span><span class="ln ln--sm"></span>
-                  <span class="scene-btns"><span></span><span></span></span>
-                </div>
-              </div>
-              <div class="scene-site__cards">
-                <span><?= icon('code-xml', 'icon') ?><i></i><i></i></span>
-                <span><?= icon('shield-check', 'icon') ?><i></i><i></i></span>
-                <span><?= icon('graduation-cap', 'icon') ?><i></i><i></i></span>
-              </div>
-            </div>
-            <div class="scene-globe" aria-hidden="true">
-              <svg class="scene-globe__svg" viewBox="0 0 200 200" focusable="false">
-                <defs>
-                  <radialGradient id="sg-fill" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#1e3a8a" stop-opacity=".85"/><stop offset=".7" stop-color="#0b1a3a" stop-opacity=".9"/><stop offset="1" stop-color="#050b18"/></radialGradient>
-                  <linearGradient id="sg-line" x1="0" x2="1"><stop offset="0" stop-color="#67e8f9" stop-opacity="0"/><stop offset=".5" stop-color="#67e8f9"/><stop offset="1" stop-color="#8fb4ff" stop-opacity="0"/></linearGradient>
-                  <clipPath id="sg-clip"><circle cx="100" cy="100" r="78"/></clipPath>
-                </defs>
-                <circle cx="100" cy="100" r="96" class="sg-halo"/>
-                <circle cx="100" cy="100" r="78" fill="url(#sg-fill)"/>
-                <g clip-path="url(#sg-clip)" class="sg-grid">
-                  <ellipse cx="100" cy="100" rx="56" ry="78"/><ellipse cx="100" cy="100" rx="30" ry="78"/><line x1="100" y1="22" x2="100" y2="178"/>
-                  <ellipse cx="100" cy="100" rx="78" ry="20"/><ellipse cx="100" cy="62" rx="68" ry="15"/><ellipse cx="100" cy="138" rx="68" ry="15"/>
-                </g>
-                <circle cx="100" cy="100" r="78" class="sg-rim"/>
-                <path class="sg-arc" d="M44 72 Q 84 18 132 58"/>
-                <path class="sg-arc sg-arc--2" d="M60 140 Q 120 170 158 112"/>
-                <path class="sg-arc sg-arc--3" d="M132 58 Q 176 84 158 112"/>
-                <g class="sg-nodes"><circle cx="44" cy="72" r="3.2"/><circle cx="132" cy="58" r="3.2"/><circle cx="158" cy="112" r="3.2"/><circle cx="60" cy="140" r="3.2"/></g>
-                <g class="sg-shield" transform="translate(100 100)">
-                  <circle r="27" class="sg-shield__bg"/>
-                  <path d="M0-17c5 4 10 6 14 6v9c0 9-6 15-14 19-8-4-14-10-14-19v-9c4 0 9-2 14-6z" class="sg-shield__body"/>
-                  <path d="M-6 0l4.5 4.5L7-4" class="sg-shield__tick"/>
-                </g>
-              </svg>
-              <ul class="scene-checks">
-                <li><?= icon('check', 'icon') ?>SSL</li>
-                <li><?= icon('check', 'icon') ?>MFA</li>
-                <li><?= icon('check', 'icon') ?>Backups</li>
-                <li><?= icon('check', 'icon') ?>Updates</li>
-              </ul>
-            </div>
-            <span class="scene-scan" aria-hidden="true"></span>
-          </div>
+        <div class="media-frame media-frame--hero">
+          <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
+          <span class="media-sheen" aria-hidden="true"></span>
         </div>
         <span class="hero__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       </div>
@@ -106,10 +54,6 @@ require INC . '/layout/header.php';
       <div class="float-card float-card--mid" aria-hidden="true">
         <span class="float-card__icon"><?= icon('globe', 'icon icon-sm') ?></span>
         <span><strong>Clients worldwide</strong><small>Remote, any time zone</small></span>
-      </div>
-      <div class="float-card float-card--bottom" aria-hidden="true">
-        <span class="float-card__icon float-card__icon--gold"><?= icon('graduation-cap', 'icon icon-sm') ?></span>
-        <span><strong>Team trained</strong><small>Phishing awareness</small></span>
       </div>
       <span class="hero__ring" aria-hidden="true"></span>
     </div>

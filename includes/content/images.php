@@ -12,7 +12,7 @@
  */
 
 return [
-    'hero'       => ['id' => '1573164713988-8665fc963095', 'alt' => 'Technology professional working on a laptop in a modern office', 'w' => 1600, 'h' => 1067],
+    'hero'       => ['id' => '1573164713988-8665fc963095', 'alt' => 'Technology professional with a laptop in a server room', 'w' => 1600, 'h' => 1067],
     'cyber'      => ['id' => '1515378791036-0648a3ef77b2',    'alt' => 'Professional working on a laptop at a tidy desk',                'w' => 1600, 'h' => 1067],
     'webdev'     => ['id' => '1519389950473-47ba0277781c', 'alt' => 'Team working together on laptops at a long table',                     'w' => 1600, 'h' => 1067],
     'itsupport'  => ['id' => '1573164713714-d95e436ab8d6', 'alt' => 'Support specialist helping a client with a computer',             'w' => 1600, 'h' => 1067],

@@ -397,7 +397,7 @@ function admin_section_file(string $section): string
 function image_usage(): array
 {
     return [
-        'hero'       => 'Homepage hero (not shown now: the top of the homepage uses a designed graphic)',
+        'hero'       => 'Homepage hero (top of the homepage)',
         'cyber'      => 'Homepage cybersecurity section + Cybersecurity page',
         'webdev'     => 'Web Development page',
         'itsupport'  => 'IT Support page',
