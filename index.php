@@ -63,6 +63,11 @@ function resolve_route(string $path): array
         return ['file' => 'blog-post.php', 'get' => ['slug' => $m[1]]];
     }
 
+    // Private download links: /download/{token} (Admin → Orders)
+    if (preg_match('#^download/([a-f0-9]{40})$#', $slug, $m)) {
+        return ['file' => 'download.php', 'get' => ['token' => $m[1]]];
+    }
+
     // Courses & Tools: /courses-and-tools/product-address
     if (preg_match('#^' . preg_quote($routes['shop'], '#') . '/([a-z0-9-]+)$#', $slug, $m)
         && (shop_find($m[1], viewer_is_admin()) || link_path('/' . $slug) === '/' . $slug)) {

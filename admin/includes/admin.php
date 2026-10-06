@@ -140,10 +140,12 @@ function admin_header(string $title, string $active = ''): void
 {
     $unread = unread_count();
     $pendingFeedback = feedback_pending_count();
+    $newOrders = orders_new_count();
     $nav = [
         ['Dashboard', '/admin/', 'dashboard', 'layout-template'],
         ['Messages', '/admin/messages', 'messages', 'mail'],
         ['Client feedback', '/admin/feedback', 'feedback', 'quote'],
+        ['Orders', '/admin/orders', 'orders', 'shopping-bag'],
         ['Blog posts', '/admin/blog', 'blog', 'file-text'],
         ['Tech & security news', '/admin/news', 'news', 'sparkles'],
     ];
@@ -155,15 +157,16 @@ function admin_header(string $title, string $active = ''): void
     }
     $tools = [
         ['Media library', '/admin/media', 'media', 'hard-drive'],
+        ['Product files', '/admin/files', 'files', 'package'],
         ['Email', '/admin/email', 'email', 'mail'],
         ['Appearance', '/admin/appearance', 'appearance', 'sparkles'],
         ['Settings', '/admin/edit?section=settings', 'edit:settings', 'wrench'],
         ['Account', '/admin/account', 'account', 'user'],
         ['Backup', '/admin/backup', 'backup', 'database'],
     ];
-    $link = static function (array $item) use ($active, $unread, $pendingFeedback): string {
+    $link = static function (array $item) use ($active, $unread, $pendingFeedback, $newOrders): string {
         [$label, $href, $key, $ic] = $item;
-        $count = ['messages' => $unread, 'feedback' => $pendingFeedback][$key] ?? 0;
+        $count = ['messages' => $unread, 'feedback' => $pendingFeedback, 'orders' => $newOrders][$key] ?? 0;
         $badge = $count ? '<span class="badge">' . $count . '</span>' : '';
         return '<li><a href="' . e($href) . '"' . ($active === $key ? ' aria-current="page"' : '') . '>' . icon($ic, 'icon icon-sm') . '<span>' . e($label) . '</span>' . $badge . '</a></li>';
     };

@@ -17,25 +17,25 @@ return [
     // the Services menu). 'children' => 'services' renders the services menu.
     // The Courses & Tools link only shows once a product is published.
     'nav' => [
-        ['label' => 'Services',        'path' => '/services', 'children' => 'services'],
-        ['label' => 'Courses & Tools', 'path' => '/courses-and-tools'],
-        ['label' => 'About',           'path' => '/about'],
-        ['label' => 'Blog',            'path' => '/blog'],
-        ['label' => 'Contact',         'path' => '/contact'],
+        ['label' => 'Services',        'page' => 'services', 'path' => '/services', 'children' => 'services'],
+        ['label' => 'Courses & Tools', 'page' => 'shop', 'path' => '/courses-and-tools'],
+        ['label' => 'About',           'page' => 'about', 'path' => '/about'],
+        ['label' => 'Blog',            'page' => 'blog', 'path' => '/blog'],
+        ['label' => 'Contact',         'page' => 'contact', 'path' => '/contact'],
     ],
 
     'cta_primary'   => ['label' => 'Book a Consultation', 'path' => '/book-a-consultation'],
     'cta_secondary' => ['label' => 'Get a Quote',         'path' => '/get-a-quote'],
 
     'footer_company' => [
-        ['label' => 'About',            'path' => '/about'],
-        ['label' => 'Courses & Tools',  'path' => '/courses-and-tools'],
-        ['label' => 'Blog',             'path' => '/blog'],
-        ['label' => 'Resources',        'path' => '/resources'],
-        ['label' => 'FAQ',              'path' => '/faq'],
-        ['label' => 'Leave Feedback',   'path' => '/feedback'],
-        ['label' => 'Contact',          'path' => '/contact'],
-        ['label' => 'Privacy Policy',   'path' => '/privacy-policy'],
-        ['label' => 'Terms of Service', 'path' => '/terms-of-service'],
+        ['label' => 'About',            'page' => 'about', 'path' => '/about'],
+        ['label' => 'Courses & Tools',  'page' => 'shop', 'path' => '/courses-and-tools'],
+        ['label' => 'Blog',             'page' => 'blog', 'path' => '/blog'],
+        ['label' => 'Resources',        'page' => 'resources', 'path' => '/resources'],
+        ['label' => 'FAQ',              'page' => 'faq', 'path' => '/faq'],
+        ['label' => 'Leave Feedback',   'page' => 'feedback', 'path' => '/feedback'],
+        ['label' => 'Contact',          'page' => 'contact', 'path' => '/contact'],
+        ['label' => 'Privacy Policy',   'page' => 'privacy', 'path' => '/privacy-policy'],
+        ['label' => 'Terms of Service', 'page' => 'terms', 'path' => '/terms-of-service'],
     ],
 ];

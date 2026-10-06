@@ -449,7 +449,7 @@ function shop_products(bool $includeDrafts = false): array
         if (!$includeDrafts && ($p['status'] ?? 'published') !== 'published') {
             continue;
         }
-        $out[] = $p + ['type' => 'Course', 'price' => '', 'price_note' => '', 'image' => '', 'summary' => '', 'description' => '', 'includes' => [], 'format' => '', 'buy_url' => '', 'buy_label' => '', 'featured' => false];
+        $out[] = $p + ['type' => 'Course', 'price' => '', 'price_note' => '', 'image' => '', 'summary' => '', 'description' => '', 'includes' => [], 'format' => '', 'buy_url' => '', 'buy_label' => '', 'featured' => false, 'file' => '', 'download_url' => ''];
     }
     // Featured first, otherwise in the order you listed them.
     usort($out, static fn ($a, $b) => (int) !empty($b['featured']) <=> (int) !empty($a['featured']));
@@ -498,10 +498,65 @@ function shop_is_open(): bool
     return shop_products() !== [];
 }
 
-/** Menu links from Brand & navigation, minus the shop link while nothing is for sale (admins always see it). */
+/** Pages you can pick for a menu link (Admin → Brand & navigation): key => label. */
+function menu_page_options(): array
+{
+    $opts = ['' => 'Custom link (type it below)', 'home' => 'Home'];
+    $labels = ['services' => 'Services (all)', 'shop' => 'Courses & Tools', 'about' => 'About', 'blog' => 'Blog', 'resources' => 'Resources', 'faq' => 'FAQ',
+        'contact' => 'Contact', 'quote' => 'Get a Quote', 'consultation' => 'Book a Consultation', 'feedback' => 'Leave Feedback',
+        'privacy' => 'Privacy Policy', 'terms' => 'Terms of Service', 'credits' => 'Photo credits'];
+    foreach ($labels as $key => $label) {
+        if (isset(PAGE_FILES[$key])) {
+            $opts[$key] = $label;
+        }
+    }
+    foreach (services() as $slug => $svc) {
+        $opts['svc:' . $slug] = 'Service: ' . $svc['name'];
+    }
+    return $opts;
+}
+
+/** The address a menu link points to: the chosen page, or the custom link. */
+function menu_item_path(array $item): string
+{
+    $page = (string) ($item['page'] ?? '');
+    if ($page === 'home') {
+        return '/';
+    }
+    if (str_starts_with($page, 'svc:') && isset(services()[substr($page, 4)])) {
+        return service_path(substr($page, 4));
+    }
+    if ($page !== '' && isset(PAGE_FILES[$page])) {
+        return page_url($page);
+    }
+    return (string) ($item['path'] ?? '');
+}
+
+/**
+ * Menu links from Brand & navigation: hidden links are left out, and the shop
+ * link waits until something is for sale (admins always see it).
+ */
 function nav_items(string $which = 'nav'): array
 {
     $shop = page_url('shop');
     $open = shop_is_open() || viewer_is_admin();
-    return array_values(array_filter((array) site($which), static fn ($item) => $open || link_path((string) ($item['path'] ?? '')) !== $shop));
+    $out = [];
+    foreach ((array) site($which) as $item) {
+        if (!is_array($item) || !empty($item['hide'])) {
+            continue;
+        }
+        $item['path'] = menu_item_path($item);
+        if (trim((string) ($item['label'] ?? '')) === '' || $item['path'] === '' || (!$open && link_path($item['path']) === $shop)) {
+            continue;
+        }
+        $out[] = $item;
+    }
+    return $out;
+}
+
+/** The main header button, or null when it is switched off. */
+function header_button(): ?array
+{
+    $b = (array) site('cta_primary');
+    return empty($b['hide']) && trim((string) ($b['label'] ?? '')) !== '' ? $b : null;
 }

@@ -114,7 +114,7 @@ $graph = array_merge(schema_base(), $page['schema']);
     </nav>
 
     <div class="site-header__actions">
-      <a class="btn btn-primary btn-sm header-book" href="<?= e(site('cta_primary')['path']) ?>"><span><?= e(site('cta_primary')['label']) ?></span></a>
+      <?php if ($hb = header_button()): ?><a class="btn btn-primary btn-sm header-book" href="<?= e($hb['path']) ?>"><span><?= e($hb['label']) ?></span></a><?php endif; ?>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" data-nav-toggle>
         <span class="sr-only">Open menu</span>
         <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span></span>
@@ -144,7 +144,7 @@ $graph = array_merge(schema_base(), $page['schema']);
         <?php endforeach; ?>
       </ul>
       <div class="mobile-nav__actions">
-        <?= button(site('cta_primary')['label'], site('cta_primary')['path'], 'primary', 'calendar-check') ?>
+        <?php if ($hb = header_button()): ?><?= button($hb['label'], $hb['path'], 'primary', 'calendar-check') ?><?php endif; ?>
         <?= button(site('cta_secondary')['label'], site('cta_secondary')['path'], 'secondary') ?>
       </div>
       <p class="mobile-nav__tagline"><?= e(site('tagline')) ?></p>
