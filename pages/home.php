@@ -21,7 +21,7 @@ require INC . '/layout/header.php';
 
 <!-- 2. Hero -->
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__bg" aria-hidden="true"><span class="aurora"><i></i><i></i><i></i></span><span class="hero__grid"></span><span class="hero__glow"></span></div>
+  <div class="hero__bg" aria-hidden="true"><span class="aurora"><i></i><i></i><i></i></span><span class="hero__grid"></span><span class="hero__rays"></span><span class="hero__sparkles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="hero__glow"></span></div>
   <div class="container hero__inner">
     <div class="hero__content">
       <p class="eyebrow eyebrow--light hero__eyebrow"><?= e($home['hero']['eyebrow']) ?></p>
