@@ -20,52 +20,38 @@ require INC . '/layout/header.php';
 ?>
 
 <!-- 2. Hero -->
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero__bg" aria-hidden="true"><span class="aurora"><i></i><i></i><i></i></span><span class="hero__grid"></span><span class="hero__rays"></span><span class="hero__sparkles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="hero__glow"></span></div>
+<?php $founder = cfg('founder', []); $founderPhoto = trim((string) ($founder['photo'] ?? '')); ?>
+<section class="hero hero--calm" aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true"></div>
   <div class="container hero__inner">
     <div class="hero__content">
-      <p class="eyebrow eyebrow--light hero__eyebrow"><?= e($home['hero']['eyebrow']) ?></p>
+      <p class="hero__kicker"><?= e($home['hero']['eyebrow']) ?></p>
       <?php $hl = (string) $home['hero']['headline']; $cut = strpos($hl, '. '); ?>
-      <h1 class="hero__title" id="hero-title"><?php if ($cut !== false): ?><?= e(substr($hl, 0, $cut + 1)) ?> <span class="text-gradient"><?= e(substr($hl, $cut + 2)) ?></span><?php else: ?><?= e($hl) ?><?php endif; ?></h1>
+      <h1 class="hero__title" id="hero-title"><?php if ($cut !== false): ?><?= e(substr($hl, 0, $cut + 1)) ?> <span class="hero__accent"><?= e(substr($hl, $cut + 2)) ?></span><?php else: ?><?= e($hl) ?><?php endif; ?></h1>
       <p class="hero__text"><?= e($home['hero']['text']) ?></p>
       <div class="btn-row">
         <?= button('Book a Consultation', '/book-a-consultation', 'primary btn-lg', 'calendar-check') ?>
-        <?= button('Explore Our Services', '#services', 'outline-light btn-lg', 'arrow-right') ?>
+        <?= button('See what we can help with', '#services', 'outline-light btn-lg', 'arrow-right') ?>
       </div>
-      <ul class="hero__points">
+      <ul class="hero__creds">
         <?php foreach ($home['hero']['points'] as $pt): ?>
           <li><?= icon('check', 'icon icon-xs') ?><?= e($pt) ?></li>
         <?php endforeach; ?>
       </ul>
     </div>
 
-    <div class="hero__visual">
-      <div class="hero__stage" data-tilt>
-        <div class="media-frame media-frame--hero">
+    <figure class="hero__visual hero__visual--calm">
+      <div class="media-frame media-frame--hero">
+        <?php if ($founderPhoto !== ''): ?>
+          <?= photo(ltrim($founderPhoto, '/'), '(min-width: 1024px) 46vw, 100vw', ['eager' => true, 'alt' => 'Portrait of ' . ($founder['name'] ?? 'the founder')]) ?>
+        <?php else: ?>
           <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
-          <span class="media-sheen" aria-hidden="true"></span>
-          <span class="hero__scan" aria-hidden="true"></span>
-          <span class="hero__status" aria-hidden="true"><i></i>Secure session</span>
-        </div>
-        <span class="hero__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <?php endif; ?>
       </div>
-      <span class="hero__chip hero__chip--lock" aria-hidden="true"><?= icon('lock', 'icon') ?></span>
-      <span class="hero__chip hero__chip--cloud" aria-hidden="true"><?= icon('cloud', 'icon') ?></span>
-      <span class="hero__chip hero__chip--code" aria-hidden="true"><?= icon('code-xml', 'icon') ?></span>
-      <div class="float-card float-card--top" aria-hidden="true">
-        <span class="float-card__icon float-card__icon--ok"><?= icon('shield-check', 'icon icon-sm') ?></span>
-        <span><strong>MFA enabled</strong><small>Account protected</small></span>
-      </div>
-      <div class="float-card float-card--mid" aria-hidden="true">
-        <span class="float-card__icon"><?= icon('globe', 'icon icon-sm') ?></span>
-        <span><strong>Clients worldwide</strong><small>Remote, any time zone</small></span>
-      </div>
-      <div class="float-card float-card--check" aria-hidden="true">
-        <span class="float-card__icon float-card__icon--ok"><?= icon('circle-check-big', 'icon icon-sm') ?></span>
-        <span><strong>Security check</strong><small class="float-card__ticks"><i>SSL</i><i>Backups</i><i>Updates</i></small></span>
-      </div>
-      <span class="hero__ring" aria-hidden="true"></span>
-    </div>
+      <?php if ($founderPhoto !== '' && !empty($founder['name'])): ?>
+        <figcaption class="hero__caption"><strong><?= e($founder['name']) ?></strong><span><?= e(($founder['title'] ?? 'Founder') . ', ' . site('name')) ?></span></figcaption>
+      <?php endif; ?>
+    </figure>
   </div>
 </section>
 
@@ -86,24 +72,12 @@ require INC . '/layout/header.php';
 <!-- 4. Services -->
 <section class="section" id="services" aria-labelledby="services-heading">
   <div class="container">
-    <?= section_header('Our Services', 'Technology Services Built Around You', 'From building your digital presence to protecting it, Enoma Digital Technologies provides practical technology services designed around your goals.', ['id' => 'services-heading']) ?>
+    <?= section_header('Services', 'What we can help with', 'From building your website to keeping your accounts and devices safe. Pick an area to see exactly what is included.', ['id' => 'services-heading', 'align' => 'left']) ?>
     <?= service_grid(null, ['compact' => true, 'class' => 'service-grid--home']) ?>
   </div>
 </section>
 
-<!-- Capabilities strip: every service feature, scrolling -->
-<?php $caps = []; foreach (services() as $navSvc) { foreach ((array) ($navSvc['includes'] ?? []) as $cap) { $caps[$cap] = $navSvc['icon'] ?? 'check'; } } ?>
-<?php if ($caps): ?>
-<section class="ticker" aria-label="What we help with">
-  <?php foreach ([false, true] as $copy): ?>
-    <ul class="ticker__track"<?= $copy ? ' aria-hidden="true"' : '' ?>>
-      <?php foreach ($caps as $cap => $capIcon): ?>
-        <li><?= icon($capIcon, 'icon icon-xs') ?><?= e($cap) ?></li>
-      <?php endforeach; ?>
-    </ul>
-  <?php endforeach; ?>
-</section>
-<?php endif; ?>
+
 
 <?php if ($show('why')): ?>
 <!-- 5. Why Enoma -->
@@ -159,7 +133,7 @@ require INC . '/layout/header.php';
 <!-- 7. AI Assistant + 7B. Service Finder -->
 <section class="section section--muted assist" id="assistant" aria-labelledby="assistant-heading">
   <div class="container">
-    <?= section_header('Guidance', 'Not Sure What You Need?', "Tell us what you're trying to accomplish or the technology problem you're facing. Our AI assistant can help identify the right Enoma service.", ['id' => 'assistant-heading']) ?>
+    <?= section_header('Not sure where to start?', 'Tell us what is going on', 'Pick what you need help with, or describe the problem, and you will be pointed to the right service.', ['id' => 'assistant-heading', 'align' => 'left']) ?>
     <div class="assist__grid">
       <div class="assist__panel">
         <h3 class="assist__label"><?= icon('sparkles', 'icon icon-sm') ?> Ask the AI assistant</h3>
@@ -283,7 +257,7 @@ require INC . '/layout/header.php';
 <!-- 12. FAQ -->
 <section class="section section--muted" aria-labelledby="faq-heading">
   <div class="container container--narrow">
-    <?= section_header('FAQ', 'Frequently Asked Questions', 'Quick answers about our services. Still have questions? Our team is happy to help.', ['id' => 'faq-heading']) ?>
+    <?= section_header('FAQ', 'Common questions', 'Short answers to what people usually ask first. Anything else, just send us a message.', ['id' => 'faq-heading', 'align' => 'left']) ?>
     <?= faq_list($faqs) ?>
     <p class="section-foot">More questions? <a href="/faq">See all FAQs</a> or <a href="/contact">contact us</a>.</p>
   </div>

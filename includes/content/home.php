@@ -19,10 +19,10 @@ return [
     'faq_count' => '4',
 
     'hero' => [
-        'eyebrow'  => 'Build. Secure. Empower.',
-        'headline' => 'Build Smarter. Stay Secure.',
-        'text'     => 'Enoma Digital Technologies helps businesses and individuals build professional digital experiences, solve technology challenges, and strengthen their cybersecurity.',
-        'points'   => ['Remote services worldwide', 'Security built in from day one', 'Clear, human communication'],
+        'eyebrow'  => 'Independent IT and web services · Remote, worldwide',
+        'headline' => 'Websites, IT support and cybersecurity. Done properly.',
+        'text'     => 'Enoma Digital Technologies is a small, founder-led business. We set up technology that works, keep it secure, and explain everything in plain language, for small businesses, professionals and families.',
+        'points'   => ['MSc in Cybersecurity', 'AWS Certified Solutions Architect', 'Enterprise IT support experience'],
     ],
 
     'trust' => [
@@ -36,14 +36,14 @@ return [
     ],
 
     'why' => [
-        'eyebrow' => 'Why Enoma',
-        'heading' => 'Technology Without the Confusion',
-        'text'    => 'Technology should make your work and life easier, not more complicated. Enoma Digital Technologies focuses on making technology practical, understandable and genuinely useful, with honest recommendations and clear explanations at every step.',
+        'eyebrow' => 'How we work',
+        'heading' => 'Straight answers, no jargon.',
+        'text'    => "Most people don't need more technology. They need the right setup, explained clearly, by someone who answers their messages. That is how we like to work.",
         'points'  => [
-            ['icon' => 'heart-handshake', 'title' => 'Human Support',           'text' => 'Real people. Clear communication. Practical solutions.'],
-            ['icon' => 'shield-check',    'title' => 'Security Mindset',        'text' => 'Security is considered from the beginning, not added as an afterthought.'],
-            ['icon' => 'target',          'title' => 'Built Around Your Needs', 'text' => 'No unnecessary technology. Solutions based on your goals.'],
-            ['icon' => 'lightbulb',       'title' => 'Education First',         'text' => "We don't just solve problems. We help you understand them."],
+            ['icon' => 'heart-handshake', 'title' => 'You deal with the person doing the work', 'text' => 'No call centre and no ticket queue. You talk directly to the engineer looking after your setup.'],
+            ['icon' => 'shield-check',    'title' => 'Security from the start',                 'text' => 'Accounts, backups and updates are set up properly from day one, not patched on later.'],
+            ['icon' => 'target',          'title' => 'Only what you need',                      'text' => "We recommend what fits your goals and budget, and we tell you when you don't need something."],
+            ['icon' => 'lightbulb',       'title' => 'You understand your own setup',           'text' => 'We explain what we are doing as we go, so you are never left guessing.'],
         ],
     ],
 
@@ -64,14 +64,14 @@ return [
     ],
 
     'process' => [
-        'eyebrow' => 'Our Process',
-        'heading' => 'How It Works',
-        'text'    => 'A simple, transparent process from first conversation to lasting results.',
+        'eyebrow' => 'Working together',
+        'heading' => 'How a project works',
+        'text'    => 'Four clear steps, and you always know what happens next.',
         'steps'   => [
-            ['icon' => 'message-square-text', 'title' => 'Tell Us What You Need',                    'text' => 'Share your goals or the problem you are facing through a consultation or quick form.'],
-            ['icon' => 'search',              'title' => 'We Understand the Problem',                'text' => 'We ask the right questions and look at your situation before recommending anything.'],
-            ['icon' => 'wrench',              'title' => 'We Build or Recommend the Right Solution', 'text' => 'You get a clear plan, then we build, configure or guide, keeping you informed throughout.'],
-            ['icon' => 'rocket',              'title' => 'You Move Forward With Confidence',         'text' => 'You leave with working technology and an understanding of how to use and protect it.'],
+            ['icon' => 'message-square-text', 'title' => 'Tell us what you need',      'text' => 'Book a short call or send a message about your goals or the problem.'],
+            ['icon' => 'search',              'title' => 'We look at your situation',  'text' => 'We ask questions and check your current setup before recommending anything.'],
+            ['icon' => 'wrench',              'title' => 'We agree a plan, then do it', 'text' => 'You get a clear plan and price, then we build, fix or set things up and keep you updated.'],
+            ['icon' => 'rocket',              'title' => 'You are set up and confident', 'text' => 'You get working technology and know how to use it and keep it safe.'],
         ],
     ],
 
