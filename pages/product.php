@@ -52,6 +52,12 @@ require INC . '/layout/header.php';
         <span class="post-hero__cat"><?= icon($product['type'] === 'Course' || $product['type'] === 'Workshop' ? 'graduation-cap' : 'package', 'icon icon-xs') ?><?= e($product['type']) ?></span>
         <h1 class="post-hero__title" id="product-title"><?= e($product['name']) ?></h1>
         <?php if ($product['summary'] !== ''): ?><p class="post-hero__lead"><?= e($product['summary']) ?></p><?php endif; ?>
+        <ul class="product-chips">
+          <li><?= icon(shop_type_icon((string) $product['type']), 'icon icon-xs') ?><?= e($product['type']) ?></li>
+          <?php if ($product['format'] !== ''): ?><li><?= icon('monitor-check', 'icon icon-xs') ?><?= e($product['format']) ?></li><?php endif; ?>
+          <?php if ($includes): ?><li><?= icon('layers-2', 'icon icon-xs') ?><?= count($includes) ?> item<?= count($includes) > 1 ? 's' : '' ?> included</li><?php endif; ?>
+          <li><?= icon('mail', 'icon icon-xs') ?>Access sent by email</li>
+        </ul>
         <?php if (($product['status'] ?? 'published') !== 'published'): ?><?= setup_notice('This product is a draft: only you can see it. Set it to Published in Admin → Products & prices.') ?><?php endif; ?>
       </div>
       <aside class="buy-box" aria-label="Purchase">
@@ -70,6 +76,16 @@ require INC . '/layout/header.php';
             <p class="buy-box__secure"><?= icon('lock', 'icon icon-xs') ?> No payment needed yet: we email you how to pay, then send your access.</p>
           <?php endif; ?>
           <?php if ($product['format'] !== ''): ?><p class="buy-box__format"><?= icon('check', 'icon icon-xs') ?> <?= e($product['format']) ?></p><?php endif; ?>
+          <?php if ($includes): ?>
+            <ul class="buy-box__list">
+              <?php foreach (array_slice($includes, 0, 4) as $item): ?><li><?= icon('check', 'icon icon-xs') ?><?= e($item) ?></li><?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
+          <div class="buy-box__trust" aria-label="Buying with us">
+            <span><?= icon('lock', 'icon icon-xs') ?>Secure order</span>
+            <span><?= icon('mail', 'icon icon-xs') ?>Access by email</span>
+            <span><?= icon('headset', 'icon icon-xs') ?>Real help</span>
+          </div>
         </div>
       </aside>
     </div>
@@ -79,8 +95,8 @@ require INC . '/layout/header.php';
     <?php if ($includes): ?>
       <section class="product-includes" aria-labelledby="includes-heading">
         <h2 id="includes-heading">What’s included</h2>
-        <ul class="check-list">
-          <?php foreach ($includes as $item): ?><li><?= icon('check', 'icon icon-sm') ?><span><?= e($item) ?></span></li><?php endforeach; ?>
+        <ul class="includes-grid">
+          <?php foreach ($includes as $item): ?><li><span class="includes-grid__icon"><?= icon('check', 'icon icon-sm') ?></span><span><?= e($item) ?></span></li><?php endforeach; ?>
         </ul>
       </section>
     <?php endif; ?>
@@ -90,6 +106,11 @@ require INC . '/layout/header.php';
     <?php if ($orderState !== null): $ov = $orderState['values']; $oe = $orderState['errors'];
       $oerr = static fn (string $k): string => isset($oe[$k]) ? '<p class="field__error" id="order-' . $k . '-error">' . icon('circle-alert', 'icon icon-xs') . e($oe[$k]) . '</p>' : '';
       $oinv = static fn (string $k): string => isset($oe[$k]) ? ' aria-invalid="true" aria-describedby="order-' . $k . '-error"' : ''; ?>
+    <ol class="buy-steps" aria-label="How buying works">
+      <li><span class="buy-steps__num">1</span><strong>Place your order</strong><small>Your name and email, no payment yet</small></li>
+      <li><span class="buy-steps__num">2</span><strong>Pay securely</strong><small>We email you how to pay</small></li>
+      <li><span class="buy-steps__num">3</span><strong>Get access</strong><small>Your <?= in_array($product['type'], ['Course', 'Workshop'], true) ? 'course access' : 'private download link' ?> arrives by email</small></li>
+    </ol>
     <section class="order-card" aria-labelledby="order-heading">
       <div class="order-card__head">
         <span class="order-card__icon"><?= icon('shopping-bag', 'icon') ?></span>

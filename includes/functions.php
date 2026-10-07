@@ -492,6 +492,18 @@ function shop_price(array $p): string
     return $n == 0.0 ? 'Free' : '$' . number_format($n, fmod($n, 1.0) == 0.0 ? 0 : 2);
 }
 
+/** Icon for a product type. */
+function shop_type_icon(string $type): string
+{
+    return match ($type) {
+        'Course', 'Workshop' => 'graduation-cap',
+        'Software'           => 'code-xml',
+        'Template', 'Guide'  => 'file-text',
+        'Bundle'             => 'layers-2',
+        default              => 'package',
+    };
+}
+
 /** Whether the shop has anything to show visitors (the menu link is hidden until then). */
 function shop_is_open(): bool
 {
