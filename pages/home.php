@@ -73,7 +73,7 @@ require INC . '/layout/header.php';
 <section class="section" id="services" aria-labelledby="services-heading">
   <div class="container">
     <?= section_header('Services', 'What we can help with', 'From building your website to keeping your accounts and devices safe. Pick an area to see exactly what is included.', ['id' => 'services-heading', 'align' => 'left']) ?>
-    <?= service_grid(null, ['compact' => true, 'class' => 'service-grid--home']) ?>
+    <?= service_grid(null, ['compact' => true, 'photo' => true, 'class' => 'service-grid--home']) ?>
   </div>
 </section>
 
@@ -83,12 +83,15 @@ require INC . '/layout/header.php';
 <!-- 5. Why Enoma -->
 <section class="section section--dark why" aria-labelledby="why-heading">
   <div class="section__bg" aria-hidden="true"></div>
-  <div class="container why__inner">
+  <div class="container why__inner why__inner--photo">
+    <div class="why__media reveal">
+      <div class="media-frame media-frame--tall"><?= photo('people', '(min-width: 1024px) 40vw, 100vw') ?></div>
+    </div>
+    <div class="why__body">
     <div class="why__intro">
       <?= section_header($home['why']['eyebrow'], $home['why']['heading'], $home['why']['text'], ['align' => 'left', 'id' => 'why-heading']) ?>
-      <?= button('Learn About Enoma', '/about', 'outline-light', 'arrow-right') ?>
     </div>
-    <div class="why__grid">
+    <div class="why__grid why__grid--list">
       <?php foreach ($home['why']['points'] as $pt): ?>
         <div class="feature-card reveal">
           <span class="feature-card__icon"><?= icon($pt['icon']) ?></span>
@@ -96,6 +99,8 @@ require INC . '/layout/header.php';
           <p class="feature-card__text"><?= e($pt['text']) ?></p>
         </div>
       <?php endforeach; ?>
+    </div>
+    <p class="why__more"><?= button('Learn About Enoma', '/about', 'outline-light', 'arrow-right') ?></p>
     </div>
   </div>
 </section>

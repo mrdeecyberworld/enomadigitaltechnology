@@ -11,7 +11,11 @@ function service_card(string $slug, array $svc, array $opts = []): string
     $headingLevel = (int) ($opts['level'] ?? 3);
     $id = 'svc-' . $slug;
     ob_start(); ?>
-    <article class="service-card<?= $compact ? ' service-card--compact' : '' ?> reveal" aria-labelledby="<?= e($id) ?>">
+    <?php $withPhoto = !empty($opts['photo']) && !empty($svc['image']); ?>
+    <article class="service-card<?= $compact ? ' service-card--compact' : '' ?><?= $withPhoto ? ' service-card--photo' : '' ?> reveal" aria-labelledby="<?= e($id) ?>">
+      <?php if ($withPhoto): ?>
+        <div class="media-frame service-card__photo"><?= photo((string) $svc['image'], '(min-width: 960px) 380px, (min-width: 640px) 50vw, 100vw', ['alt' => '']) ?></div>
+      <?php endif; ?>
       <div class="service-card__icon"><?= icon($svc['icon']) ?></div>
       <h<?= $headingLevel ?> class="service-card__title" id="<?= e($id) ?>"><?= e($svc['name']) ?></h<?= $headingLevel ?>>
       <p class="service-card__text"><?= e($svc['summary']) ?></p>
