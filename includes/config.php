@@ -92,6 +92,13 @@ $config = [
     // Without an API key the assistant runs in "guided mode": a local,
     // rules-based helper that only uses approved website content.
     // With a key it uses the Claude API from the server (never the browser).
+    // Search engines (Admin → Settings → Search engines)
+    'seo' => [
+        'google_verification' => '',   // Google Search Console "HTML tag" code
+        'bing_verification'   => '',   // Bing Webmaster Tools code
+        'force_https'         => false, // send every visitor to https:// (turn on once SSL works)
+    ],
+
     'ai' => [
         'api_key'        => '',              // prefer the ANTHROPIC_API_KEY env var
         'model'          => 'claude-opus-5-5',

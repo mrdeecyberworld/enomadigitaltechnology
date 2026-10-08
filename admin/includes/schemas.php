@@ -361,6 +361,11 @@ function admin_sections(): array
                     $f('model', 'Model', 'text'),
                     $f('rate_limit', 'Messages per visitor per hour', 'text'),
                 ]]),
+                $f('seo', 'Search engines (Google Search Console)', 'group', ['fields' => [
+                    $f('google_verification', 'Google Search Console verification code', 'text', ['hint' => 'In Search Console choose “URL prefix”, then the “HTML tag” method, and paste the whole tag or just the code here. Save, then click Verify in Search Console.']),
+                    $f('bing_verification', 'Bing Webmaster Tools verification code (optional)', 'text', ['hint' => 'Bing also powers Yahoo and DuckDuckGo results. Paste the whole tag or just the code.']),
+                    $f('force_https', 'Always use the secure address (https://)', 'bool', ['hint' => 'Turn on once https://enomadigitaltech.com opens with a padlock. Visitors using http:// are then sent to the secure address, which Google prefers.']),
+                ]]),
                 $f('setup_notices', 'Show me setup reminders on the website while I’m logged in', 'bool'),
                 $f('base_url', 'Website address', 'url', ['hint' => 'Used for canonical links and the sitemap. No trailing slash.']),
             ]],

@@ -16,6 +16,17 @@ if (parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) === '/enoma-rewrite-
 
 require __DIR__ . '/includes/bootstrap.php';
 
+// Admin → Settings → Search engines: always use the secure address.
+if (cfg('seo.force_https') && PHP_SAPI !== 'cli-server') {
+    $secure = ($_SERVER['HTTPS'] ?? '') === 'on' || ($_SERVER['HTTPS'] ?? '') === '1'
+        || (string) ($_SERVER['SERVER_PORT'] ?? '') === '443'
+        || strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')) === 'https';
+    if (!$secure && !empty($_SERVER['HTTP_HOST'])) {
+        header('Location: https://' . $_SERVER['HTTP_HOST'] . ($_SERVER['REQUEST_URI'] ?? '/'), true, 301);
+        exit;
+    }
+}
+
 $requestPath = rawurldecode(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/');
 $requestQuery = (string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_QUERY);
 

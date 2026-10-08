@@ -51,6 +51,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if ($key === 'settings') {
         $data['ai']['rate_limit'] = max(1, (int) ($data['ai']['rate_limit'] ?? 20));
         $data['base_url'] = rtrim((string) ($data['base_url'] ?? ''), '/') ?: cfg('base_url');
+        // Verification codes: accept the whole <meta> tag or just the code.
+        foreach (['google_verification', 'bing_verification'] as $k) {
+            $v = trim((string) ($data['seo'][$k] ?? ''));
+            if (preg_match('/content\s*=\s*["\']([^"\']+)["\']/i', $v, $m)) {
+                $v = $m[1];
+            }
+            $data['seo'][$k] = preg_replace('/[^A-Za-z0-9_\-]/', '', $v);
+        }
     }
     if ($key === 'images') {
         // Photo links pasted from unsplash.com become photo IDs; a link that can't be read keeps the previous photo.

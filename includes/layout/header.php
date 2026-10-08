@@ -25,6 +25,18 @@ $page = array_merge([
     'body_class'  => '',
 ], $page ?? []);
 
+// Search results show about 60 characters of a title and 160 of a description:
+// shorten the brand suffix (or drop it) and trim long descriptions at a word.
+$brandSuffix = ' | ' . site('name');
+if (mb_strlen($page['title']) > 60 && str_ends_with($page['title'], $brandSuffix)) {
+    $bare = mb_substr($page['title'], 0, -mb_strlen($brandSuffix));
+    $page['title'] = mb_strlen($bare . ' | Enoma') <= 60 ? $bare . ' | Enoma' : $bare;
+}
+if (mb_strlen($page['description']) > 160) {
+    $cut = mb_substr($page['description'], 0, 157);
+    $page['description'] = rtrim(mb_substr($cut, 0, (int) mb_strrpos($cut, ' ')), " ,.;:-") . '…';
+}
+
 $canonical = abs_url($page['path']);
 $ogImage = abs_url($page['og_image']);
 $graph = array_merge(schema_base(), $page['schema']);
@@ -38,6 +50,8 @@ $graph = array_merge(schema_base(), $page['schema']);
   <meta name="description" content="<?= e($page['description']) ?>">
   <link rel="canonical" href="<?= e($canonical) ?>">
   <?php if ($page['noindex']): ?><meta name="robots" content="noindex, follow"><?php endif; ?>
+  <?php if (cfg('seo.google_verification')): ?><meta name="google-site-verification" content="<?= e((string) cfg('seo.google_verification')) ?>"><?php endif; ?>
+  <?php if (cfg('seo.bing_verification')): ?><meta name="msvalidate.01" content="<?= e((string) cfg('seo.bing_verification')) ?>"><?php endif; ?>
 
   <meta property="og:type" content="<?= e($page['og_type']) ?>">
   <meta property="og:site_name" content="<?= e(site('name')) ?>">

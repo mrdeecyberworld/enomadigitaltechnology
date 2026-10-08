@@ -17,7 +17,7 @@ return [
         'intro'            => 'From building your digital presence to protecting it, Enoma Digital Technologies provides practical technology services for small businesses, startups, organizations and individuals.',
     ],
     'about' => [
-        'meta_title'       => 'About Enoma Digital Technologies | Technology With a Human Approach',
+        'meta_title'       => 'About Us: Founder-Led IT, Web & Cybersecurity | Enoma',
         'meta_description' => 'Enoma Digital Technologies was created to make technology more accessible, practical and secure for small businesses, organizations and individuals worldwide.',
         'eyebrow'          => 'About Enoma',
         'heading'          => 'Technology With a Human Approach',
