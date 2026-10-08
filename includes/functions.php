@@ -222,6 +222,45 @@ function photo(string $key, string $sizes = '(min-width: 1024px) 50vw, 100vw', a
     );
 }
 
+/* ---------- Google AdSense ---------- */
+
+/** Publisher ID in the "ca-pub-…" form, or '' when AdSense is not set up. */
+function adsense_client(): string
+{
+    $id = trim((string) cfg('adsense.client', ''));
+    if (preg_match('/^(?:ca-)?pub-(\d{10,20})$/', $id, $m)) {
+        return 'ca-pub-' . $m[1];
+    }
+    return '';
+}
+
+/**
+ * Whether ads may show on this address. Never in the admin, the shop, download
+ * links or form-heavy pages people use to buy or contact you.
+ */
+function adsense_enabled_for(string $path): bool
+{
+    $placement = (string) cfg('adsense.placement', 'all');
+    if (adsense_client() === '' || $placement === 'off') {
+        return false;
+    }
+    $path = '/' . trim($path, '/');
+    foreach (['/admin', '/api', '/download', page_url('shop')] as $blocked) {
+        if ($path === $blocked || str_starts_with($path, $blocked . '/')) {
+            return false;
+        }
+    }
+    if ($placement === 'content') {
+        foreach ([page_url('blog'), page_url('resources')] as $allowed) {
+            if ($path === $allowed || str_starts_with($path, $allowed . '/')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return true;
+}
+
 /** Security headers (also set in .htaccess where mod_headers is available). */
 function send_security_headers(): void
 {
@@ -232,6 +271,12 @@ function send_security_headers(): void
     header('X-Frame-Options: SAMEORIGIN');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()');
+    $path = (string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+    if (function_exists('cfg') && adsense_enabled_for($path)) {
+        // Google's ads load scripts, images and frames from many Google domains.
+        header("Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.gstatic.com https://*.googleadservices.com https://*.adtrafficquality.google; style-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:; frame-src https:; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; object-src 'none'");
+        return;
+    }
     header("Content-Security-Policy: default-src 'self'; img-src 'self' data: https://images.unsplash.com; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self'; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; object-src 'none'");
 }
 

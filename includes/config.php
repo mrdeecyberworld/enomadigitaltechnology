@@ -92,6 +92,12 @@ $config = [
     // Without an API key the assistant runs in "guided mode": a local,
     // rules-based helper that only uses approved website content.
     // With a key it uses the Claude API from the server (never the browser).
+    // Google AdSense (Admin → Settings → Google AdSense)
+    'adsense' => [
+        'client'    => 'ca-pub-4418201778948074', // your publisher ID (it is public: it appears in every ad)
+        'placement' => 'all',                     // all | content (blog and guides only) | off
+    ],
+
     // Search engines (Admin → Settings → Search engines)
     'seo' => [
         'google_verification' => '',   // Google Search Console "HTML tag" code

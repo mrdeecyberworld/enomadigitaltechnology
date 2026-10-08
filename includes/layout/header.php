@@ -82,6 +82,9 @@ $graph = array_merge(schema_base(), $page['schema']);
   <script src="<?= e(asset('js/main.js')) ?>" defer></script>
 
   <?= json_ld(['@context' => 'https://schema.org', '@graph' => $graph]) ?>
+  <?php if (adsense_enabled_for($page['path'])): ?>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<?= e(adsense_client()) ?>" crossorigin="anonymous"></script>
+  <?php endif; ?>
 </head>
 <body class="<?= e($page['body_class']) ?>">
 <a class="skip-link" href="#main">Skip to main content</a>

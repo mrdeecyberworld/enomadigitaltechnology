@@ -50,6 +50,9 @@ function resolve_route(string $path): array
     if ($slug === '') {
         return ['file' => 'home.php'];
     }
+    if ($slug === 'ads.txt') {
+        return ['file' => 'ads-txt.php'];
+    }
     if ($slug === 'sitemap.xml') {
         return ['file' => 'sitemap.php'];
     }

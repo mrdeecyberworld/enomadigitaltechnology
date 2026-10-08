@@ -51,6 +51,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if ($key === 'settings') {
         $data['ai']['rate_limit'] = max(1, (int) ($data['ai']['rate_limit'] ?? 20));
         $data['base_url'] = rtrim((string) ($data['base_url'] ?? ''), '/') ?: cfg('base_url');
+        // AdSense: accept the whole snippet or just the ID.
+        if (preg_match('/(?:ca-)?pub-\d{10,20}/', (string) ($data['adsense']['client'] ?? ''), $m)) {
+            $data['adsense']['client'] = str_starts_with($m[0], 'ca-') ? $m[0] : 'ca-' . $m[0];
+        } else {
+            $data['adsense']['client'] = '';
+        }
         // Verification codes: accept the whole <meta> tag or just the code.
         foreach (['google_verification', 'bing_verification'] as $k) {
             $v = trim((string) ($data['seo'][$k] ?? ''));

@@ -361,6 +361,10 @@ function admin_sections(): array
                     $f('model', 'Model', 'text'),
                     $f('rate_limit', 'Messages per visitor per hour', 'text'),
                 ]]),
+                $f('adsense', 'Google AdSense (ads on your website)', 'group', ['fields' => [
+                    $f('client', 'Publisher ID', 'text', ['hint' => 'Looks like ca-pub-1234567890123456. You can paste the whole AdSense code; only the ID is kept. Your ads.txt file is created automatically.']),
+                    $f('placement', 'Where ads may appear', 'select', ['options' => ['all' => 'All pages (needed while Google reviews your site)', 'content' => 'Blog and guides only (recommended once approved)', 'off' => 'Off (no ads)']]),
+                ]]),
                 $f('seo', 'Search engines (Google Search Console)', 'group', ['fields' => [
                     $f('google_verification', 'Google Search Console verification code', 'text', ['hint' => 'In Search Console choose “URL prefix”, then the “HTML tag” method, and paste the whole tag or just the code here. Save, then click Verify in Search Console.']),
                     $f('bing_verification', 'Bing Webmaster Tools verification code (optional)', 'text', ['hint' => 'Bing also powers Yahoo and DuckDuckGo results. Paste the whole tag or just the code.']),
