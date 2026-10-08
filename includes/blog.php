@@ -17,6 +17,7 @@ function blog_seed_if_needed(): void
     $marker = blog_dir() . '/.seeded';
     if (is_file($marker)) {
         blog_add_seed_covers();
+        blog_seed_extra('blog-seed-2');
         return;
     }
     $now = time();
@@ -31,6 +32,34 @@ function blog_seed_if_needed(): void
     }
     @file_put_contents($marker, date('c'));
     @file_put_contents(blog_dir() . '/.covers', date('c'));
+    blog_seed_extra('blog-seed-2');
+}
+
+/**
+ * Add a later set of starter posts once (also on sites that already have posts).
+ * A post that already exists is left alone, and the set is never added twice,
+ * so a post you delete does not come back.
+ */
+function blog_seed_extra(string $set): void
+{
+    $marker = blog_dir() . '/.seeded-' . preg_replace('/[^a-z0-9-]/', '', $set);
+    if (is_file($marker)) {
+        return;
+    }
+    $now = time();
+    foreach (content_default($set) as $i => $post) {
+        if (is_file(blog_dir() . '/' . $post['slug'] . '.json')) {
+            continue;
+        }
+        $post['id'] = $post['slug'];
+        $post['status'] = 'published';
+        // Spread over the past weeks, newest first in the order listed.
+        $post['published_at'] = date('Y-m-d H:i', $now - $i * 4 * 86400);
+        $post['updated_at'] = date('c', $now);
+        $post['author'] = '';
+        blog_write($post);
+    }
+    @file_put_contents($marker, date('c'));
 }
 
 /** Give starter posts saved before cover photos existed their photo (once; posts you've changed keep your choice). */
