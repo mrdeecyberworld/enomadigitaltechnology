@@ -611,6 +611,16 @@ function nav_items(string $which = 'nav'): array
     return $out;
 }
 
+/** Freelancer status (Admin → Settings → Freelancer status), or null when switched off. */
+function freelance_status(): ?array
+{
+    $f = (array) cfg('freelance', []);
+    if (empty($f['show']) || trim((string) ($f['status'] ?? '')) === '') {
+        return null;
+    }
+    return $f + ['bar_text' => '', 'link_label' => '', 'link' => ''];
+}
+
 /** The main header button, or null when it is switched off. */
 function header_button(): ?array
 {

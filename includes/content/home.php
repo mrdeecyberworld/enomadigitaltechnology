@@ -15,14 +15,30 @@ return [
         'process'   => true,
         'about'     => false,
         'faq'       => true,
+        'showcase'  => true,
     ],
     'faq_count' => '4',
 
     'hero' => [
-        'eyebrow'  => 'Independent IT and web services · Remote, worldwide',
+        'eyebrow'  => 'Freelance web developer and IT specialist · Remote, worldwide',
         'headline' => 'Websites, IT support and cybersecurity. Done properly.',
-        'text'     => 'Enoma Digital Technologies is a small, founder-led business. We set up technology that works, keep it secure, and explain everything in plain language, for small businesses, professionals and families.',
+        'text'     => 'I am a freelance web developer and IT specialist, working as Enoma Digital Technologies. I build websites, set up technology that works, keep it secure and explain everything in plain language, for small businesses, professionals and families worldwide.',
         'points'   => ['MSc in Cybersecurity', 'AWS Certified Solutions Architect', 'Enterprise IT support experience'],
+    ],
+
+    // Slider near the bottom of the homepage (Admin → Homepage → Slider).
+    'showcase' => [
+        'eyebrow' => 'Hire a freelancer',
+        'heading' => 'One freelancer, everything your technology needs',
+        'text'    => 'Swipe through what I can take off your plate. Every project is handled personally, start to finish.',
+        'slides'  => [
+            ['photo' => 'webdev',     'icon' => 'code-xml',       'tag' => 'Web development',     'title' => 'Websites that bring you customers',        'text' => 'Fast, secure, mobile-ready websites with a clear message and an easy way to get in touch.', 'label' => 'Get a website quote',   'path' => '/web-development'],
+            ['photo' => 'cyber',      'icon' => 'shield-check',   'tag' => 'Cybersecurity',       'title' => 'Accounts and data locked down properly',   'text' => 'MFA, email security, backups and a practical security check, explained without jargon.',  'label' => 'Improve your security', 'path' => '/cybersecurity'],
+            ['photo' => 'itsupport',  'icon' => 'headset',        'tag' => 'Remote IT support',   'title' => 'Tech problems fixed, wherever you are',    'text' => 'Friendly remote help with computers, email and accounts, with every fix explained.',      'label' => 'Get IT help',           'path' => '/it-support'],
+            ['photo' => 'cloud',      'icon' => 'cloud',          'tag' => 'Cloud and email',     'title' => 'Microsoft 365 and Google Workspace, set up right', 'text' => 'Professional email, shared files and secure sign-ins for you and your team.',     'label' => 'Explore cloud setup',   'path' => '/cloud-services'],
+            ['photo' => 'training',   'icon' => 'graduation-cap', 'tag' => 'Training',            'title' => 'Confidence with technology, at any age',   'text' => 'Plain-language training on phishing, passwords and staying safe online.',               'label' => 'See training',          'path' => '/training'],
+            ['photo' => 'consulting', 'icon' => 'lightbulb',      'tag' => 'Consulting',          'title' => 'Honest advice before you spend',           'text' => 'The right tools for your goals and budget, and a straight answer when you do not need something.', 'label' => 'Book a consultation', 'path' => '/book-a-consultation'],
+        ],
     ],
 
     'trust' => [

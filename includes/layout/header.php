@@ -88,6 +88,15 @@ $graph = array_merge(schema_base(), $page['schema']);
 </head>
 <body class="<?= e($page['body_class']) ?>">
 <a class="skip-link" href="#main">Skip to main content</a>
+<?php if ($fl = freelance_status()): ?>
+<div class="freelance-bar">
+  <div class="container freelance-bar__inner">
+    <span class="status-dot" aria-hidden="true"></span>
+    <p class="freelance-bar__text"><strong><?= e($fl['status']) ?></strong><?php if ($fl['bar_text'] !== ''): ?><span class="freelance-bar__more"> · <?= e($fl['bar_text']) ?></span><?php endif; ?></p>
+    <?php if ($fl['link_label'] !== '' && $fl['link'] !== ''): ?><a class="freelance-bar__link" href="<?= e($fl['link']) ?>"><?= e($fl['link_label']) ?><?= icon('arrow-right', 'icon icon-xs') ?></a><?php endif; ?>
+  </div>
+</div>
+<?php endif; ?>
 
 <header class="site-header" data-header>
   <div class="container site-header__inner">

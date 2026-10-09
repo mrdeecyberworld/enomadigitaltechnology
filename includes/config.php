@@ -55,6 +55,16 @@ $config = [
         'photo' => '',
     ],
 
+    // Freelancer status: badge in the hero and a bar at the top of every page
+    // (Admin → Settings → Freelancer status).
+    'freelance' => [
+        'show'       => true,
+        'status'     => 'Freelancer · Available for new projects',
+        'bar_text'   => 'Websites, IT support and cybersecurity for clients worldwide.',
+        'link_label' => 'Hire me',
+        'link'       => '/get-a-quote',
+    ],
+
     // ── Form delivery (INTEGRATION POINT) ───────────────────────────────
     // 'none' : forms validate but nothing is sent. Visitors are told plainly
     //          that online delivery is not connected yet.

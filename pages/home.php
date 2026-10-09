@@ -25,6 +25,9 @@ require INC . '/layout/header.php';
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="container hero__inner">
     <div class="hero__content">
+      <?php if ($fl = freelance_status()): ?>
+        <a class="hero__status" href="<?= e($fl['link'] ?: '/get-a-quote') ?>"><span class="status-dot" aria-hidden="true"></span><?= e($fl['status']) ?></a>
+      <?php endif; ?>
       <p class="hero__kicker"><?= e($home['hero']['eyebrow']) ?></p>
       <?php $hl = (string) $home['hero']['headline']; $cut = strpos($hl, '. '); ?>
       <h1 class="hero__title" id="hero-title"><?php if ($cut !== false): ?><?= e(substr($hl, 0, $cut + 1)) ?> <span class="hero__accent"><?= e(substr($hl, $cut + 2)) ?></span><?php else: ?><?= e($hl) ?><?php endif; ?></h1>
@@ -265,6 +268,48 @@ require INC . '/layout/header.php';
     <?= section_header('FAQ', 'Common questions', 'Short answers to what people usually ask first. Anything else, just send us a message.', ['id' => 'faq-heading', 'align' => 'left']) ?>
     <?= faq_list($faqs) ?>
     <p class="section-foot">More questions? <a href="/faq">See all FAQs</a> or <a href="/contact">contact us</a>.</p>
+  </div>
+</section>
+<?php endif; ?>
+
+<?php $showcase = $home['showcase'] ?? content_default('home')['showcase']; $slides = array_values(array_filter((array) ($showcase['slides'] ?? []), static fn ($s) => trim((string) ($s['title'] ?? '')) !== '')); ?>
+<?php if ($show('showcase') && $slides): $n = count($slides); ?>
+<!-- Slider -->
+<section class="section showcase" aria-labelledby="showcase-heading">
+  <div class="container">
+    <div class="showcase__head">
+      <?= section_header((string) ($showcase['eyebrow'] ?? ''), (string) ($showcase['heading'] ?? ''), (string) ($showcase['text'] ?? ''), ['align' => 'left', 'id' => 'showcase-heading']) ?>
+      <div class="showcase__arrows">
+        <button type="button" class="showcase__arrow" data-slider-prev aria-label="Previous slide"><?= icon('arrow-left', 'icon') ?></button>
+        <button type="button" class="showcase__arrow" data-slider-next aria-label="Next slide"><?= icon('arrow-right', 'icon') ?></button>
+      </div>
+    </div>
+    <div class="showcase__slider" data-slider aria-roledescription="carousel" aria-label="<?= e((string) ($showcase['heading'] ?? 'Services')) ?>">
+      <div class="showcase__viewport">
+        <div class="showcase__track" data-slider-track>
+          <?php foreach ($slides as $i => $sl): ?>
+            <article class="showcase__slide<?= $i === 0 ? ' is-active' : '' ?>" role="group" aria-roledescription="slide" aria-label="<?= $i + 1 ?> of <?= $n ?>" data-slide>
+              <div class="media-frame showcase__media"><?= photo(ltrim((string) ($sl['photo'] ?? ''), '/') ?: 'services', '(min-width: 1024px) 1200px, 100vw') ?></div>
+              <div class="showcase__body">
+                <?php if (!empty($sl['tag'])): ?><span class="showcase__tag"><?php if (!empty($sl['icon'])): ?><?= icon((string) $sl['icon'], 'icon icon-xs') ?><?php endif; ?><?= e((string) $sl['tag']) ?></span><?php endif; ?>
+                <h3 class="showcase__title"><?= e((string) $sl['title']) ?></h3>
+                <?php if (!empty($sl['text'])): ?><p class="showcase__text"><?= e((string) $sl['text']) ?></p><?php endif; ?>
+                <?php if (!empty($sl['label']) && !empty($sl['path'])): ?><?= button((string) $sl['label'], (string) $sl['path'], 'primary', 'arrow-right') ?><?php endif; ?>
+              </div>
+              <span class="showcase__count" aria-hidden="true"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?> / <?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></span>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <div class="showcase__controls">
+        <div class="showcase__dots">
+          <?php foreach ($slides as $i => $sl): ?>
+            <button type="button" class="showcase__dot<?= $i === 0 ? ' is-active' : '' ?>" data-slider-dot="<?= $i ?>" aria-label="Go to slide <?= $i + 1 ?>: <?= e((string) $sl['title']) ?>"<?= $i === 0 ? ' aria-current="true"' : '' ?>><span></span></button>
+          <?php endforeach; ?>
+        </div>
+        <button type="button" class="showcase__pause" data-slider-pause aria-label="Pause slides"><?= icon('pause', 'icon icon-sm') ?><?= icon('play', 'icon icon-sm') ?></button>
+      </div>
+    </div>
   </div>
 </section>
 <?php endif; ?>

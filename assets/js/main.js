@@ -157,6 +157,81 @@
     });
   }
 
+  /* ---------- Homepage slider ----------
+     Autoplay is driven by the progress bar's CSS animation on the active dot:
+     when it ends, the next slide shows. Pausing (button, hover, focus, off-screen)
+     just pauses that animation. No autoplay for reduced motion. */
+  function initSlider() {
+    document.querySelectorAll('[data-slider]').forEach(function (slider) {
+      var track = slider.querySelector('[data-slider-track]');
+      var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-slide]'));
+      var dots = Array.prototype.slice.call(slider.querySelectorAll('[data-slider-dot]'));
+      var section = slider.closest('section') || slider;
+      var pauseBtn = slider.querySelector('[data-slider-pause]');
+      var index = 0;
+      if (!track || slides.length < 2) {
+        if (pauseBtn) pauseBtn.hidden = true;
+        return;
+      }
+
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        track.style.transform = 'translateX(' + (-100 * index) + '%)';
+        slides.forEach(function (s, n) {
+          var on = n === index;
+          s.classList.toggle('is-active', on);
+          if (on) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
+          else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
+        });
+        dots.forEach(function (d, n) {
+          d.classList.toggle('is-active', n === index);
+          if (n === index) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+        });
+      }
+
+      function setPaused(paused) {
+        slider.classList.toggle('is-paused', paused);
+        if (pauseBtn) pauseBtn.setAttribute('aria-label', paused ? 'Play slides' : 'Pause slides');
+      }
+
+      section.querySelectorAll('[data-slider-prev]').forEach(function (b) { b.addEventListener('click', function () { go(index - 1); }); });
+      section.querySelectorAll('[data-slider-next]').forEach(function (b) { b.addEventListener('click', function () { go(index + 1); }); });
+      dots.forEach(function (d, n) { d.addEventListener('click', function () { go(n); }); });
+      if (pauseBtn) pauseBtn.addEventListener('click', function () { setPaused(!slider.classList.contains('is-paused')); });
+
+      slider.addEventListener('animationend', function (e) {
+        if (e.target.parentNode && e.target.parentNode.classList && e.target.parentNode.classList.contains('is-active') && e.target.parentNode.hasAttribute('data-slider-dot')) go(index + 1);
+      });
+
+      slider.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { go(index - 1); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { go(index + 1); e.preventDefault(); }
+      });
+
+      // Swipe
+      var startX = null, startY = 0;
+      track.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') { startX = e.clientX; startY = e.clientY; } });
+      track.addEventListener('pointerup', function (e) {
+        if (startX === null) return;
+        var dx = e.clientX - startX, dy = e.clientY - startY;
+        startX = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1));
+      });
+      track.addEventListener('pointercancel', function () { startX = null; });
+
+      // Only run while the slider is on screen.
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          slider.classList.toggle('is-offscreen', !entries[0].isIntersecting);
+        }, { threshold: 0.25 }).observe(slider);
+      }
+
+      if (reduceMotion) setPaused(true);
+      slider.classList.add('is-ready');
+      go(0);
+    });
+  }
+
   /* ---------- Form validation (server validates too) ---------- */
   function initForms() {
     document.querySelectorAll('[data-focus-on-load]').forEach(function (el) {
@@ -555,6 +630,7 @@
     initMenus();
     initMobileNav();
     initImages();
+    initSlider();
     initForms();
     initAssistant();
     initFinder();

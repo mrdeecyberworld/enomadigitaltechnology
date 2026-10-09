@@ -74,6 +74,7 @@ function admin_sections(): array
                     $f('process', 'How it works (process steps)', 'bool'),
                     $f('about', 'About Enoma', 'bool'),
                     $f('faq', 'FAQ', 'bool'),
+                    $f('showcase', 'Slider near the bottom of the page', 'bool'),
                 ]]),
                 $f('faq_count', 'Number of FAQ questions on the homepage', 'text', ['hint' => 'The rest are on the FAQ page.']),
                 $f('hero', 'Hero', 'group', ['fields' => [
@@ -81,6 +82,14 @@ function admin_sections(): array
                     $f('headline', 'Headline (H1)'),
                     $f('text', 'Supporting text', 'textarea', ['rows' => 3]),
                     $f('points', 'Check points under buttons', 'lines'),
+                ]]),
+                $f('showcase', 'Slider', 'group', ['fields' => [
+                    $f('eyebrow', 'Small label'), $f('heading', 'Heading'), $f('text', 'Text', 'textarea', ['rows' => 2]),
+                    $f('slides', 'Slides', 'repeater', ['item_label' => 'title', 'add_label' => 'Add slide', 'fields' => [
+                        $f('photo', 'Photo', 'image', ['hint' => 'Choose an uploaded image, or a photo name from Photos (e.g. webdev, cyber, itsupport).']),
+                        $f('icon', 'Icon', 'icon'), $f('tag', 'Small label'), $f('title', 'Title'), $f('text', 'Text', 'textarea', ['rows' => 2]),
+                        $f('label', 'Button text'), $f('path', 'Button link'),
+                    ]]),
                 ]]),
                 $f('trust', 'Trust bar', 'group', ['fields' => [
                     $f('heading', 'Heading'),
@@ -352,6 +361,12 @@ function admin_sections(): array
                 $f('social', 'Social media', 'group', ['fields' => [
                     $f('LinkedIn', 'LinkedIn URL', 'url'), $f('Facebook', 'Facebook URL', 'url'), $f('Instagram', 'Instagram URL', 'url'),
                     $f('X', 'X (Twitter) URL', 'url'), $f('YouTube', 'YouTube URL', 'url'),
+                ]]),
+                $f('freelance', 'Freelancer status', 'group', ['fields' => [
+                    $f('show', 'Show that I am a freelancer (top bar and homepage badge)', 'bool'),
+                    $f('status', 'Badge text', 'text', ['hint' => 'Shown with a green dot in the homepage hero and the header.']),
+                    $f('bar_text', 'Top bar text', 'text'),
+                    $f('link_label', 'Button text'), $f('link', 'Button link'),
                 ]]),
                 $f('founder', 'Founder profile', 'group', ['fields' => [
                     $f('name', 'Name'), $f('title', 'Title'), $f('bio', 'Short bio', 'textarea', ['rows' => 4]), $f('photo', 'Photo', 'image'),
