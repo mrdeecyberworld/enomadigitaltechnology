@@ -26,3 +26,5 @@ enoma-website-preview.html
 storage/blog/
 storage/cache/
 storage/media/
+storage/product-files/*
+!storage/product-files/.htaccess
