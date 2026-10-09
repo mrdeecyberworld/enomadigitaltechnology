@@ -7,6 +7,7 @@ return [
     // Which homepage sections are shown (Admin → Homepage → Sections to show).
     // Kept short on purpose: details live on their own pages.
     'sections' => [
+        'freelancer' => true,
         'trust'     => false,
         'why'       => true,
         'security'  => false,
@@ -24,6 +25,20 @@ return [
         'headline' => 'Websites, IT support and cybersecurity. Done properly.',
         'text'     => 'I am a freelance web developer and IT specialist, working as Enoma Digital Technologies. I build websites, set up technology that works, keep it secure and explain everything in plain language, for small businesses, professionals and families worldwide.',
         'points'   => ['MSc in Cybersecurity', 'AWS Certified Solutions Architect', 'Enterprise IT support experience'],
+    ],
+
+    // "I'm a freelancer" section under the hero (Admin → Homepage → Freelancer section).
+    'freelancer' => [
+        'eyebrow' => 'Your freelancer',
+        'heading' => "I'm a freelancer, so you work with me directly",
+        'text'    => 'No agency, no account managers and no hand-offs. When you hire Enoma Digital Technologies, you hire me: I plan the work, do it myself and stay your contact from the first message to the final handover.',
+        'role'    => 'Freelance web developer and IT specialist',
+        'facts'   => ['Remote, working with clients worldwide', 'MSc in Cybersecurity', 'AWS Certified Solutions Architect'],
+        'ways'    => [
+            ['icon' => 'rocket',         'title' => 'One-off projects',   'text' => 'A website, a migration or a security setup, for a fixed price agreed before I start.'],
+            ['icon' => 'calendar-check', 'title' => 'Ongoing support',    'text' => 'A monthly plan for website care or IT support, so help is always one message away.'],
+            ['icon' => 'clock',          'title' => 'Pay-as-you-go help', 'text' => 'Prepaid hours for quick fixes and questions, whenever you need them.'],
+        ],
     ],
 
     // Slider near the bottom of the homepage (Admin → Homepage → Slider).
@@ -52,14 +67,14 @@ return [
     ],
 
     'why' => [
-        'eyebrow' => 'How we work',
+        'eyebrow' => 'How I work',
         'heading' => 'Straight answers, no jargon.',
-        'text'    => "Most people don't need more technology. They need the right setup, explained clearly, by someone who answers their messages. That is how we like to work.",
+        'text'    => "Most people don't need more technology. They need the right setup, explained clearly, by someone who answers their messages. That is how I like to work.",
         'points'  => [
-            ['icon' => 'heart-handshake', 'title' => 'You deal with the person doing the work', 'text' => 'No call centre and no ticket queue. You talk directly to the engineer looking after your setup.'],
+            ['icon' => 'heart-handshake', 'title' => 'You deal with me, the person doing the work', 'text' => 'No call centre and no ticket queue. You talk directly to the engineer looking after your setup.'],
             ['icon' => 'shield-check',    'title' => 'Security from the start',                 'text' => 'Accounts, backups and updates are set up properly from day one, not patched on later.'],
-            ['icon' => 'target',          'title' => 'Only what you need',                      'text' => "We recommend what fits your goals and budget, and we tell you when you don't need something."],
-            ['icon' => 'lightbulb',       'title' => 'You understand your own setup',           'text' => 'We explain what we are doing as we go, so you are never left guessing.'],
+            ['icon' => 'target',          'title' => 'Only what you need',                      'text' => "I recommend what fits your goals and budget, and I tell you when you don't need something."],
+            ['icon' => 'lightbulb',       'title' => 'You understand your own setup',           'text' => 'I explain what I am doing as I go, so you are never left guessing.'],
         ],
     ],
 
@@ -84,9 +99,9 @@ return [
         'heading' => 'How a project works',
         'text'    => 'Four clear steps, and you always know what happens next.',
         'steps'   => [
-            ['icon' => 'message-square-text', 'title' => 'Tell us what you need',      'text' => 'Book a short call or send a message about your goals or the problem.'],
-            ['icon' => 'search',              'title' => 'We look at your situation',  'text' => 'We ask questions and check your current setup before recommending anything.'],
-            ['icon' => 'wrench',              'title' => 'We agree a plan, then do it', 'text' => 'You get a clear plan and price, then we build, fix or set things up and keep you updated.'],
+            ['icon' => 'message-square-text', 'title' => 'Tell me what you need',      'text' => 'Book a short call or send me a message about your goals or the problem.'],
+            ['icon' => 'search',              'title' => 'I look at your situation',   'text' => 'I ask questions and check your current setup before recommending anything.'],
+            ['icon' => 'wrench',              'title' => 'We agree a plan, then I do it', 'text' => 'You get a clear plan and price, then I build, fix or set things up and keep you updated.'],
             ['icon' => 'rocket',              'title' => 'You are set up and confident', 'text' => 'You get working technology and know how to use it and keep it safe.'],
         ],
     ],

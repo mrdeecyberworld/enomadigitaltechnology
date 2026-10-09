@@ -66,6 +66,7 @@ function admin_sections(): array
             'intro' => 'Hero, trust bar, Why Enoma, cybersecurity feature, process and about sections. Choose which sections appear under Sections to show: a shorter homepage is easier to read.',
             'schema' => ['type' => 'group', 'fields' => [
                 $f('sections', 'Sections to show', 'group', ['fields' => [
+                    $f('freelancer', '“I’m a freelancer” section under the hero', 'bool'),
                     $f('trust', 'Trust bar (service links under the hero)', 'bool'),
                     $f('why', 'Why Enoma', 'bool'),
                     $f('security', 'Cybersecurity feature', 'bool'),
@@ -82,6 +83,12 @@ function admin_sections(): array
                     $f('headline', 'Headline (H1)'),
                     $f('text', 'Supporting text', 'textarea', ['rows' => 3]),
                     $f('points', 'Check points under buttons', 'lines'),
+                ]]),
+                $f('freelancer', 'Freelancer section', 'group', ['fields' => [
+                    $f('eyebrow', 'Small label'), $f('heading', 'Heading'), $f('text', 'Text', 'textarea', ['rows' => 3]),
+                    $f('role', 'Your role (under your name)'),
+                    $f('facts', 'Facts on your card', 'lines'),
+                    $f('ways', 'Ways to hire me', 'repeater', ['item_label' => 'title', 'fields' => [$f('icon', 'Icon', 'icon'), $f('title', 'Title'), $f('text', 'Text', 'textarea', ['rows' => 2])]]),
                 ]]),
                 $f('showcase', 'Slider', 'group', ['fields' => [
                     $f('eyebrow', 'Small label'), $f('heading', 'Heading'), $f('text', 'Text', 'textarea', ['rows' => 2]),

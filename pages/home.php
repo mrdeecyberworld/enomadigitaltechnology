@@ -34,7 +34,7 @@ require INC . '/layout/header.php';
       <p class="hero__text"><?= e($home['hero']['text']) ?></p>
       <div class="btn-row">
         <?= button('Book a Consultation', '/book-a-consultation', 'primary btn-lg', 'calendar-check') ?>
-        <?= button('See what we can help with', '#services', 'outline-light btn-lg', 'arrow-right') ?>
+        <?= button('See what I can help with', '#services', 'outline-light btn-lg', 'arrow-right') ?>
       </div>
       <ul class="hero__creds">
         <?php foreach ($home['hero']['points'] as $pt): ?>
@@ -58,6 +58,52 @@ require INC . '/layout/header.php';
   </div>
 </section>
 
+<?php $fr = $home['freelancer'] ?? content_default('home')['freelancer']; ?>
+<?php if ($show('freelancer') && trim((string) ($fr['heading'] ?? '')) !== ''): ?>
+<!-- I'm a freelancer -->
+<?php $fn = cfg('founder', []); $fName = trim((string) ($fn['name'] ?? '')); $fPhoto = trim((string) ($fn['photo'] ?? '')); $fl = freelance_status(); ?>
+<section class="section freelancer" id="freelancer" aria-labelledby="freelancer-heading">
+  <div class="container freelancer__inner">
+    <aside class="freelancer__card reveal" aria-label="Freelancer profile">
+      <div class="freelancer__avatar">
+        <?php if ($fPhoto !== ''): ?>
+          <?= photo(ltrim($fPhoto, '/'), '120px', ['alt' => 'Portrait of ' . ($fName ?: 'the freelancer')]) ?>
+        <?php else: ?>
+          <span aria-hidden="true"><?= e(implode('', array_map(static fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)), array_slice(preg_split('/\s+/', $fName ?: site('name')), 0, 2)))) ?></span>
+        <?php endif; ?>
+      </div>
+      <p class="freelancer__name"><?= e($fName ?: site('name')) ?></p>
+      <p class="freelancer__role"><?= e((string) ($fr['role'] ?? 'Freelancer')) ?></p>
+      <?php if ($fl): ?><p class="freelancer__status"><span class="status-dot" aria-hidden="true"></span><?= e(preg_replace('/^Freelancer\s*·\s*/u', '', $fl['status'])) ?></p><?php endif; ?>
+      <?php if (!empty($fr['facts'])): ?>
+        <ul class="freelancer__facts">
+          <?php foreach ((array) $fr['facts'] as $fact): ?><li><?= icon('check', 'icon icon-xs') ?><?= e((string) $fact) ?></li><?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
+    </aside>
+    <div class="freelancer__body">
+      <?= section_header((string) ($fr['eyebrow'] ?? ''), (string) $fr['heading'], (string) ($fr['text'] ?? ''), ['align' => 'left', 'id' => 'freelancer-heading']) ?>
+      <?php if (!empty($fr['ways'])): ?>
+        <h3 class="freelancer__ways-title">Ways to hire me</h3>
+        <ul class="freelancer__ways">
+          <?php foreach ((array) $fr['ways'] as $w): ?>
+            <li class="freelancer__way reveal">
+              <span class="freelancer__way-icon"><?= icon((string) ($w['icon'] ?? 'check'), 'icon') ?></span>
+              <strong><?= e((string) ($w['title'] ?? '')) ?></strong>
+              <span><?= e((string) ($w['text'] ?? '')) ?></span>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
+      <div class="btn-row">
+        <?= button(($fl['link_label'] ?? '') ?: 'Hire me', ($fl['link'] ?? '') ?: '/get-a-quote', 'primary', 'arrow-right') ?>
+        <?= button('My background', '/about', 'ghost', 'user-round') ?>
+      </div>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <?php if ($show('trust')): ?>
 <!-- 3. Trust bar -->
 <section class="trust" aria-labelledby="trust-heading">
@@ -75,7 +121,7 @@ require INC . '/layout/header.php';
 <!-- 4. Services -->
 <section class="section" id="services" aria-labelledby="services-heading">
   <div class="container">
-    <?= section_header('Services', 'What we can help with', 'From building your website to keeping your accounts and devices safe. Pick an area to see exactly what is included.', ['id' => 'services-heading', 'align' => 'left']) ?>
+    <?= section_header('Services', 'What I can help with', 'From building your website to keeping your accounts and devices safe. Pick an area to see exactly what is included.', ['id' => 'services-heading', 'align' => 'left']) ?>
     <?= service_grid(null, ['compact' => true, 'photo' => true, 'class' => 'service-grid--home']) ?>
   </div>
 </section>
@@ -103,7 +149,7 @@ require INC . '/layout/header.php';
         </div>
       <?php endforeach; ?>
     </div>
-    <p class="why__more"><?= button('Learn About Enoma', '/about', 'outline-light', 'arrow-right') ?></p>
+    <p class="why__more"><?= button('More about me', '/about', 'outline-light', 'arrow-right') ?></p>
     </div>
   </div>
 </section>
@@ -141,7 +187,7 @@ require INC . '/layout/header.php';
 <!-- 7. AI Assistant + 7B. Service Finder -->
 <section class="section section--muted assist" id="assistant" aria-labelledby="assistant-heading">
   <div class="container">
-    <?= section_header('Not sure where to start?', 'Tell us what is going on', 'Pick what you need help with, or describe the problem, and you will be pointed to the right service.', ['id' => 'assistant-heading', 'align' => 'left']) ?>
+    <?= section_header('Not sure where to start?', 'Tell me what is going on', 'Pick what you need help with, or describe the problem, and you will be pointed to the right service.', ['id' => 'assistant-heading', 'align' => 'left']) ?>
     <div class="assist__grid">
       <div class="assist__panel">
         <h3 class="assist__label"><?= icon('sparkles', 'icon icon-sm') ?> Ask the AI assistant</h3>
@@ -265,9 +311,9 @@ require INC . '/layout/header.php';
 <!-- 12. FAQ -->
 <section class="section section--muted" aria-labelledby="faq-heading">
   <div class="container container--narrow">
-    <?= section_header('FAQ', 'Common questions', 'Short answers to what people usually ask first. Anything else, just send us a message.', ['id' => 'faq-heading', 'align' => 'left']) ?>
+    <?= section_header('FAQ', 'Common questions', 'Short answers to what people usually ask first. Anything else, just send me a message.', ['id' => 'faq-heading', 'align' => 'left']) ?>
     <?= faq_list($faqs) ?>
-    <p class="section-foot">More questions? <a href="/faq">See all FAQs</a> or <a href="/contact">contact us</a>.</p>
+    <p class="section-foot">More questions? <a href="/faq">See all FAQs</a> or <a href="/contact">contact me</a>.</p>
   </div>
 </section>
 <?php endif; ?>
