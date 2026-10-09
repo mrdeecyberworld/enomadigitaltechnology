@@ -10,7 +10,7 @@ return [
     'domain'      => 'EnomaDigitalTech.com',
     'tagline'     => 'Build. Secure. Empower.',
     'statement'   => 'Technology solutions built around your needs.',
-    'description' => 'Enoma Digital Technologies provides web development, cybersecurity, IT support and technology training for businesses and individuals.',
+    'description' => 'Enoma Digital Technologies: freelance web developer and IT specialist offering web development, cybersecurity, IT support and technology training for clients worldwide.',
     'service_area' => 'Remote technology services for clients worldwide.',
 
     // Primary navigation (kept short; the logo links home and every service is in
@@ -24,7 +24,7 @@ return [
         ['label' => 'Contact',         'page' => 'contact', 'path' => '/contact'],
     ],
 
-    'cta_primary'   => ['label' => 'Book a Consultation', 'path' => '/book-a-consultation'],
+    'cta_primary'   => ['label' => 'Hire Me',             'path' => '/get-a-quote'],
     'cta_secondary' => ['label' => 'Get a Quote',         'path' => '/get-a-quote'],
 
     'footer_company' => [

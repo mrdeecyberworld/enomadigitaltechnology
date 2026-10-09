@@ -82,8 +82,9 @@ function admin_sections(): array
                     $f('text', 'Supporting text', 'textarea', ['rows' => 3]),
                     $f('points', 'Check points under buttons', 'lines'),
                 ]]),
-                $f('freelancer', 'Freelancer section', 'group', ['fields' => [
+                $f('freelancer', 'Freelancer section (your photo and profile card)', 'group', ['fields' => [
                     $f('eyebrow', 'Small label'), $f('heading', 'Heading'), $f('text', 'Text', 'textarea', ['rows' => 3]),
+                    $f('photo', 'Your photo', 'image', ['hint' => 'Click Choose… to upload your picture. It shows on your freelancer card and at the top of the homepage. A clear, well-lit photo from the chest up works best.']),
                     $f('role', 'Your role (under your name)'),
                     $f('facts', 'Facts on your card', 'lines'),
                     $f('ways', 'Ways to hire me', 'repeater', ['item_label' => 'title', 'fields' => [$f('icon', 'Icon', 'icon'), $f('title', 'Title'), $f('text', 'Text', 'textarea', ['rows' => 2])]]),

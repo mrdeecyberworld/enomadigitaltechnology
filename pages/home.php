@@ -17,7 +17,13 @@ require INC . '/layout/header.php';
 ?>
 
 <!-- 2. Hero -->
-<?php $founder = cfg('founder', []); $founderPhoto = trim((string) ($founder['photo'] ?? '')); ?>
+<?php
+$founder = cfg('founder', []);
+$fr = $home['freelancer'] ?? content_default('home')['freelancer'];
+// Your photo: Admin → Homepage → Freelancer section → Your photo, else Settings → Founder profile → Photo.
+$founderPhoto = trim((string) ($fr['photo'] ?? '')) ?: trim((string) ($founder['photo'] ?? ''));
+$myRole = trim((string) ($fr['role'] ?? '')) ?: 'Freelancer';
+?>
 <section class="hero hero--calm" aria-labelledby="hero-title">
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="container hero__inner">
@@ -49,16 +55,15 @@ require INC . '/layout/header.php';
         <?php endif; ?>
       </div>
       <?php if ($founderPhoto !== '' && !empty($founder['name'])): ?>
-        <figcaption class="hero__caption"><strong><?= e($founder['name']) ?></strong><span><?= e(($founder['title'] ?? 'Founder') . ', ' . site('name')) ?></span></figcaption>
+        <figcaption class="hero__caption"><strong><?= e($founder['name']) ?></strong><span><?= e($myRole) ?> · Available for freelance projects</span></figcaption>
       <?php endif; ?>
     </figure>
   </div>
 </section>
 
-<?php $fr = $home['freelancer'] ?? content_default('home')['freelancer']; ?>
 <?php if ($show('freelancer') && trim((string) ($fr['heading'] ?? '')) !== ''): ?>
 <!-- I'm a freelancer -->
-<?php $fn = cfg('founder', []); $fName = trim((string) ($fn['name'] ?? '')); $fPhoto = trim((string) ($fn['photo'] ?? '')); $fl = freelance_status(); ?>
+<?php $fn = cfg('founder', []); $fName = trim((string) ($fn['name'] ?? '')); $fPhoto = $founderPhoto; $fl = freelance_status(); ?>
 <section class="section freelancer" id="freelancer" aria-labelledby="freelancer-heading">
   <div class="container freelancer__inner">
     <aside class="freelancer__card reveal" aria-label="Freelancer profile">

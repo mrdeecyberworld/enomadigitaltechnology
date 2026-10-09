@@ -30,6 +30,7 @@ return [
         'eyebrow' => 'Your freelancer',
         'heading' => "I'm a freelancer, so you work with me directly",
         'text'    => 'No agency, no account managers and no hand-offs. When you hire Enoma Digital Technologies, you hire me: I plan the work, do it myself and stay your contact from the first message to the final handover.',
+        'photo'   => '', // your picture (Admin → Homepage → Freelancer section → Your photo)
         'role'    => 'Freelance web developer and IT specialist',
         'facts'   => ['Remote, working with clients worldwide', 'MSc in Cybersecurity', 'AWS Certified Solutions Architect'],
         'ways'    => [
