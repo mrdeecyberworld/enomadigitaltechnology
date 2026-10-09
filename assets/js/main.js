@@ -158,9 +158,9 @@
   }
 
   /* ---------- Homepage slider ----------
-     Autoplay is driven by the progress bar's CSS animation on the active dot:
-     when it ends, the next slide shows. Pausing (button, hover, focus, off-screen)
-     just pauses that animation. No autoplay for reduced motion. */
+     Slides cross-fade on their own. Autoplay is driven by the progress bar's CSS
+     animation on the active dot: when it ends, the next slide shows. The pause
+     button (and scrolling the slider off screen) just pauses that animation. */
   function initSlider() {
     document.querySelectorAll('[data-slider]').forEach(function (slider) {
       var track = slider.querySelector('[data-slider-track]');
@@ -176,7 +176,6 @@
 
       function go(i) {
         index = (i + slides.length) % slides.length;
-        track.style.transform = 'translateX(' + (-100 * index) + '%)';
         slides.forEach(function (s, n) {
           var on = n === index;
           s.classList.toggle('is-active', on);
@@ -226,7 +225,6 @@
         }, { threshold: 0.25 }).observe(slider);
       }
 
-      if (reduceMotion) setPaused(true);
       slider.classList.add('is-ready');
       go(0);
     });

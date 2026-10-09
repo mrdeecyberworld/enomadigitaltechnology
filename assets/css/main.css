@@ -1984,8 +1984,9 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 @media (min-width: 760px) { .showcase__arrows { display: flex; } }
 
 .showcase__viewport { overflow: hidden; border-radius: 28px; border: 1px solid var(--line); background: var(--surface-2); box-shadow: 0 30px 80px -40px rgba(0, 0, 0, .65); }
-.showcase__track { display: flex; transition: transform .8s cubic-bezier(.65, 0, .25, 1); touch-action: pan-y; will-change: transform; }
-.showcase__slide { position: relative; flex: 0 0 100%; display: grid; min-width: 0; }
+.showcase__track { display: grid; touch-action: pan-y; }
+.showcase__slide { position: relative; grid-area: 1 / 1; display: grid; min-width: 0; opacity: 0; visibility: hidden; transition: opacity 1.1s var(--ease), visibility 0s linear 1.1s; }
+.showcase__slide.is-active { z-index: 1; opacity: 1; visibility: visible; transition: opacity 1.1s var(--ease), visibility 0s; }
 .showcase__media { aspect-ratio: 16 / 10; border-radius: 0; box-shadow: none; }
 .showcase__media::after { box-shadow: none; background: linear-gradient(180deg, transparent 55%, rgba(6, 11, 22, .35)); }
 .showcase__media img { transform: scale(1.1); transition: transform 7s ease-out; }
@@ -2018,8 +2019,6 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 .showcase__dot.is-active { width: 72px; }
 .showcase__dot.is-active span { transform: scaleX(1); }
 .showcase__slider.is-ready:not(.is-paused) .showcase__dot.is-active span { animation: showcase-progress 6.5s linear both; }
-.showcase__slider:hover .showcase__dot.is-active span,
-.showcase__slider:focus-within .showcase__dot.is-active span,
 .showcase__slider.is-offscreen .showcase__dot.is-active span { animation-play-state: paused; }
 @keyframes showcase-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .showcase__dot:focus-visible { outline: 2px solid var(--blue-500); outline-offset: 2px; border-radius: 4px; }
@@ -2030,12 +2029,13 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 
 /* Without JavaScript: a swipeable row */
 .showcase__slider:not(.is-ready) .showcase__viewport { overflow-x: auto; scroll-snap-type: x mandatory; }
-.showcase__slider:not(.is-ready) .showcase__slide { scroll-snap-align: start; }
+.showcase__slider:not(.is-ready) .showcase__track { display: flex; }
+.showcase__slider:not(.is-ready) .showcase__slide { flex: 0 0 100%; opacity: 1; visibility: visible; scroll-snap-align: start; }
 .showcase__slider:not(.is-ready) .showcase__body > * { opacity: 1; transform: none; }
 .showcase__slider:not(.is-ready) .showcase__controls, .showcase:not(:has(.is-ready)) .showcase__arrows { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .showcase__track, .showcase__media img, .showcase__body > * { transition: none; }
+  .showcase__media img, .showcase__body > * { transition: none; }
   .showcase__media img { transform: none; }
 }
 

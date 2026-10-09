@@ -74,10 +74,8 @@ function admin_sections(): array
                     $f('training', 'Training feature', 'bool'),
                     $f('process', 'How it works (process steps)', 'bool'),
                     $f('about', 'About Enoma', 'bool'),
-                    $f('faq', 'FAQ', 'bool'),
                     $f('showcase', 'Slider near the bottom of the page', 'bool'),
                 ]]),
-                $f('faq_count', 'Number of FAQ questions on the homepage', 'text', ['hint' => 'The rest are on the FAQ page.']),
                 $f('hero', 'Hero', 'group', ['fields' => [
                     $f('eyebrow', 'Small label'),
                     $f('headline', 'Headline (H1)'),
@@ -169,7 +167,7 @@ function admin_sections(): array
         'faqs' => [
             'title' => 'FAQs',
             'icon'  => 'circle-help',
-            'intro' => 'General questions shown on the homepage and FAQ page. They also feed the AI assistant and Google’s FAQ data. Service-specific FAQs are edited under Services.',
+            'intro' => 'General questions shown on the FAQ page. They also feed the AI assistant and Google’s FAQ data. Service-specific FAQs are edited under Services.',
             'schema' => ['type' => 'repeater', 'item_label' => 'q', 'add_label' => 'Add question', 'fields' => [
                 $f('q', 'Question'), $f('a', 'Answer', 'textarea', ['rows' => 3]),
             ]],

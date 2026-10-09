@@ -11,14 +11,12 @@ return [
         'trust'     => false,
         'why'       => true,
         'security'  => false,
-        'assistant' => true,
+        'assistant' => false,
         'training'  => false,
         'process'   => true,
         'about'     => false,
-        'faq'       => true,
         'showcase'  => true,
     ],
-    'faq_count' => '4',
 
     'hero' => [
         'eyebrow'  => 'Freelance web developer and IT specialist · Remote, worldwide',
@@ -45,7 +43,7 @@ return [
     'showcase' => [
         'eyebrow' => 'Hire a freelancer',
         'heading' => 'One freelancer, everything your technology needs',
-        'text'    => 'Swipe through what I can take off your plate. Every project is handled personally, start to finish.',
+        'text'    => 'A quick look at what I can take off your plate. Every project is handled personally, start to finish.',
         'slides'  => [
             ['photo' => 'webdev',     'icon' => 'code-xml',       'tag' => 'Web development',     'title' => 'Websites that bring you customers',        'text' => 'Fast, secure, mobile-ready websites with a clear message and an easy way to get in touch.', 'label' => 'Get a website quote',   'path' => '/web-development'],
             ['photo' => 'cyber',      'icon' => 'shield-check',   'tag' => 'Cybersecurity',       'title' => 'Accounts and data locked down properly',   'text' => 'MFA, email security, backups and a practical security check, explained without jargon.',  'label' => 'Improve your security', 'path' => '/cybersecurity'],

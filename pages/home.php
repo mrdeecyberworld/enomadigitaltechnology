@@ -6,14 +6,11 @@ $home = content('home');
 $training = content('training');
 $sectionDefaults = content_default('home')['sections'];
 $show = static fn (string $key): bool => (bool) ((array) ($home['sections'] ?? []) + $sectionDefaults)[$key];
-$faqCount = max(1, (int) ($home['faq_count'] ?? 4));
-$faqs = array_slice(content('faqs'), 0, $faqCount);
 
 $page = [
     'title'       => page_text('home', 'meta_title', site('name')),
     'description' => page_text('home', 'meta_description', site('description')),
     'path'        => '/',
-    'schema'      => [schema_faq($faqs)],
     'body_class'  => 'page-home',
 ];
 require INC . '/layout/header.php';
@@ -303,17 +300,6 @@ require INC . '/layout/header.php';
       <?= button('View all articles', '/blog', 'ghost', 'arrow-right') ?>
     </div>
     <div class="post-grid"><?php foreach ($latest as $p) echo blog_card($p); ?></div>
-  </div>
-</section>
-<?php endif; ?>
-
-<?php if ($show('faq')): ?>
-<!-- 12. FAQ -->
-<section class="section section--muted" aria-labelledby="faq-heading">
-  <div class="container container--narrow">
-    <?= section_header('FAQ', 'Common questions', 'Short answers to what people usually ask first. Anything else, just send me a message.', ['id' => 'faq-heading', 'align' => 'left']) ?>
-    <?= faq_list($faqs) ?>
-    <p class="section-foot">More questions? <a href="/faq">See all FAQs</a> or <a href="/contact">contact me</a>.</p>
   </div>
 </section>
 <?php endif; ?>
