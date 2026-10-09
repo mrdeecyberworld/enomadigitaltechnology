@@ -43,7 +43,7 @@ require INC . '/layout/header.php';
     <figure class="hero__visual hero__visual--calm">
       <div class="media-frame media-frame--hero">
         <?php if ($founderPhoto !== ''): ?>
-          <?= photo(ltrim($founderPhoto, '/'), '(min-width: 1024px) 46vw, 100vw', ['eager' => true, 'alt' => 'Portrait of ' . ($founder['name'] ?? 'the founder')]) ?>
+          <?= photo(ltrim($founderPhoto, '/'), '(min-width: 1024px) 46vw, 100vw', ['eager' => true, 'alt' => 'Portrait of ' . ($founder['name'] ?? 'the founder'), 'class' => 'founder-photo']) ?>
         <?php else: ?>
           <?= photo('hero', '(min-width: 1024px) 46vw, 100vw', ['eager' => true]) ?>
         <?php endif; ?>
@@ -64,7 +64,7 @@ require INC . '/layout/header.php';
     <aside class="freelancer__card reveal" aria-label="Freelancer profile">
       <div class="freelancer__avatar">
         <?php if ($fPhoto !== ''): ?>
-          <?= photo(ltrim($fPhoto, '/'), '120px', ['alt' => 'Portrait of ' . ($fName ?: 'the freelancer')]) ?>
+          <?= photo(ltrim($fPhoto, '/'), '120px', ['alt' => 'Portrait of ' . ($fName ?: 'the freelancer'), 'class' => 'founder-photo']) ?>
         <?php else: ?>
           <span aria-hidden="true"><?= e(implode('', array_map(static fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)), array_slice(preg_split('/\s+/', $fName ?: site('name')), 0, 2)))) ?></span>
         <?php endif; ?>

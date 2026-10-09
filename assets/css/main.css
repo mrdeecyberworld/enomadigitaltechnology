@@ -2070,3 +2070,23 @@ html { scrollbar-color: var(--line-strong) var(--page-bg); }
 .freelancer__way strong { font-size: 1.02rem; color: var(--text); }
 .freelancer__way > span:last-child { font-size: .92rem; line-height: 1.55; color: var(--text-soft, var(--text-muted)); }
 @media (max-width: 959px) { .freelancer__card { order: 2; } }
+
+/* ==========================================================================
+   Homepage: tighter rhythm (less empty space between sections)
+   ========================================================================== */
+.page-home { --section-y: clamp(44px, 5.5vw, 76px); }
+.page-home .hero--calm { padding-block: clamp(36px, 5vw, 72px) clamp(44px, 5.5vw, 76px); }
+.page-home .hero__creds { margin-top: 26px; padding-top: 18px; }
+.page-home .section-header { margin-bottom: clamp(24px, 3vw, 36px); }
+.page-home .section-header--left { margin-bottom: 22px; }
+.page-home .section-lead { margin-top: 12px; }
+.page-home .freelancer + .section { padding-top: 0; }
+.page-home .freelancer__ways-title { margin-top: 18px; }
+.page-home .freelancer__ways { margin-bottom: 22px; }
+.page-home .showcase__head { margin-bottom: 22px; }
+.page-home .showcase__controls { margin-top: 16px; }
+.page-home .showcase + .cta-band { padding-top: 0; }
+@media (min-width: 900px) { .page-home .showcase__slide { min-height: 420px; } }
+
+/* Your own photo: keep faces in frame (a focus point set in Media library wins) */
+img.founder-photo { object-position: 50% 22%; }

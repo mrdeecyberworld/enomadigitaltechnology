@@ -9,7 +9,7 @@ return [
     'sections' => [
         'freelancer' => true,
         'trust'     => false,
-        'why'       => true,
+        'why'       => false,
         'security'  => false,
         'assistant' => false,
         'training'  => false,
