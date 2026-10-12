@@ -1,9 +1,12 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /includes/
-Disallow: /storage/
+Disallow: /api
+Disallow: /admin
+Disallow: /includes
+Disallow: /storage
+Disallow: /pages/
+Disallow: /deploy
 Disallow: /download/
+Disallow: /assets/uploads/*.svg
 
 Sitemap: https://enomadigitaltech.com/sitemap.xml

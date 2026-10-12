@@ -21,8 +21,15 @@ if (cfg('seo.force_https') && PHP_SAPI !== 'cli-server') {
     $secure = ($_SERVER['HTTPS'] ?? '') === 'on' || ($_SERVER['HTTPS'] ?? '') === '1'
         || (string) ($_SERVER['SERVER_PORT'] ?? '') === '443'
         || strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')) === 'https';
-    if (!$secure && !empty($_SERVER['HTTP_HOST'])) {
-        header('Location: https://' . $_SERVER['HTTP_HOST'] . ($_SERVER['REQUEST_URI'] ?? '/'), true, 301);
+    // Also send www. visitors to the main address (the one in Settings → Website address).
+    $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
+    $mainHost = strtolower((string) parse_url((string) cfg('base_url'), PHP_URL_HOST));
+    if ($mainHost !== '' && $host === 'www.' . $mainHost) {
+        $host = $mainHost;
+        $secure = false;
+    }
+    if (!$secure && $host !== '') {
+        header('Location: https://' . $host . ($_SERVER['REQUEST_URI'] ?? '/'), true, 301);
         exit;
     }
 }
