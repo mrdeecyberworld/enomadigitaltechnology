@@ -5,8 +5,55 @@
   var doc = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Motion (GSAP, self-hosted in assets/js/vendor) ----------
+     Subtle by design: a short hero entrance, a gentle parallax on the hero
+     photo and soft fade-ups as sections scroll in. Only opacity and position
+     change, so content stays readable for screen readers and keyboards.
+     Nothing runs for visitors who ask for reduced motion. */
+  function initMotion() {
+    var g = window.gsap, ST = window.ScrollTrigger;
+    if (!g || !ST || reduceMotion) return false;
+    g.registerPlugin(ST);
+
+    var hero = document.querySelector('.hero');
+    if (hero) {
+      var parts = hero.querySelectorAll('.hero__status, .hero__kicker, .hero__title, .hero__text, .hero .btn-row, .hero__creds');
+      var tl = g.timeline({ defaults: { ease: 'power3.out', duration: 0.8 } });
+      if (parts.length) tl.from(parts, { y: 22, opacity: 0, stagger: 0.08 });
+      var visual = hero.querySelector('.hero__visual');
+      if (visual) tl.from(visual, { y: 28, opacity: 0, scale: 0.98, duration: 1 }, 0.15);
+      var heroImg = hero.querySelector('.media-frame--hero img');
+      if (heroImg) {
+        g.fromTo(heroImg, { yPercent: -3, scale: 1.08 }, {
+          yPercent: 3, scale: 1.08, ease: 'none',
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true }
+        });
+      }
+    }
+
+    var sel = '.reveal, .section-header, .service-card, .freelancer__way, .process-step, .post-card, .product-card, .feature-card, .testimonial, .cta-band__panel';
+    var skip = '.hero, .showcase__slider, .site-header, .mobile-nav, .site-footer';
+    var targets = g.utils.toArray(sel).filter(function (el) {
+      return !el.closest(skip) && !(el.parentElement && el.parentElement.closest(sel));
+    });
+    if (targets.length) {
+      g.set(targets, { opacity: 0, y: 24 });
+      ST.batch(targets, {
+        start: 'top 90%',
+        once: true,
+        onEnter: function (batch) {
+          g.to(batch, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.08, overwrite: true, clearProps: 'transform' });
+        }
+      });
+    }
+    // Safety net: never leave anything hidden (e.g. very short pages, print).
+    window.addEventListener('beforeprint', function () { g.set(targets, { opacity: 1, y: 0 }); });
+    return true;
+  }
+
   /* ---------- Scroll reveal ---------- */
   function initReveal() {
+    if (initMotion()) return;
     var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
     if (reduceMotion || !('IntersectionObserver' in window)) {
       return;

@@ -79,6 +79,8 @@ $graph = array_merge(schema_base(), $page['schema']);
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="<?= e(asset('css/main.css')) ?>">
   <?php if ($look['accent'] !== ''): ?><link rel="stylesheet" href="/theme.css?v=<?= e(substr(md5($look['accent'] . $look['theme']), 0, 8)) ?>"><?php endif; ?>
+  <script src="<?= e(asset('js/vendor/gsap.min.js')) ?>" defer></script>
+  <script src="<?= e(asset('js/vendor/ScrollTrigger.min.js')) ?>" defer></script>
   <script src="<?= e(asset('js/main.js')) ?>" defer></script>
 
   <?= json_ld(['@context' => 'https://schema.org', '@graph' => $graph]) ?>
