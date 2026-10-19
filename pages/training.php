@@ -21,7 +21,7 @@ $page = [
 ];
 require INC . '/layout/header.php';
 
-echo page_hero('Technology Education for Everyone', [
+echo page_hero('Technology training for every age and level', [
     'eyebrow' => $svc['eyebrow'],
     'text'    => $svc['intro'],
     'crumbs'  => $crumbs,
@@ -33,7 +33,7 @@ echo page_hero('Technology Education for Everyone', [
 
 <section class="section" aria-labelledby="audiences-heading">
   <div class="container">
-    <?= section_header('Who we train', 'Training that meets people where they are', 'Sessions are adapted to each audience, with examples that feel relevant and a pace that builds real confidence.', ['id' => 'audiences-heading']) ?>
+    <?= section_header('Who I train', 'Sessions planned around the group', 'I adjust each session to the audience, with examples from their own lives or work and a pace they are comfortable with.', ['id' => 'audiences-heading']) ?>
     <div class="audience-grid">
       <?php foreach ($training['audiences'] as $a): ?>
         <div class="feature-card feature-card--light reveal">
@@ -60,7 +60,7 @@ echo page_hero('Technology Education for Everyone', [
 
 <section class="section" id="programs" aria-labelledby="programs-heading">
   <div class="container">
-    <?= section_header('Training programs', 'Formats that fit your group', 'All programs are delivered live online. Contact us to discuss your audience, goals and schedule.', ['id' => 'programs-heading']) ?>
+    <?= section_header('Training programs', 'Formats that fit your group', 'All programs are live and online. Contact me to talk about your group, goals and schedule.', ['id' => 'programs-heading']) ?>
     <div class="detail-grid detail-grid--2">
       <?php foreach ($training['formats'] as $f): ?>
         <div class="detail-card reveal">
@@ -85,7 +85,7 @@ echo page_hero('Technology Education for Everyone', [
 <section class="section" aria-labelledby="training-form-heading">
   <div class="container form-layout">
     <div class="form-layout__intro">
-      <?= section_header('Plan a session', 'Ask about training', 'Tell us who the training is for, roughly how many people, and the topics you are interested in.', ['align' => 'left', 'id' => 'training-form-heading']) ?>
+      <?= section_header('Plan a session', 'Ask about training', 'Tell me who the training is for, roughly how many people, and which topics interest you.', ['align' => 'left', 'id' => 'training-form-heading']) ?>
       <ul class="contact-points">
         <li><?= icon('users', 'icon icon-sm') ?><span>Groups, teams, classrooms and individuals</span></li>
         <li><?= icon('globe', 'icon icon-sm') ?><span>Delivered live online, worldwide</span></li>
@@ -97,6 +97,6 @@ echo page_hero('Technology Education for Everyone', [
   </div>
 </section>
 
-<?= cta_banner('Ready to build confidence with technology?', 'Let’s design a training session that fits your group.') ?>
+<?= cta_banner('Want to plan a session?', 'Tell me about your group and I will suggest a format.') ?>
 
 <?php require INC . '/layout/footer.php'; ?>

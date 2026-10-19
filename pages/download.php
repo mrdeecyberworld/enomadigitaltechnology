@@ -47,11 +47,11 @@ if ($problem === null) {
 http_response_code(410);
 $page = ['title' => 'Download unavailable | ' . site('name'), 'description' => '', 'path' => '/download', 'noindex' => true];
 require INC . '/layout/header.php';
-echo page_hero('Download unavailable', ['eyebrow' => 'Your purchase', 'text' => $problem . ' Contact us and we will send you a new link.']);
+echo page_hero('Download unavailable', ['eyebrow' => 'Your purchase', 'text' => $problem . ' Contact me and I will send you a new link.']);
 ?>
 <section class="section">
   <div class="container container--narrow section-foot">
-    <?= button('Contact Us', page_url('contact'), 'primary', 'arrow-right') ?>
+    <?= button('Contact Me', page_url('contact'), 'primary', 'arrow-right') ?>
   </div>
 </section>
 <?php require INC . '/layout/footer.php'; ?>

@@ -18,6 +18,7 @@ function blog_seed_if_needed(): void
     if (is_file($marker)) {
         blog_add_seed_covers();
         blog_seed_extra('blog-seed-2');
+        blog_refresh_seed_text();
         return;
     }
     $now = time();
@@ -58,6 +59,40 @@ function blog_seed_extra(string $set): void
         $post['updated_at'] = date('c', $now);
         $post['author'] = '';
         blog_write($post);
+    }
+    @file_put_contents($marker, date('c'));
+}
+
+/**
+ * Once: give starter articles the plain-language rewrite. Only articles that
+ * still match their original text (blog-seed-v1 fingerprints) are updated, so
+ * anything you have edited in Admin → Blog posts keeps your wording.
+ */
+function blog_refresh_seed_text(): void
+{
+    $marker = blog_dir() . '/.text-v2';
+    if (is_file($marker)) {
+        return;
+    }
+    $original = content_default('blog-seed-v1');
+    $fields = ['title', 'excerpt', 'body', 'meta_title', 'meta_description'];
+    foreach (['blog-seed', 'blog-seed-2'] as $set) {
+        foreach (content_default($set) as $seed) {
+            $post = json_read(blog_dir() . '/' . $seed['slug'] . '.json');
+            if (!is_array($post) || !isset($original[$seed['slug']])) {
+                continue;
+            }
+            $current = md5(json_encode(array_map(static fn (string $f): string => (string) ($post[$f] ?? ''), $fields)));
+            if ($current !== $original[$seed['slug']]) {
+                continue;
+            }
+            foreach ($fields as $f) {
+                if (array_key_exists($f, $seed)) {
+                    $post[$f] = $seed[$f];
+                }
+            }
+            blog_write($post);
+        }
     }
     @file_put_contents($marker, date('c'));
 }

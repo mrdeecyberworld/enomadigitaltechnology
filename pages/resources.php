@@ -48,7 +48,7 @@ echo page_hero(page_text('resources', 'heading', 'Resources'), [
 
 <section class="section section--muted" aria-labelledby="res-help-heading">
   <div class="container container--narrow center">
-    <?= section_header('Need a hand?', 'Want help putting this into practice?', 'We can set up MFA, review your accounts, configure backups or train your team.', ['id' => 'res-help-heading']) ?>
+    <?= section_header('Need a hand?', 'Want help putting this into practice?', 'I can set up MFA, review your accounts, configure backups or train your team.', ['id' => 'res-help-heading']) ?>
     <div class="btn-row btn-row--center">
       <?= button('Explore Cybersecurity', '/cybersecurity', 'primary', 'shield-check') ?>
       <?= button('Explore Training', '/training', 'secondary', 'graduation-cap') ?>

@@ -18,9 +18,9 @@ const FORM_TYPES = [
 
 const BUDGET_RANGES = [
     'Under $1,000',
-    '$1,000 – $2,500',
-    '$2,500 – $5,000',
-    '$5,000 – $10,000',
+    '$1,000 to $2,500',
+    '$2,500 to $5,000',
+    '$5,000 to $10,000',
     '$10,000+',
     'Not sure yet',
 ];
@@ -226,7 +226,7 @@ function form_notification(string $type, array $v, string $serviceName, ?string 
     ], static fn ($l) => $l !== null));
     return [
         'to'       => mail_settings()['to'],
-        'subject'  => $label . ' from ' . $v['name'] . ' – ' . $serviceName,
+        'subject'  => $label . ' from ' . $v['name'] . ': ' . $serviceName,
         'text'     => $text,
         'reply_to' => $v['email'],
     ];

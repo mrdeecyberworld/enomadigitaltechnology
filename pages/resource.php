@@ -54,7 +54,7 @@ require INC . '/layout/header.php';
     <div class="post-cta">
       <div>
         <h2>Want help with this?</h2>
-        <p>We can set it up with you, or train your team to do it confidently.</p>
+        <p>I can set it up with you, or teach your team to do it themselves.</p>
       </div>
       <?= button('Book a Consultation', page_url('consultation'), 'primary', 'calendar-check') ?>
     </div>

@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 function cta_banner(
     string $heading = 'Have a technology problem or project in mind?',
-    string $text = 'Tell us about it. You will get an honest answer and clear next steps.'
+    string $text = 'Tell me about it and I will reply with an honest answer and clear next steps.'
 ): string {
     ob_start(); ?>
     <section class="cta-band" aria-labelledby="cta-heading">

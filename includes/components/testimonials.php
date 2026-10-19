@@ -42,7 +42,7 @@ function testimonials_section(): string
             <?= testimonial_card() ?>
           <?php endfor; endif; ?>
         </div>
-        <p class="testimonial-cta reveal">Worked with us? <a class="link-arrow" href="<?= e(page_url('feedback')) ?>">Share your feedback<?= icon('arrow-right', 'icon icon-xs') ?></a></p>
+        <p class="testimonial-cta reveal">Have I worked with you? <a class="link-arrow" href="<?= e(page_url('feedback')) ?>">Share your feedback<?= icon('arrow-right', 'icon icon-xs') ?></a></p>
       </div>
     </section>
     <?php

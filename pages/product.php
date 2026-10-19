@@ -73,7 +73,7 @@ require INC . '/layout/header.php';
           <?php else: ?>
             <?= viewer_is_admin() ? setup_notice('No checkout link yet, so visitors place an order and you send payment details by email (Admin → Orders). Add a checkout link in Admin → Products & prices when your payments are ready.') : '' ?>
             <?= button($priceValue === 0.0 ? 'Get it free' : 'Order now', '#' . $orderFormId, 'primary btn-lg buy-box__button', 'shopping-bag') ?>
-            <p class="buy-box__secure"><?= icon('lock', 'icon icon-xs') ?> No payment needed yet: we email you how to pay, then send your access.</p>
+            <p class="buy-box__secure"><?= icon('lock', 'icon icon-xs') ?> You do not pay yet. I email you how to pay, then send your access.</p>
           <?php endif; ?>
           <?php if ($product['format'] !== ''): ?><p class="buy-box__format"><?= icon('check', 'icon icon-xs') ?> <?= e($product['format']) ?></p><?php endif; ?>
           <?php if ($includes): ?>
@@ -108,7 +108,7 @@ require INC . '/layout/header.php';
       $oinv = static fn (string $k): string => isset($oe[$k]) ? ' aria-invalid="true" aria-describedby="order-' . $k . '-error"' : ''; ?>
     <ol class="buy-steps" aria-label="How buying works">
       <li><span class="buy-steps__num">1</span><strong>Place your order</strong><small>Your name and email, no payment yet</small></li>
-      <li><span class="buy-steps__num">2</span><strong>Pay securely</strong><small>We email you how to pay</small></li>
+      <li><span class="buy-steps__num">2</span><strong>Pay securely</strong><small>I email you how to pay</small></li>
       <li><span class="buy-steps__num">3</span><strong>Get access</strong><small>Your <?= in_array($product['type'], ['Course', 'Workshop'], true) ? 'course access' : 'private download link' ?> arrives by email</small></li>
     </ol>
     <section class="order-card" aria-labelledby="order-heading">
@@ -116,7 +116,7 @@ require INC . '/layout/header.php';
         <span class="order-card__icon"><?= icon('shopping-bag', 'icon') ?></span>
         <div>
           <h2 id="order-heading"><?= $priceValue === 0.0 ? 'Get' : 'Order' ?> <?= e($product['name']) ?></h2>
-          <p><?= $price !== '' ? '<strong>' . e($price) . '</strong> · ' : '' ?>Send your details and we will email you how to pay. Once payment is confirmed you receive your <?= in_array($product['type'], ['Course', 'Workshop'], true) ? 'course access' : 'download link' ?>.</p>
+          <p><?= $price !== '' ? '<strong>' . e($price) . '</strong> · ' : '' ?>Send your details and I will email you how to pay. Once payment is confirmed you receive your <?= in_array($product['type'], ['Course', 'Workshop'], true) ? 'course access' : 'download link' ?>.</p>
         </div>
       </div>
       <form class="form" id="<?= e($orderFormId) ?>" method="post" action="<?= e(current_path()) ?>#<?= e($orderFormId) ?>" novalidate data-validate>
@@ -145,13 +145,13 @@ require INC . '/layout/header.php';
             <input type="text" id="order-country" name="country" autocomplete="country-name" maxlength="80" value="<?= e((string) ($ov['country'] ?? '')) ?>">
           </div>
           <div class="field field--full">
-            <label for="order-note">Anything we should know? <span class="optional">(optional)</span></label>
+            <label for="order-note">Anything I should know? <span class="optional">(optional)</span></label>
             <textarea id="order-note" name="note" rows="3" maxlength="2000"><?= e((string) ($ov['note'] ?? '')) ?></textarea>
           </div>
         </div>
         <div class="form__footer">
           <button type="submit" class="btn btn-primary btn-lg"><span><?= $priceValue === 0.0 ? 'Request it' : 'Place order' ?></span><?= icon('send', 'icon btn-icon') ?></button>
-          <p class="form__privacy">No payment is taken on this page. We use your details only for this order. See our <a href="<?= e(page_url('privacy')) ?>">Privacy Policy</a>.</p>
+          <p class="form__privacy">No payment is taken on this page. I use your details only for this order. See the <a href="<?= e(page_url('privacy')) ?>">Privacy Policy</a>.</p>
         </div>
       </form>
     </section>
@@ -159,7 +159,7 @@ require INC . '/layout/header.php';
     <div class="post-cta">
       <div>
         <h2>Questions before you buy?</h2>
-        <p>Ask us anything about <?= e($product['name']) ?>. We reply by email.</p>
+        <p>Ask me anything about <?= e($product['name']) ?>. I reply by email.</p>
       </div>
       <?= button('Ask a Question', page_url('contact'), 'primary', 'arrow-right') ?>
     </div>

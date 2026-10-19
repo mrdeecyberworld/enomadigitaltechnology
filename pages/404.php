@@ -16,12 +16,12 @@ require INC . '/layout/header.php';
   <div class="container page-hero__inner">
     <div class="page-hero__content">
       <p class="eyebrow eyebrow--light">Error 404</p>
-      <h1 class="page-hero__title">We couldn’t find that page.</h1>
-      <p class="page-hero__text">The link may be outdated or the page may have moved. These links can help you get back on track.</p>
+      <h1 class="page-hero__title">This page doesn’t exist.</h1>
+      <p class="page-hero__text">The link may be old, or the page may have moved. Try one of these instead.</p>
       <div class="btn-row btn-row--center">
         <?= button('Go to Homepage', '/', 'primary', 'arrow-right') ?>
         <?= button('View Services', '/services', 'outline-light') ?>
-        <?= button('Contact Us', '/contact', 'outline-light') ?>
+        <?= button('Contact Me', '/contact', 'outline-light') ?>
       </div>
     </div>
   </div>

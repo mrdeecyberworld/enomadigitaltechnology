@@ -44,7 +44,7 @@ echo page_hero($svc['headline'], [
 
 <section class="section" aria-labelledby="included-heading">
   <div class="container">
-    <?= section_header('What we help with', $svc['name'] . ' services', $svc['summary'], ['id' => 'included-heading']) ?>
+    <?= section_header('What I help with', $svc['name'] . ' services', $svc['summary'], ['id' => 'included-heading']) ?>
     <div class="detail-grid">
       <?php foreach ($svc['details'] as $d): ?>
         <div class="detail-card reveal">
@@ -63,11 +63,11 @@ echo page_hero($svc['headline'], [
 <section class="section section--muted" aria-labelledby="audience-heading">
   <div class="container split split--center">
     <div class="split__content">
-      <?= section_header('Who it’s for', 'Built for people and organizations like yours', 'Every engagement starts with understanding your goals, your budget and how you work today.', ['align' => 'left', 'id' => 'audience-heading']) ?>
+      <?= section_header('Who it’s for', 'Who I usually work with', 'Every project starts with me learning your goals, your budget and how you work today.', ['align' => 'left', 'id' => 'audience-heading']) ?>
       <?= check_list($svc['audience'], 'check-list--2col reveal') ?>
     </div>
     <div class="split__content">
-      <ol class="mini-process reveal" aria-label="How we work">
+      <ol class="mini-process reveal" aria-label="How I work">
         <?php foreach (content('home')['process']['steps'] as $i => $step): ?>
           <li><span class="mini-process__num" aria-hidden="true"><?= $i + 1 ?></span><span><strong><?= e($step['title']) ?></strong><?= e($step['text']) ?></span></li>
         <?php endforeach; ?>
@@ -88,7 +88,7 @@ echo page_hero($svc['headline'], [
 <section class="section section--muted" aria-labelledby="inquiry-heading">
   <div class="container form-layout">
     <div class="form-layout__intro">
-      <?= section_header('Get in touch', 'Ask about ' . $svc['name'], 'Tell us a little about what you need. We will review your request and follow up with next steps.', ['align' => 'left', 'id' => 'inquiry-heading']) ?>
+      <?= section_header('Get in touch', 'Ask about ' . $svc['name'], 'Tell me a little about what you need, and I will reply with next steps.', ['align' => 'left', 'id' => 'inquiry-heading']) ?>
       <ul class="contact-points">
         <li><?= icon('calendar-check', 'icon icon-sm') ?><span>Prefer to talk? <a href="/book-a-consultation">Book a consultation</a>.</span></li>
         <li><?= icon('clipboard-list', 'icon icon-sm') ?><span>Have a defined project? <a href="/get-a-quote">Request a quote</a>.</span></li>
@@ -103,7 +103,7 @@ echo page_hero($svc['headline'], [
 
 <section class="section" aria-labelledby="related-heading">
   <div class="container">
-    <?= section_header('Related services', 'Explore more ways we can help', null, ['id' => 'related-heading']) ?>
+    <?= section_header('Related services', 'Other ways I can help', null, ['id' => 'related-heading']) ?>
     <?= service_grid(array_values(array_diff(array_keys(services()), [$serviceSlug])), ['compact' => true]) ?>
   </div>
 </section>

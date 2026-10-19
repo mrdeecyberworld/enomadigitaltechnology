@@ -27,14 +27,14 @@ echo page_hero(page_text('services', 'heading', 'Services'), [
 
 <section class="section" aria-labelledby="all-services-heading">
   <div class="container">
-    <?= section_header('What we do', 'How we help', 'Choose a service to learn more, or use the service finder below if you are not sure where to start.', ['id' => 'all-services-heading']) ?>
+    <?= section_header('Services', 'Pick an area', 'Choose a service to see what it includes. If you are not sure, the service finder below can point you in the right direction.', ['id' => 'all-services-heading']) ?>
     <?= service_grid() ?>
   </div>
 </section>
 
 <section class="section section--muted" aria-labelledby="finder-heading">
   <div class="container container--narrow">
-    <?= section_header('Service finder', 'Find the right service', 'Answer two quick questions and we will suggest where to start.', ['id' => 'finder-heading']) ?>
+    <?= section_header('Service finder', 'Find the right service', 'Answer two quick questions and it will suggest where to start.', ['id' => 'finder-heading']) ?>
     <?= service_finder() ?>
   </div>
 </section>

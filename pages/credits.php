@@ -28,7 +28,7 @@ echo page_hero('Photo Credits', [
 <section class="section">
   <div class="container container--narrow prose credits">
     <h2>Main photos</h2>
-    <p>Most photos come from <a href="https://unsplash.com" rel="noopener" target="_blank">Unsplash<span class="sr-only"> (opens in a new tab)</span></a> and are used under the <a href="https://unsplash.com/license" rel="noopener" target="_blank">Unsplash License<span class="sr-only"> (opens in a new tab)</span></a>. Photos of people are illustrations, not our staff or clients.</p>
+    <p>Most photos come from <a href="https://unsplash.com" rel="noopener" target="_blank">Unsplash<span class="sr-only"> (opens in a new tab)</span></a> and are used under the <a href="https://unsplash.com/license" rel="noopener" target="_blank">Unsplash License<span class="sr-only"> (opens in a new tab)</span></a>. Photos of people are illustrations. They do not show me or my clients.</p>
 
     <h2>Backup photos</h2>
     <p>When a main photo can't load, one of these is shown instead. They come from Google's <a href="https://storage.googleapis.com/openimages/web/index.html" rel="noopener" target="_blank">Open Images<span class="sr-only"> (opens in a new tab)</span></a> collection and are used under the Creative Commons Attribution 2.0 licence (CC BY 2.0). Some have been cropped to fit.</p>

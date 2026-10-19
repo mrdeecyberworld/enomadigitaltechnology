@@ -44,8 +44,8 @@ declare(strict_types=1);
       </nav>
 
       <div class="site-footer__col site-footer__cta">
-        <h2 class="site-footer__heading">Get Started</h2>
-        <p>Tell us what you need. We'll help you find the right solution.</p>
+        <h2 class="site-footer__heading">Get started</h2>
+        <p>Tell me what you need and I will help you work out the next step.</p>
         <div class="btn-stack">
           <?= button(site('cta_primary')['label'], site('cta_primary')['path'], 'primary', 'calendar-check') ?>
           <?= button(site('cta_secondary')['label'], site('cta_secondary')['path'], 'outline-light') ?>

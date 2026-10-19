@@ -49,7 +49,7 @@ function assistant_knowledge(): string
 function assistant_system_prompt(): string
 {
     return <<<PROMPT
-You are the Enoma AI Assistant on the website of Enoma Digital Technologies, a U.S.-based technology services company that serves clients worldwide. You help visitors understand their technology needs and find the right Enoma service.
+You are the Enoma AI Assistant on the website of Enoma Digital Technologies, a U.S.-based freelance technology business run by Enoma Divine Omozusi, serving clients worldwide. You help visitors understand their technology needs and find the right Enoma service.
 
 How to respond:
 - You are an automated AI assistant. If asked, say so plainly. Never claim or imply that you are a human or a staff member.
@@ -61,6 +61,7 @@ How to respond:
 - Security help is defensive only. Refuse requests to access accounts or systems without permission, crack passwords, write malware, phish, evade security, surveil people, or perform any offensive or harmful activity. Offer defensive alternatives instead.
 - If someone may be in an active security incident, give calm, general first steps and recommend contacting Enoma or an appropriate professional promptly.
 - Keep replies short and friendly: usually 2 to 5 sentences, plain text, no markdown headings or tables. Simple "- " bullet lines are fine.
+- Write the way a helpful person talks: plain words, no sales language or buzzwords (such as "seamless", "robust" or "tailored solutions"), and no dashes between clauses.
 - Never ask for passwords, payment details or sensitive personal information.
 
 Approved company information:
@@ -122,7 +123,7 @@ function assistant_guided(array $messages): array
     if ($has('\b(hacked|compromised|breach(ed)?|someone (got|logged) into|clicked (a|on a|the) (link|attachment)|ransomware|scammed|locked out)\b')) {
         return [
             'reply' => "I'm sorry you're dealing with that. Some general first steps:\n- From a device you trust, change the password on the affected account and any account that used the same password.\n- Turn on multi-factor authentication and check the account's recovery email and phone number.\n- If money or banking is involved, contact your bank directly using a number you already trust.\n- Don't pay or reply to anyone demanding payment.\nFor hands-on help, contact Enoma Digital Technologies as soon as you can.",
-            'links' => [['label' => 'Contact us now', 'url' => '/contact'], ['label' => 'Cybersecurity services', 'url' => '/cybersecurity']],
+            'links' => [['label' => 'Get in touch now', 'url' => '/contact'], ['label' => 'Cybersecurity services', 'url' => '/cybersecurity']],
             'suggestions' => ['How do I recognize phishing?'],
         ];
     }
@@ -130,7 +131,7 @@ function assistant_guided(array $messages): array
     if ($has('\b(where are you|located|location|office|which states?|united states|u\.s\.|usa|remote|near me|in my area|worldwide|international|countr(y|ies)|abroad|outside the us|europe|africa|canada|uk)\b')) {
         return [
             'reply' => 'Enoma Digital Technologies is based in the United States and works with clients worldwide. Services are delivered remotely, and sessions are scheduled to suit your time zone.',
-            'links' => [['label' => 'Our services', 'url' => '/services']],
+            'links' => [['label' => 'See the services', 'url' => '/services']],
             'suggestions' => ['Do you provide remote IT support?'],
         ];
     }
@@ -221,7 +222,7 @@ function assistant_guided(array $messages): array
     if ($secondary) {
         $reply .= ' ' . service($secondary)['name'] . ' may also be relevant: ' . lcfirst(service($secondary)['summary']);
     }
-    $reply .= ' The best next step is a consultation so we can understand your situation.';
+    $reply .= ' The best next step is a consultation, so Enoma can understand your situation.';
 
     return [
         'reply' => $reply,
@@ -235,12 +236,12 @@ function assistant_service_blurb(string $slug, string $t): string
     $svc = service($slug);
     $intro = match ($slug) {
         'web-development' => str_contains($t, 'redesign') || str_contains($t, 'update')
-            ? 'It sounds like you want to improve an existing website. Our Web Development service includes website redesign and maintenance.'
+            ? 'It sounds like you want to improve an existing website. The Web Development service includes redesigns and maintenance.'
             : 'It sounds like Web Development is a good fit.',
         'cybersecurity' => 'It sounds like Cybersecurity is a good fit.',
         'it-support' => 'It sounds like IT Support can help.',
         'training' => 'Technology Training sounds like a good fit.',
-        'cloud-services' => 'Our Cloud & Digital Technology service sounds like a good fit.',
+        'cloud-services' => 'Cloud & Digital Technology sounds like a good fit.',
         'technology-consulting' => 'Technology Consulting sounds like a good place to start.',
         default => $svc['name'] . ' may be a good fit.',
     };
@@ -254,7 +255,7 @@ function assistant_followups(string $slug): array
         'web-development' => ['How long does a website take?', 'Can you redesign my site?', 'Book a consultation'],
         'cybersecurity' => ['What is a security assessment?', 'How do I spot phishing?', 'Book a consultation'],
         'it-support' => ['Do you provide remote support?', 'Book a consultation'],
-        'training' => ['Is training online?', 'Can training be tailored?', 'Book a consultation'],
+        'training' => ['Is training online?', 'Can training be adapted?', 'Book a consultation'],
         'cloud-services' => ['Microsoft 365 or Google Workspace?', 'Book a consultation'],
         default => ['What happens in a consultation?', 'Book a consultation'],
     };

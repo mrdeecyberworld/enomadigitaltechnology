@@ -9,7 +9,7 @@ return [
     'short_name'  => 'Enoma Digital Tech',
     'domain'      => 'EnomaDigitalTech.com',
     'tagline'     => 'Build. Secure. Empower.',
-    'statement'   => 'Technology solutions built around your needs.',
+    'statement'   => 'Websites, IT support and cybersecurity from a freelancer who explains things plainly.',
     'description' => 'Enoma Digital Technologies: freelance web developer and IT specialist offering web development, cybersecurity, IT support and technology training for clients worldwide.',
     'service_area' => 'Remote technology services for clients worldwide.',
 

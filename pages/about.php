@@ -49,7 +49,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
 <section class="section" aria-labelledby="mission-heading">
   <div class="container split">
     <div class="split__content">
-      <?= section_header('Our purpose', 'Making technology accessible, practical and secure', null, ['align' => 'left', 'id' => 'mission-heading']) ?>
+      <?= section_header('Why Enoma', 'Why I started Enoma Digital Technologies', null, ['align' => 'left', 'id' => 'mission-heading']) ?>
       <?php foreach ($home['about']['paragraphs'] as $p): ?>
         <p class="prose-p reveal"><?= e($p) ?></p>
       <?php endforeach; ?>
@@ -66,7 +66,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
 <section class="section section--dark" aria-labelledby="values-heading">
   <div class="section__bg" aria-hidden="true"></div>
   <div class="container">
-    <?= section_header($home['why']['eyebrow'], 'What guides our work', $home['why']['text'], ['id' => 'values-heading']) ?>
+    <?= section_header($home['why']['eyebrow'], 'How I like to work', $home['why']['text'], ['id' => 'values-heading']) ?>
     <div class="why__grid why__grid--4">
       <?php foreach ($home['why']['points'] as $pt): ?>
         <div class="feature-card reveal">
@@ -95,7 +95,7 @@ echo page_hero(page_text('about', 'heading', 'About'), [
       <?php endif; ?>
       <div class="btn-row">
         <?= button('Book a Consultation', '/book-a-consultation', 'primary', 'calendar-check') ?>
-        <?= button('Contact Us', '/contact', 'ghost', 'arrow-right') ?>
+        <?= button('Contact Me', '/contact', 'ghost', 'arrow-right') ?>
       </div>
     </div>
   </div>
@@ -183,11 +183,11 @@ echo page_hero(page_text('about', 'heading', 'About'), [
 
 <section class="section section--muted" aria-labelledby="how-heading">
   <div class="container">
-    <?= section_header('How we work', 'Remote-first, clear and collaborative', null, ['id' => 'how-heading']) ?>
+    <?= section_header('Working with me', 'Remote, clear and done together with you', null, ['id' => 'how-heading']) ?>
     <div class="detail-grid">
-      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('globe', 'icon icon-sm') ?></span><h3 class="detail-card__title">Remote services worldwide</h3><p class="detail-card__text">We deliver our services remotely using secure tools, which keeps things convenient and flexible for clients wherever they are.</p></div>
-      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('message-square-text', 'icon icon-sm') ?></span><h3 class="detail-card__title">Plain-language communication</h3><p class="detail-card__text">You will always know what we are doing and why, without jargon.</p></div>
-      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('lock', 'icon icon-sm') ?></span><h3 class="detail-card__title">Respect for your data</h3><p class="detail-card__text">Remote access happens only with your permission, and we only request the access a task requires.</p></div>
+      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('globe', 'icon icon-sm') ?></span><h3 class="detail-card__title">Remote services worldwide</h3><p class="detail-card__text">I work remotely with secure tools, so it does not matter where you are.</p></div>
+      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('message-square-text', 'icon icon-sm') ?></span><h3 class="detail-card__title">Plain-language communication</h3><p class="detail-card__text">I tell you what I am doing and why, without jargon.</p></div>
+      <div class="detail-card reveal"><span class="detail-card__icon"><?= icon('lock', 'icon icon-sm') ?></span><h3 class="detail-card__title">Respect for your data</h3><p class="detail-card__text">I only connect to your devices with your permission, and only ask for the access a task needs.</p></div>
     </div>
   </div>
 </section>

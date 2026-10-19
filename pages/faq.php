@@ -43,6 +43,6 @@ echo page_hero(page_text('faq', 'heading', 'Frequently Asked Questions'), [
   </div>
 </section>
 
-<?= cta_banner('Still have questions?', 'Ask our AI assistant on the homepage, or talk with us directly.') ?>
+<?= cta_banner('Still have questions?', 'Send me a message and I will answer it.') ?>
 
 <?php require INC . '/layout/footer.php'; ?>

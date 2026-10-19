@@ -23,9 +23,9 @@ function contact_form(string $formId, string $type, array $state, array $opts = 
         default        => 'Send Message',
     };
     $messageLabel = $opts['message_label'] ?? match ($type) {
-        'quote'        => 'Tell us about your project',
+        'quote'        => 'Tell me about your project',
         'consultation' => 'What would you like to discuss?',
-        default        => 'How can we help?',
+        default        => 'How can I help?',
     };
     $val = static fn (string $k): string => e($v[$k] ?? '');
     $invalid = static fn (string $k): string => isset($errors[$k]) ? ' aria-invalid="true" aria-describedby="' . $k . '-' . $formId . '-error"' : '';
@@ -114,7 +114,7 @@ function contact_form(string $formId, string $type, array $state, array $opts = 
 
       <div class="form__footer">
         <button type="submit" class="btn btn-primary btn-lg"><span><?= e($submit) ?></span><?= icon('send', 'icon btn-icon') ?></button>
-        <p class="form__privacy">We use your details only to respond to your request. See our <a href="/privacy-policy">Privacy Policy</a>.</p>
+        <p class="form__privacy">I use your details only to reply to you. See the <a href="/privacy-policy">Privacy Policy</a>.</p>
       </div>
     </form>
     <?php

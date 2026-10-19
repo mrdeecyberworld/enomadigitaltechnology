@@ -61,7 +61,7 @@ $graph = array_merge(schema_base(), $page['schema']);
   <meta property="og:image" content="<?= e($ogImage) ?>">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="<?= e(site('name') . ' – ' . site('tagline')) ?>">
+  <meta property="og:image:alt" content="<?= e(site('name') . ': ' . site('tagline')) ?>">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="<?= e($page['title']) ?>">

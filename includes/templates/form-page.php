@@ -52,7 +52,7 @@ echo page_hero($fp['title'], ['eyebrow' => $fp['eyebrow'], 'text' => $fp['intro'
 
       <?php if ($fp['type'] === 'consultation' && cfg('booking_url')): ?>
         <div class="booking-card">
-          <p><strong>Prefer to pick a time now?</strong> Use our online scheduler.</p>
+          <p><strong>Prefer to pick a time now?</strong> Use my online scheduler.</p>
           <?= button('Open Scheduler', (string) cfg('booking_url'), 'primary', 'calendar-check', ['target' => '_blank', 'rel' => 'noopener']) ?>
         </div>
       <?php elseif ($fp['type'] === 'consultation'): ?>
@@ -61,7 +61,7 @@ echo page_hero($fp['title'], ['eyebrow' => $fp['eyebrow'], 'text' => $fp['intro'
 
       <?php if (cfg('contact_email') || cfg('contact_phone')): ?>
         <div class="direct-contact">
-          <p class="side-links__label">Prefer to reach us directly?</p>
+          <p class="side-links__label">Prefer to reach me directly?</p>
           <?php if (cfg('contact_email')): ?>
             <a class="direct-contact__link" href="mailto:<?= e(cfg('contact_email')) ?>"><span class="contact-points__icon"><?= icon('mail', 'icon icon-sm') ?></span><span><span class="direct-contact__kind">Email</span><?= e(cfg('contact_email')) ?></span></a>
           <?php endif; ?>
@@ -73,7 +73,7 @@ echo page_hero($fp['title'], ['eyebrow' => $fp['eyebrow'], 'text' => $fp['intro'
 
       <div class="side-links">
         <p class="side-links__label">Other ways to start</p>
-        <?php foreach ([['/book-a-consultation', 'Book a Consultation'], ['/get-a-quote', 'Get a Quote'], ['/contact', 'Contact Us'], ['/#assistant', 'Ask the AI Assistant']] as [$href, $label]): ?>
+        <?php foreach ([['/book-a-consultation', 'Book a Consultation'], ['/get-a-quote', 'Get a Quote'], ['/contact', 'Contact Me'], ['/#assistant', 'Ask the AI Assistant']] as [$href, $label]): ?>
           <?php if ($href !== $path): ?><a href="<?= e($href) ?>"><?= e($label) ?><?= icon('arrow-right', 'icon icon-xs') ?></a><?php endif; ?>
         <?php endforeach; ?>
       </div>

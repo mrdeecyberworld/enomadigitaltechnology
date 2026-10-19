@@ -10,7 +10,7 @@ return [
         'icon'    => 'key-round',
         'tag'     => 'Cybersecurity',
         'title'   => 'Five steps to secure your most important accounts',
-        'summary' => 'Your email account is the key to almost everything else. Start there.',
+        'summary' => 'Whoever controls your email can reset most of your other passwords, so start there.',
         'steps'   => [
             'List the accounts that matter most: email, banking, work tools, social media and your domain or website host.',
             'Use a unique password for each one. A reputable password manager makes this realistic.',
@@ -24,7 +24,7 @@ return [
         'icon'    => 'fish',
         'tag'     => 'Cybersecurity',
         'title'   => 'How to recognize a phishing message',
-        'summary' => 'Phishing works by creating urgency. Slowing down is your best defense.',
+        'summary' => 'Phishing relies on rushing you, so the best defense is to slow down.',
         'steps'   => [
             'Be cautious of urgent requests involving money, gift cards, passwords or "account suspension."',
             'Check the sender\'s actual email address and hover over links before clicking.',
@@ -38,7 +38,7 @@ return [
         'icon'    => 'hard-drive',
         'tag'     => 'Cloud & Data',
         'title'   => 'Backups that actually work: the 3-2-1 approach',
-        'summary' => 'A backup you have never tested is a hope, not a plan.',
+        'summary' => 'Until you have tested a restore, you do not know whether your backup works.',
         'steps'   => [
             'Keep 3 copies of important data: the original plus two backups.',
             'Store them on 2 different types of storage, for example a cloud service and an external drive.',
@@ -52,11 +52,11 @@ return [
         'icon'    => 'layout-template',
         'tag'     => 'Web Development',
         'title'   => 'A small business website checklist',
-        'summary' => 'The essentials every business website should get right.',
+        'summary' => 'Five things every business website should get right.',
         'steps'   => [
             'Clearly state what you do, who you help and where you operate within the first screen.',
-            'Make contacting you effortless with a visible call to action on every page.',
-            'Ensure the site loads quickly and works well on phones.',
+            'Put a visible way to contact you on every page.',
+            'Make sure the site loads quickly and works well on phones.',
             'Use HTTPS, keep software updated and back up your site regularly.',
             'Give every page a unique title and description so search engines can understand it.',
         ],

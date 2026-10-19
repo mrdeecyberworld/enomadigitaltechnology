@@ -22,9 +22,9 @@ $page = [
 ];
 require INC . '/layout/header.php';
 
-echo page_hero('Share Your Experience', [
+echo page_hero('Share your experience', [
     'eyebrow' => 'Client feedback',
-    'text'    => 'Worked with us? Your honest feedback helps us improve and helps other people decide if we are the right fit.',
+    'text'    => 'Have I worked with you? Your honest feedback helps me improve and helps other people decide whether to hire me.',
     'crumbs'  => $crumbs,
 ]);
 ?>
@@ -34,13 +34,13 @@ echo page_hero('Share Your Experience', [
     <aside class="form-layout__intro" aria-labelledby="fb-side-heading">
       <h2 class="side-heading" id="fb-side-heading">How it works</h2>
       <ul class="contact-points contact-points--lg">
-        <li><span class="contact-points__icon"><?= icon('message-square-text', 'icon icon-sm') ?></span><span>Tell us how the project or support went, in your own words.</span></li>
-        <li><span class="contact-points__icon"><?= icon('shield-check', 'icon icon-sm') ?></span><span>We read every review first. Your email address is never published.</span></li>
-        <li><span class="contact-points__icon"><?= icon('badge-check', 'icon icon-sm') ?></span><span>With your permission, we may share your words on our website.</span></li>
+        <li><span class="contact-points__icon"><?= icon('message-square-text', 'icon icon-sm') ?></span><span>Tell me how the project or support went, in your own words.</span></li>
+        <li><span class="contact-points__icon"><?= icon('shield-check', 'icon icon-sm') ?></span><span>I read every review before anything is published. Your email address is never shown.</span></li>
+        <li><span class="contact-points__icon"><?= icon('badge-check', 'icon icon-sm') ?></span><span>If you allow it, I may share your words on this website.</span></li>
       </ul>
       <div class="side-links">
         <p class="side-links__label">Need help instead?</p>
-        <a href="<?= e(page_url('contact')) ?>">Contact Us<?= icon('arrow-right', 'icon icon-xs') ?></a>
+        <a href="<?= e(page_url('contact')) ?>">Contact Me<?= icon('arrow-right', 'icon icon-xs') ?></a>
       </div>
     </aside>
 
@@ -118,7 +118,7 @@ echo page_hero('Share Your Experience', [
 
         <div class="form__footer">
           <button type="submit" class="btn btn-primary btn-lg"><span>Send Feedback</span><?= icon('send', 'icon btn-icon') ?></button>
-          <p class="form__privacy">We use your email only to follow up on your feedback. See our <a href="<?= e(page_url('privacy')) ?>">Privacy Policy</a>.</p>
+          <p class="form__privacy">I use your email only to follow up on your feedback. See the <a href="<?= e(page_url('privacy')) ?>">Privacy Policy</a>.</p>
         </div>
       </form>
     </div>

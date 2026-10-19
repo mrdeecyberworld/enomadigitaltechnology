@@ -53,7 +53,7 @@ echo page_hero((string) $shop['heading'], [
         <?php foreach ($products as $p): ?><?= product_card($p, 'h3') ?><?php endforeach; ?>
       </div>
       <?php $hasCheckout = (bool) array_filter($products, static fn ($p) => trim((string) $p['buy_url']) !== ''); ?>
-      <p class="shop-trust"><?= icon('lock', 'icon icon-xs') ?> <?= e($hasCheckout ? (string) $shop['checkout_note'] : 'No payment is taken on this website: after you order, we email you how to pay, then send your access.') ?></p>
+      <p class="shop-trust"><?= icon('lock', 'icon icon-xs') ?> <?= e($hasCheckout ? (string) $shop['checkout_note'] : 'No payment is taken on this website. After you order, I email you how to pay, then send your access.') ?></p>
     <?php else: ?>
       <div class="shop-soon">
         <p class="eyebrow">Coming soon</p>
@@ -69,5 +69,5 @@ echo page_hero((string) $shop['heading'], [
   </div>
 </section>
 
-<?= cta_banner('Not sure which one is right for you?', 'Tell us what you want to learn or fix, and we will point you to the right course, tool or service.') ?>
+<?= cta_banner('Not sure which one is right for you?', 'Tell me what you want to learn or fix, and I will point you to the right course, tool or service.') ?>
 <?php require INC . '/layout/footer.php'; ?>

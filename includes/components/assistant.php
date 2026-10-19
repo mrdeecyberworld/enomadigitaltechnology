@@ -48,7 +48,7 @@ function ai_assistant(): string
       <p class="assistant__disclaimer">
         General information only. Not legal, medical or financial advice. Please don't share passwords or sensitive personal data.
       </p>
-      <noscript><p class="assistant__noscript">The assistant needs JavaScript. You can <a href="/services">browse our services</a> or <a href="/contact">contact us</a> instead.</p></noscript>
+      <noscript><p class="assistant__noscript">The assistant needs JavaScript. You can <a href="/services">browse the services</a> or <a href="/contact">contact me</a> instead.</p></noscript>
     </div>
     <?php
     return (string) ob_get_clean();
@@ -62,7 +62,7 @@ function service_finder_data(): array
             'label' => 'I need a website', 'icon' => 'code-xml',
             'question' => 'Which best describes your website project?',
             'answers' => [
-                ['label' => 'A brand-new website',            'primary' => 'web-development', 'also' => ['technology-consulting'], 'note' => 'We will plan the structure and content with you, then design and build a responsive site.'],
+                ['label' => 'A brand-new website',            'primary' => 'web-development', 'also' => ['technology-consulting'], 'note' => 'I will plan the structure and content with you, then design and build a responsive site.'],
                 ['label' => 'Redesign my existing website',   'primary' => 'web-development', 'also' => ['cybersecurity'],         'note' => 'A redesign is a good moment to improve messaging, speed, SEO basics and security.'],
                 ['label' => 'Updates or ongoing maintenance', 'primary' => 'web-development', 'also' => ['cybersecurity'],         'note' => 'Website maintenance keeps content current and software patched.'],
                 ['label' => 'A landing page for an offer',    'primary' => 'web-development', 'also' => ['technology-consulting'], 'note' => 'A focused landing page gives a campaign one clear goal.'],
@@ -73,7 +73,7 @@ function service_finder_data(): array
             'question' => 'What kind of help do you need?',
             'answers' => [
                 ['label' => 'A computer or device problem', 'primary' => 'it-support', 'also' => [],                 'note' => 'Most everyday computer problems can be diagnosed through a secure remote session.'],
-                ['label' => 'Email or software setup',      'primary' => 'it-support', 'also' => ['cloud-services'], 'note' => 'We can set up email and applications across your devices.'],
+                ['label' => 'Email or software setup',      'primary' => 'it-support', 'also' => ['cloud-services'], 'note' => 'I can set up email and applications across your devices.'],
                 ['label' => 'Wi-Fi or network issues',      'primary' => 'it-support', 'also' => ['cybersecurity'],  'note' => 'Network troubleshooting is also a chance to check your router security.'],
                 ['label' => 'Setting up new devices',       'primary' => 'it-support', 'also' => ['cybersecurity'],  'note' => 'New devices are easiest to secure properly from day one.'],
             ],
@@ -84,8 +84,8 @@ function service_finder_data(): array
             'answers' => [
                 ['label' => 'My business',                'primary' => 'cybersecurity', 'also' => ['training'],              'note' => 'A basic security assessment plus team awareness training is a strong starting point.'],
                 ['label' => 'Myself or my family',        'primary' => 'cybersecurity', 'also' => ['training'],              'note' => 'Account security, MFA and phishing awareness protect what matters most.'],
-                ['label' => 'A school or organization',   'primary' => 'cybersecurity', 'also' => ['training', 'technology-consulting'], 'note' => 'We can combine practical safeguards with education for staff and learners.'],
-                ['label' => 'My website',                 'primary' => 'cybersecurity', 'also' => ['web-development'],       'note' => 'We review HTTPS, updates, user access, backups and hosting settings.'],
+                ['label' => 'A school or organization',   'primary' => 'cybersecurity', 'also' => ['training', 'technology-consulting'], 'note' => 'I can combine practical safeguards with education for staff and learners.'],
+                ['label' => 'My website',                 'primary' => 'cybersecurity', 'also' => ['web-development'],       'note' => 'I review HTTPS, updates, user access, backups and hosting settings.'],
             ],
         ],
         'training' => [
@@ -102,7 +102,7 @@ function service_finder_data(): array
             'label' => 'I need cloud/digital technology help', 'icon' => 'cloud',
             'question' => 'What would you like to set up or improve?',
             'answers' => [
-                ['label' => 'Email and collaboration (Microsoft 365 or Google Workspace)', 'primary' => 'cloud-services', 'also' => ['cybersecurity'],         'note' => 'We configure accounts, sharing and security settings properly from the start.'],
+                ['label' => 'Email and collaboration (Microsoft 365 or Google Workspace)', 'primary' => 'cloud-services', 'also' => ['cybersecurity'],         'note' => 'I configure accounts, sharing and security settings properly from the start.'],
                 ['label' => 'Backups',                         'primary' => 'cloud-services', 'also' => ['cybersecurity'],         'note' => 'Automatic, tested backups are one of the best protections against data loss.'],
                 ['label' => 'File storage and sharing',        'primary' => 'cloud-services', 'also' => ['it-support'],            'note' => 'Organized folders and permissions keep the right files with the right people.'],
                 ['label' => 'Automating a manual process',     'primary' => 'cloud-services', 'also' => ['technology-consulting'], 'note' => 'Simple digital workflows can save hours every week.'],
@@ -113,8 +113,8 @@ function service_finder_data(): array
             'question' => 'Which of these sounds closest?',
             'answers' => [
                 ['label' => "I'm starting or growing a business",   'primary' => 'technology-consulting', 'also' => ['web-development', 'cloud-services'], 'note' => 'A consultation helps you prioritize the technology that matters first.'],
-                ['label' => 'Something is broken or not working',   'primary' => 'it-support',            'also' => [],                                     'note' => 'Tell us what is happening and we will help you get it working.'],
-                ['label' => "I'm worried about security or scams",  'primary' => 'cybersecurity',         'also' => ['training'],                           'note' => 'We will help you understand the risk and take practical next steps.'],
+                ['label' => 'Something is broken or not working',   'primary' => 'it-support',            'also' => [],                                     'note' => 'Tell me what is happening and I will help you get it working.'],
+                ['label' => "I'm worried about security or scams",  'primary' => 'cybersecurity',         'also' => ['training'],                           'note' => 'I will help you understand the risk and take practical next steps.'],
                 ['label' => 'I want to learn new technology skills', 'primary' => 'training',             'also' => [],                                     'note' => 'Training is available for all experience levels.'],
             ],
         ],
@@ -144,7 +144,7 @@ function service_finder(): string
             </button>
           <?php endforeach; ?>
         </div>
-        <noscript><p class="finder__noscript">Browse <a href="/services">all services</a> or <a href="/book-a-consultation">book a consultation</a> and we will help you choose.</p></noscript>
+        <noscript><p class="finder__noscript">Browse <a href="/services">all services</a> or <a href="/book-a-consultation">book a consultation</a> and I will help you choose.</p></noscript>
       </fieldset>
 
       <fieldset class="finder__step" data-finder-step="2" hidden>
@@ -154,7 +154,7 @@ function service_finder(): string
       </fieldset>
 
       <div class="finder__step" data-finder-step="3" hidden>
-        <h3 class="finder__question" tabindex="-1" data-finder-result-title>Our recommendation</h3>
+        <h3 class="finder__question" tabindex="-1" data-finder-result-title>Where to start</h3>
         <div data-finder-result aria-live="polite"></div>
         <div class="btn-row">
           <?= button('Book a Consultation', '/book-a-consultation', 'primary', 'calendar-check') ?>

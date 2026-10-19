@@ -8,11 +8,11 @@ return [
     [
         'slug'     => 'multi-factor-authentication-explained',
         'cover'    => 'post-mfa',
-        'title'    => 'Multi-Factor Authentication Explained: The Simplest Way to Protect Your Accounts',
+        'title'    => 'Multi-factor authentication explained, and how to turn it on',
         'category' => 'cybersecurity',
         'tags'     => ['MFA', 'Account security', 'Passwords'],
         'featured' => true,
-        'excerpt'  => 'A stolen password is far less dangerous when your account asks for a second proof of identity. Here is what multi-factor authentication is, which type to choose and how to set it up without locking yourself out.',
+        'excerpt'  => 'A stolen password is far less dangerous when your account asks for a second proof of identity. What MFA is, which type to choose and how to set it up without locking yourself out.',
         'body'     => <<<'MD'
 Passwords get stolen every day through data breaches, phishing emails and reused logins. **Multi-factor authentication (MFA)** adds a second check, so a stolen password alone is not enough to get into your account.
 
@@ -20,9 +20,9 @@ Passwords get stolen every day through data breaches, phishing emails and reused
 
 MFA asks for two or more kinds of proof when you sign in:
 
-- Something you **know**, like a password
-- Something you **have**, like your phone or a security key
-- Something you **are**, like a fingerprint or face scan
+- something you know, like a password
+- something you have, like your phone or a security key
+- something you are, like a fingerprint or face scan
 
 When MFA is on, someone who steals your password still needs your phone or key to get in.
 
@@ -30,46 +30,44 @@ When MFA is on, someone who steals your password still needs your phone or key t
 
 Not all methods are equally strong. From strongest to weakest:
 
-1. **Security keys and passkeys.** A physical key or a passkey stored on your device. Very resistant to phishing.
-2. **Authenticator apps.** Apps such as Microsoft Authenticator or Google Authenticator generate a code that changes every 30 seconds.
-3. **Text message (SMS) codes.** Better than nothing, but codes can be intercepted or redirected through SIM-swap scams.
+1. Security keys and passkeys: a physical key, or a passkey stored on your device. These are very hard to phish.
+2. Authenticator apps, such as Microsoft Authenticator or Google Authenticator, which show a code that changes every 30 seconds.
+3. Text message (SMS) codes. These are better than nothing, but criminals can intercept or redirect them with SIM-swap scams.
 
 Any MFA is far better than none. If a service only offers text messages, turn it on anyway.
 
 ## Where to turn it on first
 
-Start with the accounts that could unlock everything else:
+Start with the accounts that give access to everything else:
 
-- Your main **email** account (it can reset your other passwords)
-- **Banking** and payment apps
-- Your **Microsoft 365** or **Google Workspace** account
-- Your **website host**, **domain registrar** and social media accounts
+- your main email account, because it can reset your other passwords
+- banking and payment apps
+- your Microsoft 365 or Google Workspace account
+- your website host, domain registrar and social media accounts
 
 ## Don't lock yourself out
 
-When you set up MFA, most services give you **backup or recovery codes**. Save them somewhere safe and offline, such as a password manager or a printed copy in a secure place. Also check that your recovery phone number and email address are current.
-
-> A few minutes of setup today can prevent weeks of trouble recovering a hijacked account.
+When you set up MFA, most services give you backup or recovery codes. Save them somewhere safe, such as a password manager or a printed copy kept somewhere secure. Also check that your recovery phone number and email address are up to date.
 
 ## Need a hand?
 
-We help individuals, families and small businesses set up MFA properly on the accounts that matter most, with backup options so nobody gets locked out. [Book a consultation](/book-a-consultation) and we will walk you through it.
+I help individuals, families and small businesses set up MFA on their most important accounts, with backup options so nobody gets locked out. [Book a consultation](/book-a-consultation) and I will walk you through it.
 MD,
     ],
     [
         'slug'     => 'how-to-spot-a-phishing-email',
         'cover'    => 'post-phishing',
-        'title'    => '7 Signs an Email Is a Phishing Attempt',
+        'title'    => '7 signs an email is a phishing attempt',
         'category' => 'cybersecurity',
         'tags'     => ['Phishing', 'Email security', 'Scams'],
         'featured' => false,
-        'excerpt'  => 'Phishing emails are designed to rush you into clicking. Learn the seven warning signs to look for, and what to do if you already clicked.',
+        'excerpt'  => 'Phishing emails try to rush you into clicking. Here are seven warning signs, and what to do if you already clicked.',
         'body'     => <<<'MD'
-Phishing is one of the most common ways accounts and businesses are compromised. The good news: most phishing messages share a handful of warning signs you can learn to spot.
+Phishing is one of the most common ways criminals get into accounts and businesses. Most phishing messages share a few warning signs, and you can learn to spot them.
 
 ## 1. It creates urgency or fear
 
-"Your account will be closed in 24 hours." "Unusual sign-in detected." Pressure is designed to make you act before you think.
+"Your account will be closed in 24 hours." "Unusual sign-in detected." The pressure is there to make you act before you think.
 
 ## 2. The sender address doesn't match
 
@@ -77,7 +75,7 @@ The display name might say your bank, but the actual address is something unexpe
 
 ## 3. Links go somewhere unexpected
 
-Hover over a link (or press and hold on a phone) to preview where it really goes before you tap it. Look closely for misspelled domain names.
+Before you tap a link, hover over it (or press and hold on a phone) to see where it really goes. Look closely for misspelled domain names.
 
 ## 4. It asks for passwords, codes or payment
 
@@ -89,11 +87,11 @@ Invoices, shipping notices and "documents" you weren't expecting are a common wa
 
 ## 6. The greeting or tone feels off
 
-Generic greetings, unusual wording or requests that feel out of character for the sender are all red flags.
+Be wary of generic greetings, odd wording, or a request that seems out of character for the sender.
 
 ## 7. It's too good to be true
 
-Prizes, refunds and "exclusive" opportunities are classic lures.
+Prizes, refunds and "exclusive" offers are common bait.
 
 ## What to do if you clicked
 
@@ -105,68 +103,68 @@ Prizes, refunds and "exclusive" opportunities are classic lures.
 
 ## Train your team
 
-Phishing awareness is a skill that improves with practice. Our [cybersecurity awareness training](/training) helps teams, families and community groups recognize and report phishing with confidence.
+People get better at spotting phishing with practice. My [security awareness training](/training) teaches teams, families and community groups to recognize and report it.
 MD,
     ],
     [
         'slug'     => 'small-business-website-essentials',
         'cover'    => 'post-website',
-        'title'    => 'What Every Small Business Website Needs',
+        'title'    => 'What every small business website needs',
         'category' => 'web-development',
         'tags'     => ['Small business', 'Website design', 'SEO'],
         'featured' => false,
-        'excerpt'  => 'Your website is often a customer’s first impression. These essentials help it earn trust, rank in search and turn visitors into inquiries.',
+        'excerpt'  => 'Your website is often the first thing a customer sees of your business. These basics help it earn trust, show up in search and bring in enquiries.',
         'body'     => <<<'MD'
 A good small business website doesn't need to be complicated. It needs to answer a visitor's questions quickly and make it easy to take the next step.
 
 ## A clear first impression
 
-Within a few seconds, visitors should know **what you do**, **who you help** and **how to contact you**. Put this at the top of your homepage in plain language.
+Within a few seconds, visitors should know what you do, who you help and how to contact you. Put this at the top of your homepage in plain language.
 
 ## Easy ways to get in touch
 
-Include a clear call to action on every page, such as "Book a consultation" or "Request a quote". Keep contact forms short and ask only for what you need.
+Put a clear button on every page, such as "Book a consultation" or "Request a quote". Keep contact forms short and ask only for what you need.
 
 ## Fast and mobile-friendly
 
 Most visitors will arrive on a phone. Your site should load quickly, use readable text sizes and have buttons that are easy to tap.
 
-## Trust signals that are real
+## Honest signs of trust
 
-Real client testimonials, clear service descriptions, an about page with real people and transparent contact details all build credibility. Avoid vague claims you can't back up.
+Real client testimonials, clear service descriptions, an about page with real people and visible contact details make visitors more willing to get in touch. Leave out claims you can't back up.
 
 ## Security basics
 
-- Use **HTTPS** on every page
-- Keep your website software, themes and plugins **updated**
-- Use strong, unique passwords and **MFA** for admin accounts
-- Take regular **backups** and confirm you can restore them
+- Use HTTPS on every page.
+- Keep your website software, themes and plugins updated.
+- Use strong, unique passwords and MFA for admin accounts.
+- Take regular backups and check that you can restore them.
 
 ## Search engine basics
 
 Give every page a unique title and description, use clear headings, describe images with alt text and write content that answers the questions your customers actually ask.
 
-## Ready for a website that works?
+## Need a website?
 
-We design and build fast, secure, mobile-friendly websites for small businesses, startups and professionals. [Explore our web development services](/web-development).
+I design and build fast, secure websites that work on phones, for small businesses, startups and professionals. [See my web development service](/web-development).
 MD,
     ],
     [
         'slug'     => 'the-3-2-1-backup-rule',
         'cover'    => 'post-backup',
-        'title'    => 'The 3-2-1 Backup Rule: A Simple Plan to Protect Your Files',
+        'title'    => 'The 3-2-1 backup rule: a simple plan to protect your files',
         'category' => 'cloud',
         'tags'     => ['Backups', 'Ransomware', 'Data protection'],
         'featured' => false,
-        'excerpt'  => 'Hardware fails, laptops get lost and ransomware happens. The 3-2-1 rule is an easy way to make sure your important files survive.',
+        'excerpt'  => 'Hard drives fail, laptops get lost and ransomware happens. The 3-2-1 rule is an easy way to keep your important files safe.',
         'body'     => <<<'MD'
-Losing important files is stressful, whether it is family photos, client records or years of business documents. A simple, proven approach is the **3-2-1 backup rule**.
+Losing important files is stressful, whether they are family photos, client records or years of business documents. The 3-2-1 backup rule is a simple, widely used way to avoid it.
 
 ## The rule
 
-- Keep **3** copies of your data: the original plus two backups.
-- Store them on **2** different types of storage, such as a cloud service and an external drive.
-- Keep **1** copy offsite or in the cloud, away from your main location.
+- Keep 3 copies of your data: the original plus two backups.
+- Store them on 2 different types of storage, such as a cloud service and an external drive.
+- Keep 1 copy offsite or in the cloud, away from your main location.
 
 ## Why it works
 
@@ -178,7 +176,7 @@ Backups that depend on someone remembering usually stop happening. Use tools tha
 
 ## Test your restores
 
-A backup you have never restored is a hope, not a plan. Every few months, try restoring a file or folder to confirm everything works.
+Until you have restored from a backup, you do not know that it works. Every few months, try restoring a file or folder.
 
 ## Protect your backups too
 
@@ -186,7 +184,7 @@ Ransomware can target connected backups. Keep at least one copy that is disconne
 
 ## Need help setting it up?
 
-Our [cloud and digital technology services](/cloud-services) include backup planning and setup for individuals and growing businesses.
+My [cloud and digital technology service](/cloud-services) includes planning and setting up backups for individuals and small businesses.
 MD,
     ],
 ];
